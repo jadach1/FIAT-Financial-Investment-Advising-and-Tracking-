@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/vendor/bootstrap/css/bootstrap.css",
               "src/styles.css"
             ],
             "scripts": []
