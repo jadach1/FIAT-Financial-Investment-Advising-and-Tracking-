@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top" *ngIf="nav.visible">
 
   <a class="navbar-brand mr-1" href="index.html" routerLink="/">FIAT</a>
 
   <!-- Navbar -->
   <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="/" id="homeButton" role="button">
+      <a class="nav-link dropdown-toggle" id="homeButton" role="button" routerLink="/home">
         <i class="fas fa-home fa-fw"></i>
       </a>
     </li>
@@ -36,7 +36,7 @@
         <div class="modal-body">Are you sure you want to logout?</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="home.html">Yes</a>
+          <a class="btn btn-primary" routerLink="/home">Yes</a>
         </div>
      </div>
   </div>
