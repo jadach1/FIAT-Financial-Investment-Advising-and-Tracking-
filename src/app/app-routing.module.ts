@@ -22,7 +22,6 @@ const publicRoutes: Routes = [
   { path: 'watchlist', component: WatchlistComponent },
   { path: 'advisors', component: AdvisorsComponent },
   { path: 'performance', component: PerformanceComponent },
-  { path: 'users/register', component: RegistrationComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ]

@@ -12,13 +12,20 @@ export class RegistrationComponent {
   user = new User();
   submitted = false;
 
-  constructor( private UserService: UserService) {}
-
   questions = ['What was your first pets name?', 'What is your mothers maiden name?',
-            'What street do you live on?', 'What is your favourite colour?'];
+  'What street do you live on?', 'What is your favourite colour?'];
+
+  constructor( private UserService: UserService) {}
            
   addUser() {
-    console.log("adding user");
+    console.log(
+      this.user.username + ",",
+      this.user.firstname + ",",
+      this.user.lastname + ",",
+      this.user.password + ",",
+      this.user.recoveryQuestion + ",",
+      this.user.recoveryAnswer
+    );
     this.submitted = true;
     this.save();
   }

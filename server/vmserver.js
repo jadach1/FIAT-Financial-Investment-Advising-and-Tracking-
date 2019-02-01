@@ -13,16 +13,8 @@ app.get("/", function(req, res) {
     res.sendFile("./index.html"); //index.html file of your angularjs application
 });
 
-app.get(" ", function(req, res) {
-    res.sendFile("./index.html"); //index.html file of your angularjs application
-});
-
-app.get("**", function(req, res) {
-    res.sendFile("./index.html"); //index.html file of your angularjs application
-});
-
 // Create a Server
-app.listen(hostname, port, function () {
+app.listen(port, hostname, function () {
  
     console.log("App listening at http://%s:%s", hostname, port);
     console.log("open myvmlab.senecacollege.ca:6350 to view in browser");
