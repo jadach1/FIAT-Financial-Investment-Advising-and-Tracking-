@@ -7,9 +7,10 @@ exports.create = (req, res) => {
 	User.create({
 				"username": req.body.username, 
 				"password": req.body.password, 
-				"firstname": req.body.firstname, 
-				"lastname": req.body.lastname, 
+				"firstname": req.body.firstName, 
+				"lastname": req.body.lastName, 
 				"email": req.body.email,
+				"recoveryQuestion" : req.body.recoveryQuestion,
 				"recoveryAnswer": req.body.recoveryAnswer, 
 			}).then(users => {		
 			// Send created user to client
