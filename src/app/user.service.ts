@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = '10.10.193.143:100002/users';  // URL to node
+  private usersUrl = 'http://10.10.193.143:100002/user';  // URL to node
   constructor( 
     private http: HttpClient
   ) { }
@@ -23,6 +23,7 @@ export class UserService {
   }
  
   addUser (user: User): Observable<User> {
+    console.log(this.usersUrl+'/register');
     return this.http.post<User>(this.usersUrl+'/register', user, httpOptions);
   }
  

@@ -18,11 +18,13 @@ export class RegistrationComponent {
             'What street do you live on?', 'What is your favourite colour?'];
            
   addUser() {
+    console.log("adding user");
     this.submitted = true;
     this.save();
   }
 
   private save(): void {
+    console.log("adding user");
     this.UserService.addUser(this.user)
         .subscribe();
   }
