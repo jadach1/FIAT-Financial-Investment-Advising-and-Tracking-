@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -13,21 +16,8 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { AdvisorsComponent } from './advisors/advisors.component';
 import { PerformanceComponent } from './performance/performance.component';
-
-const appRoutes: Routes = [
-  //order matters, put more specific routes above less specific routes
-  { path: 'home', component: HomeComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'portfolio', component: PortfolioComponent },
-  { path: 'watchlist', component: WatchlistComponent },
-  { path: 'advisors', component: AdvisorsComponent },
-  { path: 'performance', component: PerformanceComponent },
-
-  { path: '',
-    redirectTo: '/home',
-    pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
-]
+import { RegistrationComponent } from './registration/registration.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -41,15 +31,15 @@ const appRoutes: Routes = [
     PortfolioComponent,
     WatchlistComponent,
     AdvisorsComponent,
-    PerformanceComponent
+    PerformanceComponent,
+    RegistrationComponent,
+    LoginComponent
   ],
   imports: [
-    RouterModule.forRoot(
-      appRoutes,
-      {enableTracing: true } //for debugging only, outputs routing to the console
-    ),
-
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
