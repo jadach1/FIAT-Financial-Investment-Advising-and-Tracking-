@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = 'http://10.10.193.143:100002/user';  // URL to node
+  private usersUrl = '/user';  // URL to node
   constructor( 
     private http: HttpClient
   ) { }

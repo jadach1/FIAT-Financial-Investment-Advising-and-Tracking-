@@ -21,8 +21,8 @@
 
     <div class="form-group">
       <label for="alterEgo">First Name</label>
-      <input type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel">
-      <div [hidden]="firstName.valid || firstName.pristine"
+      <input type="text" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel">
+      <div [hidden]="firstname.valid || firstname.pristine"
              class="alert alert-danger">
             First name is required
         </div>
@@ -30,8 +30,8 @@
 
     <div class="form-group">
       <label for="alterEgo">Last Name</label>
-      <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
-      <div [hidden]="lastName.valid || lastName.pristine"
+      <input type="text" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel">
+      <div [hidden]="lastname.valid || lastname.pristine"
              class="alert alert-danger">
             Last name is required
         </div>

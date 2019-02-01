@@ -20,9 +20,10 @@ export class RegistrationComponent {
   addUser() {
     console.log(
       this.user.username + ",",
+      this.user.password + ",",
       this.user.firstname + ",",
       this.user.lastname + ",",
-      this.user.password + ",",
+      this.user.email + ",",
       this.user.recoveryQuestion + ",",
       this.user.recoveryAnswer
     );

@@ -1,13 +1,15 @@
 // Required Modules
 var express = require("express");
 
-require('./app/route/user.route.js')(app);
-
 var app = express()
+
+require('./app/controller/user.route.js')(app);
 
 var port = process.env.PORT || 10002
 
 const hostname ='10.10.193.143'
+
+const db = require('./app/config/db.config.js');
 
 app.use(express.static("../dist/FIAT/"));
 
