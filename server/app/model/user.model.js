@@ -3,32 +3,25 @@ module.exports = (sequelize, Sequelize) => {
 		username: {
 			type:Sequelize.STRING,
 			primaryKey: true,
-			allowNull: false
 		},
 		password: {
 			type:Sequelize.STRING,
-			allowNull: false
 		},
-	    firstname: {
+	  firstname: {
 			type: Sequelize.STRING,
-			allowNull: false
-	    },
-	    lastname: {
+	  },
+	  lastname: {
 			type: Sequelize.STRING,
-			allowNull: false
-	    },
-	    email: {
+	  },
+	  email: {
 			type: Sequelize.STRING,
-			allowNull: false
-	    },
-	    recoveryQuestion: {
+	  },
+	  recoveryQuestion: {
 			type: Sequelize.STRING,
-			allowNull: false
-		  },
+		},
 		recoveryAnswer: {
 			type: Sequelize.STRING,
-			allowNull: false
-	    }
+	  }
 	});
 	
 	return User;
