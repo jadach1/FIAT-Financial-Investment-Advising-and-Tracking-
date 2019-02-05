@@ -1,31 +1,54 @@
-var express = require('express');
-var app = express();
+// Required Modules
+var express = require("express");
+var app = express()
+
 var bodyParser = require('body-parser');
-app.use(bodyParser.json())
- 
-const cors = require('cors')
-const corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200
-}
- 
-app.use(cors(corsOptions))
- 
-const db = require('./app/config/db.config.js');
-  
+app.use(bodyParser.json());
+
+require('./app/controller/devuser.route.js')(app);
+
+var port = process.env.PORT || 8080
+
+const hostname ='localhost'
+
+const db = require('./app/config/devdb.config.js');
+
+app.use(express.static("../dist/FIAT/"));
+
+app.get("/", function(req, res) {
+    res.sendFile("./index.html"); //index.html file of your angularjs application
+});
+
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync with { force: true }');
-  initial();
+    console.log('Drop and Resync with { force: true }');
+    initial();
 });
- 
-require('./app/route/user.route.js')(app);
- 
+
 // Create a Server
-var server = app.listen(8080, function () {
+app.listen(port, hostname, function () {
  
-  let host = server.address().address
-  let port = server.address().port
- 
-  console.log("App listening at http://%s:%s", host, port);
-})
+    console.log("App listening at http://%s:%s", hostname, port);
+    console.log("open myvmlab.senecacollege.ca:6350 to view in browser");
+});
+
+function initial(){
+    let users = [
+        {
+            username: "admin",
+            password: "admin",
+            firstname: "admin",
+            lastname: "admin",
+            email: "admin",
+            recoveryQuestion: "admin",
+            recoveryAnswer: "admin"
+        }
+    ]
+
+    // Init data -> save to PostgreSQL
+    const User = db.users;
+    for (let i = 0; i < users.length; i++) { 
+    User.create(users[i]);  
+    }
+}
+
