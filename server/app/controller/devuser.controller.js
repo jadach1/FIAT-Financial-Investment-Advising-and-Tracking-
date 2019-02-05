@@ -7,8 +7,8 @@ exports.create = (req, res) => {
 	User.create({
 				"username": req.body.username, 
 				"password": req.body.password, 
-				"firstname": req.body.firstName, 
-				"lastname": req.body.lastName, 
+				"firstname": req.body.firstname, 
+				"lastname": req.body.lastname, 
 				"email": req.body.email,
 				"recoveryQuestion" : req.body.recoveryQuestion,
 				"recoveryAnswer": req.body.recoveryAnswer, 
