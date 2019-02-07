@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -18,6 +18,11 @@ import { AdvisorsComponent } from './advisors/advisors.component';
 import { PerformanceComponent } from './performance/performance.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -39,7 +44,13 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: tokenGetter,
+          authScheme: 'JWT'
+        }
+      })
   ],
   providers: [],
   bootstrap: [AppComponent]

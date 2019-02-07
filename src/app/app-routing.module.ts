@@ -11,7 +11,6 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-//import { PublicGuard, ProtectedGuard } from 'ngx-auth';
 
 const publicRoutes: Routes = [
   //order matters, put more specific routes above less specific routes
