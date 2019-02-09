@@ -12,4 +12,8 @@ module.exports = function(app) {
  
     // Delete a user with username
     app.delete('/user/:username', user.delete);
+
+    app.post('/user/login', user.login);
+
+    app.post('/user/refresh', user.refresh);
 }

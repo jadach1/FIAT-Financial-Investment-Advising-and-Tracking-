@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 import { AppRoutingModule } from './module/app-routing.module';
 
@@ -17,6 +17,7 @@ import { AdvisorsComponent } from './component/advisors/advisors.component';
 import { PerformanceComponent } from './component/performance/performance.component';
 import { RegistrationComponent } from './component/registration/registration.component';
 import { LoginComponent } from './component/login/login.component';
+import { AuthenticationModule } from './module/authentication.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { LoginComponent } from './component/login/login.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    AuthenticationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

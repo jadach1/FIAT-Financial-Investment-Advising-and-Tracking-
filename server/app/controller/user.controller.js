@@ -30,6 +30,19 @@ exports.findById = (req, res) => {
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
+// Find a User by Id
+exports.login = (req, res) => {	
+	User.findById(req.params.username).then(User => {
+			if (req.params.password == User.password){
+				//add token
+				res.json(User);
+			}	
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({msg: "error", details: err});
+		});
+};
  
 // Update a User
 exports.update = (req, res) => {

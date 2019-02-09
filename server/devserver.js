@@ -29,7 +29,7 @@ db.sequelize.sync({force: true}).then(() => {
 app.listen(port, hostname, function () {
  
     console.log("App listening at http://%s:%s", hostname, port);
-    console.log("open myvmlab.senecacollege.ca:6350 to view in browser");
+    console.log("open localhost:8080 to view in browser");
 });
 
 function initial(){

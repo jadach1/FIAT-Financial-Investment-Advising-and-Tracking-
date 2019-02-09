@@ -6,5 +6,5 @@ export class User {
     public email: string
     public recoveryQuestion: string
     public recoveryAnswer: string
-
+    
 }

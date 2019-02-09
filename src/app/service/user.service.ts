@@ -8,6 +8,19 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+interface myData {
+  message: string,
+  success: boolean
+}
+
+interface isLoggedIn {
+  status: boolean
+}
+
+interface logoutStatus {
+  success: boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +30,8 @@ export class UserService {
     private http: HttpClient
   ) { }
  
-  getUser(id: number): Observable<User> {
-    const url = `${this.usersUrl}/${id}`;
+  getUser(username: string): Observable<User> {
+    const url = `${this.usersUrl}/${username}`;
     return this.http.get<User>(url);
   }
  
