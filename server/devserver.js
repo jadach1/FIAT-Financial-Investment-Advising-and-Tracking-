@@ -1,5 +1,6 @@
 // Required Modules
 var express = require("express");
+var path = require("path");
 var app = express()
 
 var bodyParser = require('body-parser');
@@ -17,6 +18,10 @@ app.use(express.static("../dist/FIAT/"));
 
 app.get("/", function(req, res) {
     res.sendFile("./index.html"); //index.html file of your angularjs application
+});
+
+app.get('*', function (req, res){
+    res.sendFile(path.join(__dirname+'/../dist/FIAT/index.html'));
 });
 
 // force: true will drop the table if it already exists

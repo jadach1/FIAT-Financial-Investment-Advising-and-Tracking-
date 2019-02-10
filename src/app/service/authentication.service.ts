@@ -21,6 +21,7 @@ const httpOptions = {
 export class AuthenticationService implements AuthService {
 
   private loginURL = '/user';  // URL to node
+  private username;
 
   constructor(
     private http: HttpClient,
@@ -97,6 +98,7 @@ export class AuthenticationService implements AuthService {
    */
 
   public login(user): Observable<any> {
+    this.username = user.username;
     return this.http.post(this.loginURL + '/login', JSON.stringify({username : user.username, password: user.password}), httpOptions)
     .pipe(tap((tokens: AccessData) => this.saveAccessData(tokens)));
   }
@@ -107,6 +109,7 @@ export class AuthenticationService implements AuthService {
   public logout(): void {
     this.tokenStorage.clear();
     location.reload(true);
+    localStorage.removeItem("currentUser");
   }
 
   /**
@@ -119,6 +122,8 @@ export class AuthenticationService implements AuthService {
     this.tokenStorage
       .setAccessToken(accessToken)
       .setRefreshToken(refreshToken);
+
+      localStorage.setItem('currentUser', this.username);
   }
 
 }

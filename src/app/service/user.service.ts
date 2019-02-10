@@ -31,7 +31,7 @@ export class UserService {
   ) { }
  
   getUser(username: string): Observable<User> {
-    const url = `${this.usersUrl}/${username}`;
+    const url = this.usersUrl + '/' + username;
     return this.http.get<User>(url);
   }
  
@@ -42,12 +42,17 @@ export class UserService {
  
   deleteUser (user: User): Observable<User> {
     const username = user.username;
-    const url = `${this.usersUrl}/${username}`;
- 
+    const url = this.usersUrl+'/'+username;
     return this.http.delete<User>(url, httpOptions);
   }
  
   updateUser (user: User): Observable<any> {
     return this.http.put(this.usersUrl, user, httpOptions);
+  }
+
+  public currentUser() : string {
+    var user: string;
+    user = <string>localStorage.getItem('currentUser');
+    return user;
   }
 }

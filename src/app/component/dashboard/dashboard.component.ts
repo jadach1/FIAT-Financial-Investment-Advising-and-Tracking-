@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AuthenticationService } from '../../service/authentication.service';
 import { UserService } from '../../service/user.service'
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +13,17 @@ import { UserService } from '../../service/user.service'
 })
 export class DashboardComponent implements OnInit {
 
-  public user: Observable<any>;
+  public user: User;
 
-  constructor( public nav: NavbarService, private authService: AuthenticationService, private userService: UserService) { }
+  constructor( public nav: NavbarService, private authService: AuthenticationService, private userService: UserService) { 
+    this.user = new User();
+  }
 
   ngOnInit() {
-    this.nav.show();
-    this.user = this.userService.getUser("admin");
-  }
+    //location.reload();
+    this.nav.show(); 
+    this.userService.getUser(this.userService.currentUser()).subscribe(
+      res => this.user = res,
+    )};
 }
+
