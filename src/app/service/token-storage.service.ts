@@ -11,7 +11,7 @@ export class TokenStorage {
    * @returns {Observable<string>}
    */
   public getAccessToken(): Observable<string> {
-    const token: string = <string>localStorage.getItem('accessToken');
+    const token: string = <string>sessionStorage.getItem('accessToken');
     return of(token);
   }
 
@@ -20,7 +20,7 @@ export class TokenStorage {
    * @returns {Observable<string>}
    */
   public getRefreshToken(): Observable<string> {
-    const token: string = <string>localStorage.getItem('refreshToken');
+    const token: string = <string>sessionStorage.getItem('refreshToken');
     return of(token);
   }
 
@@ -29,7 +29,7 @@ export class TokenStorage {
    * @returns {TokenStorage}
    */
   public setAccessToken(token: string): TokenStorage {
-    localStorage.setItem('accessToken', token);
+    sessionStorage.setItem('accessToken', token);
 
     return this;
   }
@@ -39,7 +39,7 @@ export class TokenStorage {
    * @returns {TokenStorage}
    */
   public setRefreshToken(token: string): TokenStorage {
-    localStorage.setItem('refreshToken', token);
+    sessionStorage.setItem('refreshToken', token);
 
     return this;
   }
@@ -48,7 +48,7 @@ export class TokenStorage {
    * Remove tokens
    */
   public clear() {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
   }
 }

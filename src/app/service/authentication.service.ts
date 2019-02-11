@@ -109,7 +109,7 @@ export class AuthenticationService implements AuthService {
   public logout(): void {
     this.tokenStorage.clear();
     location.reload(true);
-    localStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentUser");
   }
 
   /**
@@ -123,7 +123,7 @@ export class AuthenticationService implements AuthService {
       .setAccessToken(accessToken)
       .setRefreshToken(refreshToken);
 
-      localStorage.setItem('currentUser', this.username);
+      sessionStorage.setItem('currentUser', this.username);
   }
 
 }

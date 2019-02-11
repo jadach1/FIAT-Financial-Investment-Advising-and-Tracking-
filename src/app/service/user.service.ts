@@ -52,7 +52,7 @@ export class UserService {
 
   public currentUser() : string {
     var user: string;
-    user = <string>localStorage.getItem('currentUser');
+    user = <string>sessionStorage.getItem('currentUser');
     return user;
   }
 }
