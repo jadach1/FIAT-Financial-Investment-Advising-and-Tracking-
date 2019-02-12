@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<ul class="sidebar navbar-nav">
+<ul class="sidebar navbar-nav" *ngIf="sidebar.visible">
   <li class="nav-item">
     <a class="nav-link" routerLink="/dashboard">
       <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -10,11 +10,6 @@
     <a class="nav-link" routerLink="/portfolio">
       <i class="fas fa-fw fa-table"></i>
       <span> Portfolio</span></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/watchlist">
-      <i class="fas fa-fw fa-table"></i>
-      <span> Watchlist</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" routerLink="/advisors">

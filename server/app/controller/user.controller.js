@@ -55,3 +55,34 @@ exports.delete = (req, res) => {
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
+// Login user
+exports.login = (req, res) => {	
+	console.log(req.body.username);
+	User.findByPk(req.body.username).then(User => {
+		if (User && req.body.password == User.password){
+			console.log(User.username + " logged in");
+			res.send(generateTokens());
+		}else{
+			res.status(500).json({msg: "login error", details: "boo"});
+		}
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({msg: "error", details: err});
+		});
+};
+
+exports.refresh = (req, res) => {
+	User.findById(req.params.username).then(User => {
+		if (req.params.password == User.password){
+			res.send(generateTokens());
+		}
+	})
+}
+
+function generateTokens() {
+    return {
+      accessToken: 'access-token-' + Math.random(),
+      refreshToken: 'access-token-' + Math.random()
+    };
+}

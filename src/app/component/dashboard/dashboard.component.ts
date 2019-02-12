@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarService } from '../../service/navbar.service';
+import { SidebarService } from '../../service/sidebar.service';
+import { Observable } from 'rxjs';
+
+import { AuthenticationService } from '../../service/authentication.service';
+import { UserService } from '../../service/user.service'
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,10 +14,18 @@ import { NavbarService } from '../../service/navbar.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor( public nav: NavbarService) { }
+  public user: User;
 
-  ngOnInit() {
-    this.nav.show();
+  constructor( public nav: NavbarService, public sidebar: SidebarService, private authService: AuthenticationService, private userService: UserService) { 
+    this.user = new User();
   }
 
+  ngOnInit() {
+    //location.reload();
+    this.nav.show(); 
+    this.sidebar.show();
+    this.userService.getUser(this.userService.currentUser()).subscribe(
+      res => this.user = res,
+    )};
 }
+

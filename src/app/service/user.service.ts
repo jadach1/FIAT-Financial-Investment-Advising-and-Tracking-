@@ -8,6 +8,19 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+interface myData {
+  message: string,
+  success: boolean
+}
+
+interface isLoggedIn {
+  status: boolean
+}
+
+interface logoutStatus {
+  success: boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +30,8 @@ export class UserService {
     private http: HttpClient
   ) { }
  
-  getUser(id: number): Observable<User> {
-    const url = `${this.usersUrl}/${id}`;
+  getUser(username: string): Observable<User> {
+    const url = this.usersUrl + '/' + username;
     return this.http.get<User>(url);
   }
  
@@ -29,12 +42,17 @@ export class UserService {
  
   deleteUser (user: User): Observable<User> {
     const username = user.username;
-    const url = `${this.usersUrl}/${username}`;
- 
+    const url = this.usersUrl+'/'+username;
     return this.http.delete<User>(url, httpOptions);
   }
  
   updateUser (user: User): Observable<any> {
     return this.http.put(this.usersUrl, user, httpOptions);
+  }
+
+  public currentUser() : string {
+    var user: string;
+    user = <string>sessionStorage.getItem('currentUser');
+    return user;
   }
 }
