@@ -6,7 +6,6 @@ import { PublicGuard, ProtectedGuard } from 'ngx-auth'
 import { PageNotFoundComponent } from '../component/page-not-found/page-not-found.component';
 import { PortfolioComponent } from '../component/portfolio/portfolio.component';
 import { AdvisorsComponent } from '../component/advisors/advisors.component';
-import { PerformanceComponent } from '../component/performance/performance.component';
 import { HomeComponent } from '../component/home/home.component';
 import { DashboardComponent } from '../component/dashboard/dashboard.component';
 
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [ProtectedGuard]},
   { path: 'portfolio', component: PortfolioComponent, canActivate: [ProtectedGuard]},
   { path: 'advisors', component: AdvisorsComponent, canActivate: [ProtectedGuard]},
-  { path: 'performance', component: PerformanceComponent, canActivate: [ProtectedGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
 ]
