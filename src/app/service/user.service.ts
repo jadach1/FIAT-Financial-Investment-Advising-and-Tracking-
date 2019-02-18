@@ -50,9 +50,9 @@ export class UserService {
     return this.http.put(this.usersUrl, user, httpOptions);
   }
 
-  public currentUser() : string {
-    var user: string;
-    user = <string>sessionStorage.getItem('currentUser');
-    return user;
+  public currentUser() : Observable<User> {
+    var username: string;
+    username = <string>sessionStorage.getItem('currentUser');
+    return this.getUser(username);
   }
 }

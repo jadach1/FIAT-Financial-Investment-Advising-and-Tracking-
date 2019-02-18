@@ -14,7 +14,6 @@ import { FooterComponent } from './component/footer/footer.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { PortfolioComponent } from './component/portfolio/portfolio.component';
 import { AdvisorsComponent } from './component/advisors/advisors.component';
-import { PerformanceComponent } from './component/performance/performance.component';
 import { RegistrationComponent } from './component/registration/registration.component';
 import { LoginComponent } from './component/login/login.component';
 import { AuthenticationModule } from './module/authentication.module';
@@ -30,7 +29,6 @@ import { AuthenticationModule } from './module/authentication.module';
     PageNotFoundComponent,
     PortfolioComponent,
     AdvisorsComponent,
-    PerformanceComponent,
     RegistrationComponent,
     LoginComponent
   ],
