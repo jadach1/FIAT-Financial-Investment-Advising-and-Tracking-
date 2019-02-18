@@ -1,0 +1,16 @@
+<div class="container">
+      <h1>Login Form</h1>
+      <form #loginForm="ngForm">
+        <div class="form-group">
+          <label for="name">Username</label>
+          <input type="text" class="form-control" id="username2" [formControl] = "username2">
+        </div>
+    
+        <div class="form-group">
+          <label for="alterEgo">Password</label>
+          <input type="text" class="form-control" id="password2" required [formControl] = "password2">
+        </div>
+    
+        <button type="button" class="btn btn-dark" (click)="login()" data-dismiss="modal">Login</button>
+      </form>
+    </div>
