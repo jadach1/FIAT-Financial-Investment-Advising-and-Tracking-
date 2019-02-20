@@ -6,7 +6,9 @@ var app = express()
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-require('./app/controller/devuser.route.js')(app);
+require('./app/router/devuser.route.js')(app);
+require('./app/router/asset.route.js')(app);
+require('./app/router/transactions.route.js')(app);
 
 var port = process.env.PORT || 8080
 
