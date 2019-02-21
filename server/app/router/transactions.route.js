@@ -11,7 +11,7 @@ module.exports = function(capp) {
     capp.get('/portfolio/allAssetTransactions/:symbol', Transaction.findAllTransactionsByAsset);
 
     // Retrieve all Transactions based on symbol of Asset
-     capp.get('/portfolio/allAssetTypeTransactions/:transaction/:symbol', Transaction.findAllTransactionsByAssetAndType);
+    capp.get('/portfolio/allAssetTypeTransactions/:transaction/:symbol', Transaction.findAllTransactionsByAssetAndType);
 
     // Update a CurrentAsset with Id
     capp.put('/portfolio/Transaction', Transaction.update);

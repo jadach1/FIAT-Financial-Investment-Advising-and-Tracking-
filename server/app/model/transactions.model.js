@@ -9,20 +9,20 @@ module.exports = (sequelize, Sequelize) => {
 	  price: {
 		  type: Sequelize.DECIMAL(6,2)
       },
-      buydate: {
-          type: Sequelize.DATEONLY
-      },
-      transaction: {
-          type: Sequelize.BOOLEAN
+		buydate: {
+				type: Sequelize.DATEONLY
+		},
+		transaction: {
+				type: Sequelize.BOOLEAN
 	  },
 	  total: {
-		type: Sequelize.DECIMAL(15,2)
-	},
+				type: Sequelize.DECIMAL(15,2)
+		},
 	  gain: {
-		type: Sequelize.DECIMAL(15,2),
-		defaultValue: 0
+				type: Sequelize.DECIMAL(15,2),
+				defaultValue: 0
   	}
-    });
+  });
 	
 	return myTransaction;
 }

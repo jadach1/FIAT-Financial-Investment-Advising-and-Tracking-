@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { asset }             from '../../../model/asset';
 import { AssetService }      from '../../../service/asset.service';
 import { portfolio }         from '../../../model/portfolio';
+import { NavbarService } from '../../../service/navbar.service';
+import { SidebarService } from '../../../service/sidebar.service'
+import { UserService } from '../../../service/user.service'
+import { AuthenticationService } from '../../../service/authentication.service'
 
 @Component({
   selector: 'app-current-portfolio',
@@ -17,7 +21,10 @@ export class CurrentPortfolioComponent implements OnInit {
   currTotal: number = 0;
   orgMoney: number = 0;
   
-  constructor(private assetService: AssetService) { }
+  constructor(private assetService: AssetService, private nav: NavbarService, private sidebar: SidebarService, private auth: AuthenticationService, private user: UserService) {
+    this.nav.show();
+    this.sidebar.show();
+   }
  
 
   ngOnInit(): void {

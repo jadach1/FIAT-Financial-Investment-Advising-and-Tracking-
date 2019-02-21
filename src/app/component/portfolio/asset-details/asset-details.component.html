@@ -1,3 +1,8 @@
+<app-nav></app-nav>
+<div id="wrapper">
+<app-sidebar></app-sidebar>
+<div id="asset-details-content">
+<div class="container-fluid">
 <h6 id="heading2">Asset - {{myAsset.symbol}}  - OVERVIEW <button [routerLink]="['/Transactions/add', myAsset.symbol, displayAsset.shares]" routerLinkActive="active" type="button" >Trade</button></h6>
 <div id="container">
   <div id="leftForm">
@@ -166,4 +171,6 @@
   </div>
   
 </div>
-
+</div>
+</div>
+</div>
