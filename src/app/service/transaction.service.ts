@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TransactionsService {
-  private Url = 'http://localhost:8080/api/';  // URL to web api
+  private Url = 'http://localhost:8080/';  // URL to web api
 
   constructor(private http: HttpClient) { }
  
