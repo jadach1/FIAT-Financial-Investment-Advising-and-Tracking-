@@ -6,6 +6,11 @@ import { AssetService }             from '../../../service/asset.service';
 import { TransactionsService }      from '../../../service/transaction.service';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
+import { NavbarService } from '../../../service/navbar.service';
+import { SidebarService } from '../../../service/sidebar.service'
+import { UserService } from '../../../service/user.service'
+import { AuthenticationService } from '../../../service/authentication.service'
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-asset-details',
@@ -25,8 +30,15 @@ export class AssetDetailsComponent implements OnInit {
     private assetService: AssetService,
     private transactionService: TransactionsService,
     private location: Location,
-    private route: ActivatedRoute
-    ) { }
+    private route: ActivatedRoute,
+    private nav: NavbarService,
+    private sidebar: SidebarService,
+    private auth: AuthenticationService,
+    private user: UserService
+    ) { 
+      this.nav.show();
+      this.sidebar.show();
+    }
 
   ngOnInit() {
    this.grabAssetAndConvert();

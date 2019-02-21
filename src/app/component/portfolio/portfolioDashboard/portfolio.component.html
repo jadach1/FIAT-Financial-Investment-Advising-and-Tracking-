@@ -1,17 +1,22 @@
 <app-nav></app-nav>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6">  
-      <h1>My Asset Profit Calculator</h1>
-      <ul class="nav justify-content-center">
-          <li class="nav-item">
-              <a routerLink="myPortfolio" class="btn btn-light btn-sm" role="button" routerLinkActive="active">Current Assets</a> 
-          </li>
-          <li class="nav-item">
-            <a routerLink="myPortfolio/addAsset" class="btn btn-light btn-sm" role="button" routerLinkActive="active">Enter New Transaction (Asset)</a>
-          </li>
-      </ul>
-      <hr>
+<div id="wrapper">
+  <app-sidebar></app-sidebar>
+  <div id="portfoliodashboard-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">  
+          <h1>My Portfolio</h1>
+          <ul class="nav justify-content-center">
+              <li class="nav-item">
+                  <a routerLink="myPortfolio" class="btn btn-light btn-sm" role="button" routerLinkActive="active">Current Assets</a> 
+              </li>
+              <li class="nav-item">
+                <a routerLink="myPortfolio/addAsset" class="btn btn-light btn-sm" role="button" routerLinkActive="active">Enter New Transaction (Asset)</a>
+              </li>
+          </ul>
+          <hr>
+        </div>
+      </div>
     </div>
   </div>
 </div>

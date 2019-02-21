@@ -1,7 +1,9 @@
 // Required Modules
 var express = require("express");
 var path = require("path");
-var app = express()
+var app = express();
+const cors = require("cors");
+app.use(cors());
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
