@@ -4,8 +4,6 @@ import { Router } from '@angular/router'
 
 import { User} from '../../model/user'
 import { FormControl } from '@angular/forms';
-import { $ } from 'protractor';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
   selector: 'app-login',

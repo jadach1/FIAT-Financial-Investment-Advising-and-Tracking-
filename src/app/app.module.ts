@@ -12,12 +12,14 @@ import { HomeComponent } from './component/home/home.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
-import { PortfolioComponent } from './component/portfolio/portfolio.component';
+import { PortfolioComponent } from './component/portfolio/portfolioDashboard/portfolio.component';
 import { AdvisorsComponent } from './component/advisors/advisors.component';
-import { PerformanceComponent } from './component/performance/performance.component';
 import { RegistrationComponent } from './component/registration/registration.component';
 import { LoginComponent } from './component/login/login.component';
 import { AuthenticationModule } from './module/authentication.module';
+import { CurrentPortfolioComponent } from './component/portfolio/current-portfolio/current-portfolio.component';
+import { AddAssetComponent } from './component/portfolio/add-asset/add-asset.component';
+import { AssetDetailsComponent } from './component/portfolio/asset-details/asset-details.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +32,11 @@ import { AuthenticationModule } from './module/authentication.module';
     PageNotFoundComponent,
     PortfolioComponent,
     AdvisorsComponent,
-    PerformanceComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    CurrentPortfolioComponent,
+    AddAssetComponent,
+    AssetDetailsComponent
   ],
   imports: [
     BrowserModule,

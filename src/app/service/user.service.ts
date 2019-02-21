@@ -25,7 +25,7 @@ interface logoutStatus {
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = '/user';  // URL to node
+  private usersUrl = 'http://localhost:8080/user';  // URL to node
   constructor( 
     private http: HttpClient
   ) { }
@@ -50,9 +50,9 @@ export class UserService {
     return this.http.put(this.usersUrl, user, httpOptions);
   }
 
-  public currentUser() : string {
-    var user: string;
-    user = <string>sessionStorage.getItem('currentUser');
-    return user;
+  public currentUser() : Observable<User> {
+    var username: string;
+    username = <string>sessionStorage.getItem('currentUser');
+    return this.getUser(username);
   }
 }

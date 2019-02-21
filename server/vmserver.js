@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 require('./app/controller/user.route.js')(app);
+require('./app/router/asset.route.js')(app);
+require('./app/router/transactions.route.js')(app);
 
 var port = process.env.PORT || 10002
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PerformanceComponent } from './performance.component';
+import { AddAssetComponent } from './add-asset.component';
 
-describe('PerformanceComponent', () => {
-  let component: PerformanceComponent;
-  let fixture: ComponentFixture<PerformanceComponent>;
+describe('AddAssetComponent', () => {
+  let component: AddAssetComponent;
+  let fixture: ComponentFixture<AddAssetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PerformanceComponent ]
+      declarations: [ AddAssetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PerformanceComponent);
+    fixture = TestBed.createComponent(AddAssetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

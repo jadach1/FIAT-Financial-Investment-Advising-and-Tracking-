@@ -1,0 +1,53 @@
+<app-nav></app-nav>
+<div id="wrapper">
+  <app-sidebar></app-sidebar>
+  <div id="current-portfolio-content">
+    <div class="container-fluid">
+      <h4 style=" color: purple;" >OVERALL   </h4>
+      <table>
+        <thead>
+          <th>CURRENT TOTAL (UNREALIZED):</th>
+          <th>ORIGINAL INVESTMENT $ LEFT: </th>
+          <th>TOTAL $ INVESTED: </th>
+          <th>TOTAL $ PULLED OUT: </th>
+        </thead>
+        <tbody>
+          <tr>
+            <th>${{portfolio.currentTotal}}</th>
+            <th>${{portfolio.originalMoney}}</th>
+            <th>${{portfolio.totalMoneyIn}}</th>
+            <th>${{portfolio.totalMoneyOut}}</th>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <hr>
+      <h5 style=" color: purple;" >All Assets I Am Currently Holding</h5>
+      <div class="btn-group btn-group-sm">
+      <table >
+        <thead>
+          <tr> 
+            <th>Symbol</th>
+            <th>Current Price</th>
+            <th>Total Shares</th>
+            <th>Current Total</th>
+          </tr>
+        </thead>
+        <tbody >
+            
+          <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
+              <td><button type="button"  [routerLink]="['/currentAssets/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</button></td>
+              <td>${{ asset.price }}</td>
+              <td>{{ asset.shares }}</td>
+              <td>${{ asset.currentTotal }}</td>
+              <button [routerLink]="['/Transactions/add', asset.symbol, asset.shares]" routerLinkActive="active" type="button" >Trade</button>
+              <button type="button"  [routerLink]="['/currentAssets/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
+              <p></p>
+            <br>
+          </tr>
+        
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>

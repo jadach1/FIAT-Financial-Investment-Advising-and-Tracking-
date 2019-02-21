@@ -1,12 +1,16 @@
 // Required Modules
 var express = require("express");
 var path = require("path");
-var app = express()
+var app = express();
+const cors = require("cors");
+app.use(cors());
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-require('./app/controller/devuser.route.js')(app);
+require('./app/router/devuser.route.js')(app);
+require('./app/router/asset.route.js')(app);
+require('./app/router/transactions.route.js')(app);
 
 var port = process.env.PORT || 8080
 
