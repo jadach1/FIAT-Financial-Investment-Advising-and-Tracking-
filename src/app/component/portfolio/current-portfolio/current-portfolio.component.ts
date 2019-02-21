@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { asset }             from '../../../model/asset';
-import { AssetService }      from '../../../service/asset.service';
-import { portfolio }         from '../../../model/portfolio';
-import { NavbarService } from '../../../service/navbar.service';
-import { SidebarService } from '../../../service/sidebar.service'
-import { UserService } from '../../../service/user.service'
+import { Component, OnInit }     from '@angular/core';
+import { asset }                 from '../../../model/asset';
+import { AssetService }          from '../../../service/asset.service';
+import { portfolio }             from '../../../model/portfolio';
+import { NavbarService }         from '../../../service/navbar.service';
+import { SidebarService }        from '../../../service/sidebar.service'
+import { UserService }           from '../../../service/user.service'
 import { AuthenticationService } from '../../../service/authentication.service'
 
 @Component({
@@ -14,12 +14,12 @@ import { AuthenticationService } from '../../../service/authentication.service'
 })
 export class CurrentPortfolioComponent implements OnInit {
 
-  assets: asset[];
+  assets:     asset[];
   portfolio = new portfolio();
-  totOut: number = 0;
-  totIn: number = 0;
-  currTotal: number = 0;
-  orgMoney: number = 0;
+  totOut:     number = 0;
+  totIn:      number = 0;
+  currTotal:  number = 0;
+  orgMoney:   number = 0;
   
   constructor(private assetService: AssetService, private nav: NavbarService, private sidebar: SidebarService, private auth: AuthenticationService, private user: UserService) {
     this.nav.show();

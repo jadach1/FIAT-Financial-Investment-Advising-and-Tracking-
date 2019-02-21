@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit }        from '@angular/core';
 import { transaction }              from '../../../model/transactions';
 import { asset }                    from '../../../model/asset';
 import { whatIfAsset }              from '../../../model/whatIfAsset';
@@ -6,11 +6,11 @@ import { AssetService }             from '../../../service/asset.service';
 import { TransactionsService }      from '../../../service/transaction.service';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
-import { NavbarService } from '../../../service/navbar.service';
-import { SidebarService } from '../../../service/sidebar.service'
-import { UserService } from '../../../service/user.service'
-import { AuthenticationService } from '../../../service/authentication.service'
-import { User } from 'src/app/model/user';
+import { NavbarService }            from '../../../service/navbar.service';
+import { SidebarService }           from '../../../service/sidebar.service'
+import { UserService }              from '../../../service/user.service'
+import { AuthenticationService }    from '../../../service/authentication.service'
+import { User }                     from '../../../model/user';
 
 @Component({
   selector: 'app-asset-details',
@@ -19,12 +19,12 @@ import { User } from 'src/app/model/user';
 })
 export class AssetDetailsComponent implements OnInit {
 
-  myAsset        = new asset();
-  displayAsset = new asset();
+  myAsset         = new asset();
+  displayAsset    = new asset();
   transactions:     transaction[];
   newPrice:         number = 0;
   // what if scenario below
-  whatIf         = new whatIfAsset();
+  whatIf           = new whatIfAsset();
 
   constructor( 
     private assetService: AssetService,
