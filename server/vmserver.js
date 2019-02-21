@@ -6,7 +6,7 @@ var app = express()
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-require('./app/controller/user.route.js')(app);
+require('./app/router/user.route.js')(app);
 require('./app/router/asset.route.js')(app);
 require('./app/router/transactions.route.js')(app);
 
