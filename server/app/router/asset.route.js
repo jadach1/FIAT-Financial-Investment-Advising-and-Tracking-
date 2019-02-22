@@ -7,7 +7,7 @@ module.exports = function(capp) {
     // Find a single asset
      capp.get('/portfolio/currentassets/:symbol', CurrentAssets.findAsset);
 
-     // Find a single asset
+     // Not working, meant to check if object exists
      capp.get('/portfolio/currentassets/checkIfExist/:symbol', CurrentAssets.check);
 
     // Update a CurrentAsset with Id
@@ -16,6 +16,6 @@ module.exports = function(capp) {
     // Delete a CurrentAsset with Id
     capp.delete('/portfolio/currentassets/:id', CurrentAssets.delete);
 
-    // Retrieve all Transactions
+    // Retrieve all assets
     capp.get('/portfolio/currentassets', CurrentAssets.findAll);
 }

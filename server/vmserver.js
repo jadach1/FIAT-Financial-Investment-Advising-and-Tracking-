@@ -6,6 +6,17 @@ var app = express()
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+// initialize the variable which we will use to create the database env
+let setupENV = "cloud";
+// If you put in an argument 'node server.js myPreferedSetup' it will set this for the setup variable which we will use to connect to the database
+if (process.argv[2])
+{
+     setupENV = process.argv[2];
+} 
+
+// export the varaible for the connection file myENV.js
+module.exports = setupENV;
+
 require('./app/controller/user.route.js')(app);
 require('./app/router/asset.route.js')(app);
 require('./app/router/transactions.route.js')(app);
