@@ -32,6 +32,7 @@ export class UserService {
  
   getUser(username: string): Observable<User> {
     const url = this.usersUrl + '/' + username;
+    alert("getting user from database to authenticate login => " + url);
     return this.http.get<User>(url);
   }
  

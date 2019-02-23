@@ -26,9 +26,13 @@ export class LoginComponent implements OnInit {
     this.user.password = this.password2.value;
 
     console.log(this.user.username + "," + this.user.password);
-
-    this.authService.login(this.user).subscribe(() => 
-      this.router.navigateByUrl('/dashboard'));
+    alert("we are inside log in")
+    this.authService.login(this.user)
+    .subscribe(
+      res => alert("successful response on login"),
+      err => alert("error on login"),
+      () => {alert("completed login"), this.router.navigateByUrl('/dashboard')}
+      );
   }
 
 }
