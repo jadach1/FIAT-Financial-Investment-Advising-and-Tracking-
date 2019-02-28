@@ -22,17 +22,22 @@ export class LoginComponent implements OnInit {
   }
 
   public login(){
-    this.user.username = this.username2.value;
-    this.user.password = this.password2.value;
 
-    console.log(this.user.username + "," + this.user.password);
-    alert("we are inside log in")
-    this.authService.login(this.user)
-    .subscribe(
-      res => alert("successful response on login"),
-      err => alert("error on login"),
-      () => {alert("completed login"), this.router.navigateByUrl('/dashboard')}
-      );
+    new Promise(res=>{
+      this.user.username = this.username2.value;
+      this.user.password = this.password2.value;
+      return res();
+    }).then(res=>{
+      console.log(this.user.username + "," + this.user.password);
+      return "";
+    }).then(res=>{
+      this.authService.login(this.user)
+      .subscribe(
+        res => "",
+        err => alert("error on login"),
+        () => this.router.navigateByUrl('/dashboard')
+        );
+    })
   }
 
 }

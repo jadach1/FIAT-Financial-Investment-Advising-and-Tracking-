@@ -25,14 +25,14 @@ interface logoutStatus {
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = 'http://localhost:8080/user';  // URL to node
+  //private usersUrl = 'http://localhost:8080/user';  // URL to node
+   private usersUrl = '/user';  // URL to node
   constructor( 
     private http: HttpClient
   ) { }
  
   getUser(username: string): Observable<User> {
     const url = this.usersUrl + '/' + username;
-    alert("getting user from database to authenticate login => " + url);
     return this.http.get<User>(url);
   }
  

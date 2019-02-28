@@ -3,16 +3,14 @@ var express       = require("express");
 var path          = require("path");
 var app           = express();
 const cors        = require("cors");
-const corsOptions = {
-    origin: 'http://localhost:4200',
-    optionsSuccessStatus: 200
-  }
-app.use(cors(corsOptions));
 var bodyParser     = require('body-parser');
+
+app.use(cors());
 app.use(bodyParser.json());
 
 // initialize the variable which we will use to create the database env
 let setupENV = "cloud";
+
 // If you put in an argument 'node server.js myPreferedSetup' it will set this for the setup variable which we will use to connect to the database
 if (process.argv[2])
 {
@@ -32,37 +30,12 @@ require('./app/router/asset.route.js')(app);
 require('./app/router/transactions.route.js')(app);
 
 let db = require('./app/config/db.config.js');
-//app.use(express.static("../dist/FIAT/"));
 
 // // force: true will drop the table if it already exists
  db.sequelize.sync().then(() => {
      console.log('Database is running');
      //initial();
      });
-
-// if you enter in a 4th argument of server, we will assume the following connection.  
-// syntax is 'node customerServer $databaseENV $server'
-// if left blank we will assume local
-if(process.argv[3] === "server")
-{
-    console.log("vm server will be running")
-    port = process.env.PORT || 10002
-    hostname ='10.10.193.143'
-     
-    db = require('./app/config/db.config.js');
-     
-    app.use(express.static("../dist/FIAT/"));
-     
-    app.get("/", function(req, res) {
-      res.sendFile("./index.html"); //index.html file of your angularjs application
-    });
-     
-    app.get('*', function (req, res){
-      res.sendFile(path.join(__dirname+'/../dist/FIAT/index.html'));
-     });
-
-     console.log("open myvmlab.senecacollege.ca:6350 to view in browser");
-  }
 
 // Create a Server
 app.listen(port, hostname, function () {

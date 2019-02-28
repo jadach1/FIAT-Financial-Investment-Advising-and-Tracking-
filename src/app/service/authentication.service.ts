@@ -21,6 +21,7 @@ const httpOptions = {
 export class AuthenticationService implements AuthService {
 
   private loginURL = 'http://localhost:8080/user';  // URL to node
+// private loginURL = '/user';  // URL to node
   private username;
 
   constructor(

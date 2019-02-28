@@ -17,7 +17,7 @@ if (process.argv[2])
 // export the varaible for the connection file myENV.js
 module.exports = setupENV;
 
-require('./app/controller/user.route.js')(app);
+require('./app/router/user.route.js')(app);
 require('./app/router/asset.route.js')(app);
 require('./app/router/transactions.route.js')(app);
 
