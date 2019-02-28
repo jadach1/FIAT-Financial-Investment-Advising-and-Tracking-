@@ -31,10 +31,10 @@ app.get('*', function (req, res){
 // Create a Server
 app.listen(port, hostname, function () {
     console.log("App listening at http://%s:%s", hostname, port);
-//     if( !process.argv[2] )
-//     {
-//       console.log("open myvmlab.senecacollege.ca:6350 to view in browser");
-//     } 
+    if( !process.argv[2] )
+    {
+      console.log("open myvmlab.senecacollege.ca:6350 to view in browser");
+    } 
 });
 
 

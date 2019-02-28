@@ -1,4 +1,4 @@
-const setupENV = require('../../customServer');
+const setupENV = require('../../back_Server');
 
 // output the database setup we are using based on what the user put in 'node server $input'
 console.log("Database environment setup is: " + setupENV);
