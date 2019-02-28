@@ -1,107 +1,110 @@
-<app-nav></app-nav>
-  <div id = "wrapper">
-    <app-sidebar></app-sidebar>
+<app-portfolio></app-portfolio>
+  
     <!-- Begin Page Content -->
-    <h3 style="color:royalblue">Add New Transaction</h3>
-    <hr>
-    <div [hidden]="submitted" class="container">
-      
-    </div>
-    <hr>
-    
-    <div [hidden]="submitted">
-        <form #transactionForm="ngForm" [ngStyle]="{'color':setTransaction()}">
-    
-          <div class="form-group">
-            <label for="symbol">Company Symbol</label>
-            <input style="color:yellow" type="text" class="form-control" id="symbol" placeholder="Give Companies symbol" 
-            required maxlength="6" pattern="([0-9A-Za-z.]{1,6})" autofocus 
-            [(ngModel)]="Transaction.symbol" name="symbol" #symbol="ngModel">
-            <div [hidden]="symbol.valid || symbol.pristine"
-                 class="alert alert-danger">
-                The symbol is not valid
+<div id="portfoliodashboard-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-sm-2"><!-- Just here for formatting the page--> </div>
+          <div class='col-sm-8'>
+            <h3>Add New Transaction</h3>
+            <div [hidden]="submitted">
+                <form #transactionForm="ngForm" [ngStyle]="{'color':setTransaction()}">
+            
+                  <div class="form-group">
+                    <label for="symbol">Company Symbol</label>
+                      <input  type="text" name="symbol" id="symbol" placeholder="Give Companies symbol" 
+                              class="form-control"      autofocus   style="color:yellow"
+                              required    maxlength="6" pattern="([0-9A-Za-z.]{1,6})" 
+                              [(ngModel)]="Transaction.symbol"      #symbol="ngModel"
+                              >
+                      <div    [hidden]="symbol.valid || symbol.pristine"
+                              class="alert alert-danger">
+                              The symbol is not valid
+                      </div>
+                  </div>
+                  
+                    <div class="form-group">
+                    <label for="shares">Amount of shares: maximum is 999,999 <p>{{shareCount}}</p></label>
+                      <input  type="number" name="shares"           id="shares"            placeholder="Number of shares" 
+                              required      pattern="([0-9]{1,6})"  style="color:yellow" class="form-control"
+                              [(ngModel)]="Transaction.shares"      #shares="ngModel"
+                            >
+                      <div  [hidden]="shares.valid || shares.pristine"
+                            class="alert alert-danger">
+                            Invlid number of shares
+                      </div>
+                  </div>
+                
+                    <div class="form-group">
+                      <label for="price">Price: maximum is $9999.99</label>
+                      <input  type="number"  id="price"  name="price"    placeholder="price per share"
+                              required pattern="^\d{0,4}(\.\d{0,2})?$"   class="form-control"           style="color:yellow" 
+                              [(ngModel)]="Transaction.price"            #price="ngModel">
+                      <div    [hidden]="price.valid || price.pristine"
+                              class="alert alert-danger">
+                              Invalid price
+                      </div>
+                  </div>
+                  
+                      <div class="form-group">
+                        <label for="buydate">Transaction Date </label>
+                        <input  type="date" class="form-control" id="buydate" name="buydate"
+                                required    placeholder="date purchased"
+                                [(ngModel)]="Transaction.buydate"             #buydate="ngModel">
+                        <div  [hidden]="buydate.valid || buydate.pristine"
+                              class="alert alert-danger">
+                              date is required
+                        </div>
+                      </div>
+                
+                  <div class="form-group">
+                      <div>  
+                        <p>Transaction Type</p>
+                        <ul class="nav justify-content-center">
+                            <li class="nav-item"  style="color:white ; background-color: green">
+                                <label class="radioButton">BUY
+                                  <input  type="radio"  name="Buy" id="Buy"
+                                          required [value]="true" class="form-control"
+                                          [(ngModel)]="Transaction.transaction" #Buy="ngModel" 
+                                          >
+                                  <span class="checkmark"></span>
+                                </label> 
+                            </li>
+                            <li class="nav-item"  style="color:white ; background-color: red">
+                                <label class="radioButton">SELL
+                                  <input  type="radio"  name="transaction" id="transaction"
+                                          required [value]="false" class="form-control" 
+                                          [(ngModel)]="Transaction.transaction" #transaction="ngModel" 
+                                          >
+                                  <span class="checkmark"></span>
+                                </label> 
+                            </li>
+                        </ul>  
+                        <div [hidden]="transaction.valid || transaction.pristine"
+                              class="alert alert-danger">
+                              transaction type is required
+                        </div>
+                      </div>
+                    </div>
+            
+                  <div class="btn-group btn-group-md">
+                    <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
+                      <button type="button" class="btn btn-dark" (click)="grabAsset(Transaction.symbol)" [disabled]="!transactionForm.form.valid" >Submit</button>      
+                    <button type="button" class="btn btn-dark" (click)="newTransaction()" >Clear</button>
+                  </div>
+                </form>
             </div>
-          </div>
-          
-            <div class="form-group">
-            <label for="shares">Amount of shares: maximum is 999,999 <p>{{shareCount}}</p></label>
-            <input style="color:yellow" type="number" class="form-control" id="shares" placeholder="Number of shares" 
-            required  pattern="([0-9]{1,6})"
-            [(ngModel)]="Transaction.shares" name="shares" #shares="ngModel">
-            <div [hidden]="shares.valid || shares.pristine"
-                 class="alert alert-danger">
-                Invlid number of shares
-            </div>
-          </div>
-         
-            <div class="form-group">
-            <label for="price">Price: maximum is $9999.99</label>
-            <input style="color:yellow" type="number" class="form-control" id="price" placeholder="price per share" 
-            required pattern="^\d{0,4}(\.\d{0,2})?$"  
-            [(ngModel)]="Transaction.price" name="price" #price="ngModel">
-            <div [hidden]="price.valid || price.pristine"
-                 class="alert alert-danger">
-                Invalid price
-            </div>
-          </div>
-          
-              <div class="form-group">
-            <label for="buydate">Transaction Date </label>
-            <input  type="date" class="form-control" id="buydate" placeholder="date purchased" 
-            required
-            [(ngModel)]="Transaction.buydate" name="buydate" #buydate="ngModel">
-            <div [hidden]="buydate.valid || buydate.pristine"
-                 class="alert alert-danger">
-                date is required
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div>  
-                <p>Transaction Type</p>
-                <ul class="nav justify-content-center">
-                    <li class="nav-item"  style="color:white ; background-color: green">
-                        <label class="radioButton">BUY
-                        <input  type="radio" class="form-control" name="Buy" id="Buy"
-                        required [value]="true"
-                        [(ngModel)]="Transaction.transaction" #Buy="ngModel" >
-                        <span class="checkmark"></span>
-                        </label> 
-                    </li>
-                    <li class="nav-item"  style="color:white ; background-color: red">
-                            <label class="radioButton">SELL
-                            <input  type="radio" class="form-control" name="transaction" id="transaction"
-                            required [value]="false" 
-                            [(ngModel)]="Transaction.transaction" #transaction="ngModel" >
-                            <span class="checkmark"></span>
-                            </label> 
-                    </li>
-                </ul>  
-               
-                <div [hidden]="transaction.valid || transaction.pristine"
-                 class="alert alert-danger">
-                 transaction type is required
-                </div>
+            
+            <div [hidden]="!submitted">
+              <p>Submitted Successfully!<span class="badge badge-light"></span></p>
+            
+              <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
+                    <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
               </div>
             </div>
-          </div>
-    
-          <div class="btn-group btn-group-md">
-            <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
-              <button type="button" class="btn btn-dark" (click)="grabAsset(Transaction.symbol)" [disabled]="!transactionForm.form.valid" >Submit</button>      
-            <button type="button" class="btn btn-dark" (click)="newTransaction()" >Clear</button>
-          </div>
-        </form>
-    </div>
-    
-    <div [hidden]="!submitted">
-      <p>Submitted Successfully!<span class="badge badge-light"></span></p>
-     
-      <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
-            <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
-        </div>
-    </div>
-<app-footer></app-footer>
 
+      </div>
+    </div>
+  </div>      
+</div>

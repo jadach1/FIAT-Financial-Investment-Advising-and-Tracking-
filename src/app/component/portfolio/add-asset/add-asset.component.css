@@ -1,4 +1,13 @@
- /* Customize the label (the radioButton) */
+/* Main body*/
+#portfoliodashboard-content{
+  padding-left: 100px;
+  padding-top: -25px;
+  padding-bottom: 125px;
+  width: 100%;
+  background-color: antiquewhite;
+}
+
+/* Customize the label (the radioButton) */
  .radioButton {
     display: block;
     position: relative;
