@@ -21,8 +21,8 @@ export class AssetDetailsComponent implements OnInit {
 
   myAsset         = new asset();
   displayAsset    = new asset();
-  transactions:     transaction[];
-  newPrice:         number = 0;
+  transactions    : transaction[];
+  newPrice        : number = 0;
   // what if scenario below
   whatIf           = new whatIfAsset();
 
@@ -49,29 +49,29 @@ export class AssetDetailsComponent implements OnInit {
      this.assetService.getAsset( this.route.snapshot.paramMap.get('symbol'))
      .subscribe(
                 value => { // upon success, set value and call function to convert  
-                        this.myAsset = value, 
-                        this.convert()
-                      }, 
+                          this.myAsset = value, 
+                          this.convert()
+                         }, 
                 error => alert("This symbol does not exist"),
-                () => this.displayTransactions("all") 
+                ()    => this.displayTransactions("all") 
               );      
   }
 
   // convert number and decimals like 1111.42 into 1,111.00
   private convert(): void {
-    this.displayAsset.shares = this.myAsset.shares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.sharesSold = this.myAsset.sharesSold.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.avgprice = this.myAsset.avgprice.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.avgpriceSold = this.myAsset.avgpriceSold.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.shares        = this.myAsset.shares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.sharesSold    = this.myAsset.sharesSold.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.avgprice      = this.myAsset.avgprice.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.avgpriceSold  = this.myAsset.avgpriceSold.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     this.displayAsset.originalMoney = this.myAsset.originalMoney.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.totalMoneyIn = this.myAsset.totalMoneyIn.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.totalMoneyIn  = this.myAsset.totalMoneyIn.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     this.displayAsset.totalMoneyOut = this.myAsset.totalMoneyOut.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.price = this.myAsset.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.currentTotal = this.myAsset.currentTotal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.realProfit = this.myAsset.realProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.realMargin = this.myAsset.realMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.unRealProfit = this.myAsset.unRealProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.unRealMargin = this.myAsset.unRealMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.price         = this.myAsset.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.currentTotal  = this.myAsset.currentTotal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.realProfit    = this.myAsset.realProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.realMargin    = this.myAsset.realMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.unRealProfit  = this.myAsset.unRealProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.unRealMargin  = this.myAsset.unRealMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
 
   private updatePrice(newPrice:number): void {
@@ -123,16 +123,16 @@ export class AssetDetailsComponent implements OnInit {
         this.whatIf.sharesToSell = this.myAsset.originalMoney / this.whatIf.whatIfPrice ;
       }).then(res =>{
         // round all the values
-        this.whatIf.totalMoneyOut =  this.whatIf.totalMoneyOut.toFixed(2);
-        this.whatIf.pureProfit = this.whatIf.pureProfit.toFixed(2);
+        this.whatIf.totalMoneyOut    =  this.whatIf.totalMoneyOut.toFixed(2);
+        this.whatIf.pureProfit       = this.whatIf.pureProfit.toFixed(2);
         this.whatIf.pureProfitMargin = this.whatIf.pureProfitMargin.toFixed(2);
-        this.whatIf.sharesToSell = Math.round(this.whatIf.sharesToSell);
+        this.whatIf.sharesToSell     = Math.round(this.whatIf.sharesToSell);
       }).then(res=>{
         // convert to strings for user appeal ex 1000 to 1,000
-        this.whatIf.totalMoneyOut =  this.whatIf.totalMoneyOut.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-        this.whatIf.pureProfit = this.whatIf.pureProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        this.whatIf.totalMoneyOut    =  this.whatIf.totalMoneyOut.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        this.whatIf.pureProfit       = this.whatIf.pureProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
         this.whatIf.pureProfitMargin = this.whatIf.pureProfitMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-        this.whatIf.sharesToSell = this.whatIf.sharesToSell.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        this.whatIf.sharesToSell     = this.whatIf.sharesToSell.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
       })
   }
 
