@@ -28,8 +28,7 @@ export class UserProfileComponent implements OnInit {
     console.log(
       this.user.firstname + ',',
       this.user.lastname + ',',
-      this.user.email + ',',
-      this.user.password + ','
+      this.user.email + ','
     );
     this.submitted = true;
     this.save();
