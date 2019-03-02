@@ -1,3 +1,61 @@
-<p>
-  user-profile works!
-</p>
+<div class="container">
+  <h1>User Profile</h1>
+  <form #registrationForm="ngForm">
+    <div class="form-group">
+      <label for="name">Username</label>
+      <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="alterEgo">Password</label>
+      <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel" disabled>
+        <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#changePasswordModal">Save</button>
+    </div>
+
+    <div class="form-group">
+      <label for="alterEgo">First Name</label>
+      <input type="text" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel">
+      <div [hidden]="firstname.valid || firstname.pristine"
+             class="alert alert-danger">
+            First name is required
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="alterEgo">Last Name</label>
+      <input type="text" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel">
+      <div [hidden]="lastname.valid || lastname.pristine"
+             class="alert alert-danger">
+            Last name is required
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="alterEgo">Email</label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email" #email="ngModel">
+      <div [hidden]="email.valid || email.pristine"
+             class="alert alert-danger">
+            Email is required
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="recoveryQuestion">Recovery Question</label>
+      <select class="form-control" id="recoveryQuestion" required [(ngModel)]="user.recoveryQuestion" name="recoveryQuestion" #recoveryQuestion="ngModel" disabled>
+        <option *ngFor="let ques of questions" [value]="ques">{{ques}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="alterEgo">Recovery Answer</label>
+      <input type="text" class="form-control" id="recoveryAnswer" [(ngModel)]="user.recoveryAnswer" name="recoveryAnswer" #recoveryAnswer="ngModel" disabled>
+      <!-- <div [hidden]="recoveryAnswer.valid || recoveryAnswer.pristine"
+             class="alert alert-danger">
+             recoveryAnswer is required
+        </div> -->
+    </div>
+
+    <button type="button" class="btn btn-dark" (click)="updateUser()" data-dismiss="modal">Save</button>
+
+  </form>
+</div>
