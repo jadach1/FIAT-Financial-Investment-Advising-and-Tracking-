@@ -25,7 +25,7 @@
                   </thead>
                     <tr *ngFor="let portfolio of portfolios" [ngClass]="'tablerow'">
                       <td>{{ portfolio.portfolioName}}</td>
-                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" routerLink="/portfolio/myPortfolio">View</button></td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', portfolio.portfolioId]">View</button></td>
                     </tr>  
                   </table> 
                 </div>
@@ -52,7 +52,7 @@
                     </thead>
                       <tr *ngFor="let watchlist of watchlists" [ngClass]="'tablerow'">
                         <td>{{watchlist.portfolioName}}</td>
-                        <td style="text-align:center;"> <button type="button" class="btn btn-dark" routerLink="">View</button></td>
+                        <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', watchlist.portfolioId]">View</button></td>
                       </tr>  
                     </table> 
                   </div>
