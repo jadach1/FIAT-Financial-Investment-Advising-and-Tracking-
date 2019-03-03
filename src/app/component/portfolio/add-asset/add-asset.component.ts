@@ -9,6 +9,7 @@ import { AssetService }           from '../../../service/asset.service';
 import { TransactionsService }    from '../../../service/transaction.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
+import { User }                   from '../../../model/user'
 
 @Component({
   selector: 'app-add-asset',
@@ -23,6 +24,7 @@ export class AddAssetComponent implements OnInit {
   existingAsset = new asset();
   passedInShares: any;
   shareCount:     string;
+  private user: User;
   
   constructor(
     public nav: NavbarService, 
@@ -36,6 +38,12 @@ export class AddAssetComponent implements OnInit {
     { 
       this.nav.show();
       this.sidebar.show();
+
+      this.user = new User();
+
+      this.userService.currentUser().subscribe(
+        res =>this.user = res
+      );
     }
 
    // upon initialization set the transaction to true/buy and the colors to green
@@ -107,7 +115,7 @@ export class AddAssetComponent implements OnInit {
     }else {
       new Promise(res=>{
          // set total
-         this.Transaction.total = this.Transaction.shares * this.Transaction.price;
+         //this.Transaction.total = this.Transaction.shares * this.Transaction.price;
          // start process to check if asset exists by grabbing asset synbol from database
          // check to see if we successfully pulled the asset from the database
          if (this.existingAsset == null)
@@ -159,12 +167,12 @@ export class AddAssetComponent implements OnInit {
              if (currentTransaction.transaction === true )
              {
                assetToUpdate.shares += currentTransaction.shares;
-               assetToUpdate.totalMoneyIn =   assetToUpdate.totalMoneyIn * 1 +  currentTransaction.total;
+               //assetToUpdate.totalMoneyIn =   assetToUpdate.totalMoneyIn * 1 +  currentTransaction.total;
              }
              else {
                assetToUpdate.shares -= currentTransaction.shares;
                assetToUpdate.sharesSold += currentTransaction.shares;
-               assetToUpdate.totalMoneyOut = assetToUpdate.totalMoneyOut * 1 + currentTransaction.total;
+               //assetToUpdate.totalMoneyOut = assetToUpdate.totalMoneyOut * 1 + currentTransaction.total;
              }
              return ;
        }).then(res=> { 
@@ -215,7 +223,7 @@ export class AddAssetComponent implements OnInit {
              return ;         
        }).then(res=>{
            // Calculate gain on the transaction
-            currentTransaction.gain = (currentTransaction.price - assetToUpdate.avgprice) / assetToUpdate.avgprice * 100;
+            //currentTransaction.gain = (currentTransaction.price - assetToUpdate.avgprice) / assetToUpdate.avgprice * 100;
            // if this is NOT a new asset we will call updateAsset, otherwise we will create the new asset
            if (this.assetIsNew === false)
            {
@@ -234,7 +242,7 @@ export class AddAssetComponent implements OnInit {
              return ;  
        }).then(res=>{
              // If we have made it up to this point then it is safe to save the transaction as well.
-             currentTransactionService.addTransaction(currentTransaction)
+             currentTransactionService.addTransaction(currentTransaction, this.user.username)
              .subscribe();
              // And we can also set the submit variable to true, indicating a successful transaction
              

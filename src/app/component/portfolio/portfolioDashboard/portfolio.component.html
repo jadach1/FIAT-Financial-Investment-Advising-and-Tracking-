@@ -1,23 +1,120 @@
-<app-nav></app-nav>
-<div id="wrapper">
-  <app-sidebar></app-sidebar>
-  <div id="portfoliodashboard-content">
-    <div class="container-fluid">
+<div id="portfolio-content">
+  <div class="container-fluid">
+    <!-- Page Heading -->
+      <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">My Portfolios</h1>
+      <h1 style="text-align:center"><button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button></h1>
+  
       <div class="row">
-        <div class="col-sm-6">  
-          <h1>My Portfolio</h1>
-          <ul class="nav justify-content-center">
-              <li class="nav-item">
-                  <a routerLink="/portfolio/myPortfolio" class="btn btn-light btn-sm" role="button" routerLinkActive="active">Current Assets</a> 
-              </li>
-              <li class="nav-item">
-                <a routerLink="/portfolio/myPortfolio/addAsset" class="btn btn-light btn-sm" role="button" >Enter New Transaction (Asset)</a>
-              </li>
-          </ul>
-          <hr>
+      <!--left half of the page-->
+        <div class ="col-12" id="left-half">
+          <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Portfolios</h1>
+        
+          <!--portfolio table-->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Portfolios </h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Portfolio Name</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                    <tr *ngFor="let portfolio of portfolios" [ngClass]="'tablerow'">
+                      <td>{{ portfolio.portfolioName}}</td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" routerLink="/portfolio/myPortfolio">View</button></td>
+                    </tr>  
+                  </table> 
+                </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!--right half of the page-->
+        <div class ="col-12" id="right-half">
+          <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Watchlists</h1>
+            <!--watchlist table-->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Watchlists</h6>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="watchlistTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Watchlist Name</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                      <tr *ngFor="let watchlist of watchlists" [ngClass]="'tablerow'">
+                        <td>{{watchlist.portfolioName}}</td>
+                        <td style="text-align:center;"> <button type="button" class="btn btn-dark" routerLink="">View</button></td>
+                      </tr>  
+                    </table> 
+                  </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+</div>
+
+<div [hidden]="submitted">
+<div class="modal fade" id="portfolio-modal" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="container">
+            <h1>Add New Portfolio</h1>    
+                <form #portfolioForm="ngForm">
+                    <div class="form-group">
+                        <div> 
+                            <div class="form-group">
+                                <label for="portfolioName">Portfolio Name</label>
+                                <input type="text" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
+                                <div [hidden]="portfolioName.valid || portfolioName.pristine"
+                                       class="alert alert-danger">
+                                       Portfolio Name is required
+                                  </div>
+                              </div>
+    
+                          <label for="portfolioType">Portfolio Type</label>
+                          <ul class="nav justify-content-center">
+                              <li class="nav-item">
+                                  <label class="radioButton">Portfolio
+                                    <input  type="radio"  name="portfolioTypeP" id="portfolioTypeP"
+                                            required [value]="true" class="form-control"
+                                            [(ngModel)]="newportfolio.portfolioType" #portfolioTypeP="ngModel" 
+                                            >
+                                    <span class="checkmark"></span>
+                                  </label> 
+                              </li>
+                              <li class="nav-item">
+                                  <label class="radioButton">Watchlist 
+                                    <input  type="radio"  name="portfolioTypeW" id="portfolioTypeW"
+                                            required [value]="false" class="form-control" 
+                                            [(ngModel)]="newportfolio.portfolioType" #portfolioTypeW="ngModel" 
+                                            >
+                                    <span class="checkmark"></span>
+                                  </label> 
+                              </li>
+                          </ul>  
+                          <div [hidden]="newportfolio.valid || newportfolio.pristine"
+                                class="alert alert-danger">
+                                portfolio type is required
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div><button type="button" class="btn btn-dark" (click)="addPortfolio()">Create</button></div>
+                      
+                      </form>
+              </div>
+        </div>
     </div>
   </div>
 </div>
-<app-footer></app-footer>

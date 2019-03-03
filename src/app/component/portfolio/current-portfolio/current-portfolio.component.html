@@ -1,10 +1,8 @@
-<app-portfolio></app-portfolio>
-
 <!--TOP TABLE DISPLAYING OVERALL STATISTICS-->
 <div id="current-portfolio-content">
   <div class="container-fluid">
-    <h4 style=" color: purple;" >PORTFOLIO STATISTICS</h4>
-    <table>
+    <h4 style=" color: blue; text-align: center" >PORTFOLIO STATISTICS</h4>
+    <table class = "table table-borderless" width = 100% cellspacing = "0">
       <thead>
         <th>CURRENT VALUE OF PORTFOLIO (UNREALIZED):</th>
         <th>ORIGINAL MONEY $ LEFT:                  </th>
@@ -13,9 +11,9 @@
       </thead>
       <tbody>
         <tr>
-          <th>${{portfolio.currentTotal }}</th>
+          <th>${{portfolio.currentTotal}}</th>
           <th>${{portfolio.originalMoney}}</th>
-          <th>${{portfolio.totalMoneyIn }}</th>
+          <th>${{portfolio.totalMoneyIn}}</th>
           <th>${{portfolio.totalMoneyOut}}</th>
         </tr>
       </tbody>
@@ -24,32 +22,39 @@
     <hr>
 
     <!--BOTTOM TABLE DISPLAYING ASSET STATISTICS-->
-    <div class="container-fluid">
-      <h5 style=" color: purple;" >All Assets I Am Currently Holding</h5>
-      <table >
-        <thead>
-          <tr> 
-            <th>Symbol</th>
-            <th>Current Price</th>
-            <th>Total Shares</th>
-            <th>Current Total</th>
-            <th>Profit Margin (unrealized)</th>
-          </tr>
-        </thead>
-        <tbody >    
-          <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
-              <td><button type="button"  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</button></td>
-              <td>${{ asset.price        }}</td>
-              <td> {{ asset.shares       }}</td>
-              <td>${{ asset.currentTotal }}</td>
-              <td> {{ asset.unRealMargin }}%</td>
-              <button type="button"  [routerLink]="['/portfolio/myPortfolio/addAsset', asset.symbol, asset.shares]"   >Trade</button>
-              <button type="button"  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
-              <p></p>
-            <br>
-          </tr>   
-        </tbody>
-      </table>
-    </div>
 
+    <!--assettable-->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Assets</h6>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr> 
+                      <th>Symbol</th>
+                      <th>Current Price</th>
+                      <th>Total Shares</th>
+                      <th>Current Total</th>
+                      <th>Profit Margin (unrealized)</th>
+                    </tr>
+                  </thead>
+                  <tbody >    
+                    <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
+                        <td><a  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</a></td>
+                        <td>${{ asset.price        }}</td>
+                        <td> {{ asset.shares       }}</td>
+                        <td>${{ asset.currentTotal }}</td>
+                        <td> {{ asset.unRealMargin }}%</td>
+                        <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/myPortfolio/addAsset', asset.symbol, asset.shares]"   >Trade</button>
+                        <button type="button" class="btn btn-dark"[routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
+                        <p></p>
+                      <br>
+                    </tr>   
+                  </tbody>
+              </table> 
+            </div>
+        </div>
+      </div>
   </div>

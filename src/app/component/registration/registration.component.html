@@ -2,7 +2,7 @@
   <h1>Registration Form</h1>
   <form #registrationForm="ngForm">
     <div class="form-group">
-      <label for="name">Username</label>
+      <label for="username">Username</label>
       <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel">
       <div [hidden]="username.valid || username.pristine"
              class="alert alert-danger">
@@ -11,8 +11,8 @@
     </div>
 
     <div class="form-group">
-      <label for="alterEgo">Password</label>
-      <input type="text" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
       <div [hidden]="password.valid || password.pristine"
              class="alert alert-danger">
             Password is required
@@ -20,7 +20,7 @@
     </div>
 
     <div class="form-group">
-      <label for="alterEgo">First Name</label>
+      <label for="firsname">First Name</label>
       <input type="text" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel">
       <div [hidden]="firstname.valid || firstname.pristine"
              class="alert alert-danger">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="form-group">
-      <label for="alterEgo">Last Name</label>
+      <label for="lastname">Last Name</label>
       <input type="text" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel">
       <div [hidden]="lastname.valid || lastname.pristine"
              class="alert alert-danger">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="form-group">
-      <label for="alterEgo">Recovery Answer</label>
+      <label for="recoveryAnswer">Recovery Answer</label>
       <input type="text" class="form-control" id="recoveryAnswer" [(ngModel)]="user.recoveryAnswer" name="recoveryAnswer" #recoveryAnswer="ngModel">
       <div [hidden]="recoveryAnswer.valid || recoveryAnswer.pristine"
              class="alert alert-danger">

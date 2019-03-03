@@ -6,6 +6,7 @@ import { NavbarService }         from '../../../service/navbar.service';
 import { SidebarService }        from '../../../service/sidebar.service'
 import { UserService }           from '../../../service/user.service'
 import { AuthenticationService } from '../../../service/authentication.service'
+import { testAsset }             from '../../../model/testAsset'
 
 @Component({
   selector: 'app-current-portfolio',
@@ -14,7 +15,7 @@ import { AuthenticationService } from '../../../service/authentication.service'
 })
 export class CurrentPortfolioComponent implements OnInit {
 
-  assets:     asset[];
+  assets:     testAsset[];
   portfolio = new portfolio();
   totOut:     number = 0;
   totIn:      number = 0;
@@ -34,21 +35,21 @@ export class CurrentPortfolioComponent implements OnInit {
   getAssets(){
     return this.assetService.getAllAssets()
     .subscribe(
-      thisCanBeAnything => {
-       this.assets = thisCanBeAnything;
+      asset => {
+       this.assets = asset;
        this.calculate(this.assets);
       }
      );
   }
 
-  calculate(myAssets: asset[]){
+  calculate(myAssets: testAsset[]){
     new Promise (res=>{
       myAssets.forEach(element => 
         {
           this.totOut += (element.totalMoneyOut * 1);
           this.totIn += (element.totalMoneyIn * 1);
-          this.currTotal += (element.currentTotal * 1);
-          this.orgMoney += (element.originalMoney * 1);
+          this.currTotal += (0);
+          this.orgMoney += (0);
         })
         return res();
     }).then(res=>{

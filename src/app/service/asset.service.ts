@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { asset } from '../model/asset';
 import { Observable} from 'rxjs';
+import { TransactionsService } from '../service/transaction.service'
+import { transaction } from '../model/transactions'
+import { testAsset } from '../model/testAsset'
+import { of } from 'rxjs'
+import { UserService } from '../service/user.service'
+import { User } from '../model/user'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,8 +18,15 @@ const httpOptions = {
 })
 export class AssetService {
   private Url = 'http://localhost:8080/portfolio/';  // URL to web api
+  private singleAsset: testAsset;
+  private assetList: testAsset[];
+  private transactionList: transaction[];
+  private symbolList: string[];
+  private username: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private transactionService: TransactionsService, private userService: UserService) {
+    this.username = <string>sessionStorage.getItem('currentUser'); 
+   }
 
   // Return a single asset from the database table assets
   getAsset(symbol: string): Observable<asset> {

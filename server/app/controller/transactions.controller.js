@@ -5,6 +5,7 @@ const TransactionObject = db.transactions;
 exports.create = (req, res) => {	
 	// Save to PostgreSQL database
 	TransactionObject.create({
+				"username":            req.body.username,
 				"symbol": 			   req.body.symbol, 
 				"shares": 			   req.body.shares,
 				"price": 			   req.body.price,
@@ -24,7 +25,8 @@ exports.create = (req, res) => {
  
 // FETCH All Transactions
 exports.findAll = (req, res) => {
-	TransactionObject.findAll().then(TransactionObjects => {
+	console.log(req.query.username);
+	TransactionObject.findAll({ where: {username : req.query.username} }).then(TransactionObjects => {
 			// Send All TransactionObjects to Client
 			res.json(TransactionObjects.sort(function(c1, c2){return c1.id - c2.id}));
 		}).catch(err => {
@@ -36,7 +38,7 @@ exports.findAll = (req, res) => {
 // FETCH All Transactions by symbol
 exports.findAllTransactionsByAsset = (req, res) => {
 	const symbol = 	req.params.symbol;
-	TransactionObject.findAll({ where: {symbol : symbol} })
+	TransactionObject.findAll({ where: {username: req.query.username, symbol : symbol}  })
 		.then(TransactionObjects => {
 			// Send All TransactionObjects to Client
 			res.json(TransactionObjects.sort(function(c1, c2){return c1.id - c2.id}));
@@ -50,7 +52,7 @@ exports.findAllTransactionsByAsset = (req, res) => {
 exports.findAllTransactionsByAssetAndType = (req, res) => {
 	const symbol = 	req.params.symbol;
 	const typeOfTransaction = req.params.transaction;
-	TransactionObject.findAll({ where: {symbol : symbol, transaction: typeOfTransaction} })
+	TransactionObject.findAll({ where: {username: req.query.username, symbol : symbol, transaction: typeOfTransaction} })
 		.then(TransactionObjects => {
 			// Send All TransactionObjects to Client
 			res.json(TransactionObjects.sort(function(c1, c2){return c1.id - c2.id}));
@@ -64,7 +66,7 @@ exports.findAllTransactionsByAssetAndType = (req, res) => {
 exports.findDistinct = (req, res) => {
 	db.sequelize
 		.query('select symbol, sum(shares) as \"shares\", sum(total) / sum(shares) as \"price\", sum(total) as \"total\"' + 
-		        'from transactions where transaction = true group by symbol;', { 
+		        'from transactions where transactions.username = \'' + req.query.username + '\' and transaction = true group by symbol;', { 
 		  model: TransactionObject,
 		  mapToModel: true // pass true here if you have any mapped fields
 		}).then(TransactionObjects => {

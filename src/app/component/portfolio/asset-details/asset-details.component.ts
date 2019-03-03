@@ -11,6 +11,7 @@ import { SidebarService }           from '../../../service/sidebar.service'
 import { UserService }              from '../../../service/user.service'
 import { AuthenticationService }    from '../../../service/authentication.service'
 import { User }                     from '../../../model/user';
+import { testAsset }                from '../../../model/testAsset'
 
 @Component({
   selector: 'app-asset-details',
@@ -25,6 +26,7 @@ export class AssetDetailsComponent implements OnInit {
   newPrice        : number = 0;
   // what if scenario below
   whatIf           = new whatIfAsset();
+  private user : User;
 
   constructor( 
     private assetService: AssetService,
@@ -34,10 +36,16 @@ export class AssetDetailsComponent implements OnInit {
     private nav: NavbarService,
     private sidebar: SidebarService,
     private auth: AuthenticationService,
-    private user: UserService
+    private userService: UserService
     ) { 
       this.nav.show();
       this.sidebar.show();
+
+      this.user = new User();
+
+      this.userService.currentUser().subscribe(
+        res =>this.user = res
+      );
     }
 
   ngOnInit() {
@@ -66,16 +74,16 @@ export class AssetDetailsComponent implements OnInit {
     this.displayAsset.originalMoney = this.myAsset.originalMoney.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     this.displayAsset.totalMoneyIn  = this.myAsset.totalMoneyIn.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     this.displayAsset.totalMoneyOut = this.myAsset.totalMoneyOut.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.price         = this.myAsset.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.currentTotal  = this.myAsset.currentTotal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.realProfit    = this.myAsset.realProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.realMargin    = this.myAsset.realMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.price         = this.myAsset.price  .toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.currentTotal  = this.myAsset.currentTotal .toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    this.displayAsset.realProfit    = this.myAsset.realProfit .toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    //this.displayAsset.realMargin    = this.myAsset.realMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     this.displayAsset.unRealProfit  = this.myAsset.unRealProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    this.displayAsset.unRealMargin  = this.myAsset.unRealMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    //this.displayAsset.unRealMargin  = this.myAsset.unRealMargin.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
 
   private updatePrice(newPrice:number): void {
-      // This will uodate the current price as well as calculate the currentTotal and other totals.
+      // This will update the current price as well as calculate the currentTotal and other totals.
       new Promise(res=>{
         this.myAsset.price = newPrice;
         return res();
@@ -97,7 +105,7 @@ export class AssetDetailsComponent implements OnInit {
 
   private displayTransactions(displayType: string): void {
     // return transactions based on transactions being true, false or all
-      this.transactionService.getTransactionsByAsset(displayType,this.myAsset.symbol)
+      this.transactionService.getTransactionsByAsset(displayType,this.myAsset.symbol, this.user.username)
       .subscribe(
                   res=> this.transactions = res,
                   err=> alert("failed to connect to database"),
@@ -113,14 +121,14 @@ export class AssetDetailsComponent implements OnInit {
         return res();
       }).then(res =>{
         // how much profit will we make 
-        this.whatIf.pureProfit = this.whatIf.totalMoneyOut - this.myAsset.originalMoney;
+        this.whatIf.pureProfit = this.whatIf.totalMoneyOut - 0;
         return;
       }).then(res =>{
         // calculate profit margin
-        this.whatIf.pureProfitMargin = ( this.whatIf.pureProfit  / this.myAsset.originalMoney ) * 100
+        this.whatIf.pureProfitMargin = ( this.whatIf.pureProfit  / 0 ) * 100
       }).then(res =>{
         // how many shares do we need to sell to get our ORIGINAL MONEY back
-        this.whatIf.sharesToSell = this.myAsset.originalMoney / this.whatIf.whatIfPrice ;
+        this.whatIf.sharesToSell = 0 / this.whatIf.whatIfPrice ;
       }).then(res =>{
         // round all the values
         this.whatIf.totalMoneyOut    =  this.whatIf.totalMoneyOut.toFixed(2);
@@ -140,7 +148,7 @@ export class AssetDetailsComponent implements OnInit {
   private convertTransactions(): void{
     this.transactions.forEach(element => {
       element.price = element.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-      element.total = element.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      //element.total = element.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
       element.shares = element.shares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     });
   }

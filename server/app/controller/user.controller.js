@@ -23,7 +23,7 @@ exports.create = (req, res) => {
  
 // Find a User by Id
 exports.findById = (req, res) => {	
-	User.findById(req.params.username).then(User => {
+	User.findById(req.body.username).then(User => {
 			res.json(User);
 		}).catch(err => {
 			console.log(err);
