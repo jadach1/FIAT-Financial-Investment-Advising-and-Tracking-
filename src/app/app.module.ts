@@ -20,6 +20,8 @@ import { AuthenticationModule } from './module/authentication.module';
 import { CurrentPortfolioComponent } from './component/portfolio/current-portfolio/current-portfolio.component';
 import { AddAssetComponent } from './component/portfolio/add-asset/add-asset.component';
 import { AssetDetailsComponent } from './component/portfolio/asset-details/asset-details.component';
+import { CreateAdvisorComponent } from './component/advisors/create-advisor/create-advisor.component';
+import { AdvisorDetailsComponent } from './component/advisors/advisor-details/advisor-details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { AssetDetailsComponent } from './component/portfolio/asset-details/asset
     LoginComponent,
     CurrentPortfolioComponent,
     AddAssetComponent,
-    AssetDetailsComponent
+    AssetDetailsComponent,
+    CreateAdvisorComponent,
+    AdvisorDetailsComponent
   ],
   imports: [
     BrowserModule,
