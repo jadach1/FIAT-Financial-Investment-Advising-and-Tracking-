@@ -40,12 +40,9 @@ import { AdvisorDetailsComponent } from './component/advisors/advisor-details/ad
     CurrentPortfolioComponent,
     AddAssetComponent,
     AssetDetailsComponent,
-<<<<<<< HEAD
-    UserProfileComponent
-=======
+    UserProfileComponent,
     CreateAdvisorComponent,
     AdvisorDetailsComponent
->>>>>>> jacobBranchTest
   ],
   imports: [
     BrowserModule,
