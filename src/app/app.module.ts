@@ -20,7 +20,12 @@ import { AuthenticationModule } from './module/authentication.module';
 import { CurrentPortfolioComponent } from './component/portfolio/current-portfolio/current-portfolio.component';
 import { AddAssetComponent } from './component/portfolio/add-asset/add-asset.component';
 import { AssetDetailsComponent } from './component/portfolio/asset-details/asset-details.component';
+<<<<<<< HEAD
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
+=======
+import { CreateAdvisorComponent } from './component/advisors/create-advisor/create-advisor.component';
+import { AdvisorDetailsComponent } from './component/advisors/advisor-details/advisor-details.component';
+>>>>>>> jacobBranchTest
 
 @NgModule({
   declarations: [
@@ -38,7 +43,12 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
     CurrentPortfolioComponent,
     AddAssetComponent,
     AssetDetailsComponent,
+<<<<<<< HEAD
     UserProfileComponent
+=======
+    CreateAdvisorComponent,
+    AdvisorDetailsComponent
+>>>>>>> jacobBranchTest
   ],
   imports: [
     BrowserModule,

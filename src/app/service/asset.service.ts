@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AssetService {
-  private Url = 'http://localhost:8080/portfolio/';  // URL to web api
+  private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
 
   constructor(private http: HttpClient) { }
 

@@ -5,8 +5,20 @@ var app           = express();
 const cors        = require("cors");
 var bodyParser     = require('body-parser');
 
-app.use(cors());
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+}
+
+app.use(function(req, res, next) {
+    res.header("Content-type: application/json");
+    res.header("Access-Control-Allow-Origin: http://myvmlab.senecacollege.ca:6350");
+    next();
+});
+
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
+
 
 // initialize the variable which we will use to create the database env
 let setupENV = "cloud";
