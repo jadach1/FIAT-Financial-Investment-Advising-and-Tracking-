@@ -8,6 +8,7 @@ import { testAsset } from '../model/testAsset'
 import { of } from 'rxjs'
 import { UserService } from '../service/user.service'
 import { User } from '../model/user'
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -50,5 +51,10 @@ export class AssetService {
   updateAsset (asset: asset): Observable<any> {
     return this.http.put(this.Url+'currentassets', asset, httpOptions);
   }
+
+  getPrice( symbol: string): Observable<any> {
+    return this.http.get('http://localhost:8080/asset/' + symbol)
+  }
+
 }
 

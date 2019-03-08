@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../../service/authentication.service'
 import { PortfolioService } from '../../../service/portfolio.service'
 import { Portfolio2 } from '../../../model/portfolio2'
 import { Location } from '@angular/common';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-portfolio',
@@ -26,9 +27,11 @@ export class PortfolioComponent implements OnInit {
     private authService: AuthenticationService, 
     private userService: UserService,
     private portfolioService : PortfolioService,
-    private location: Location) { 
+    private location: Location,
+    private spinnerService: Ng4LoadingSpinnerService) { 
       this.nav.show();
       this.sidebar.show();
+      this.spinnerService.show();
   }
 
   ngOnInit() { 
@@ -37,7 +40,7 @@ export class PortfolioComponent implements OnInit {
       res => {
         this.username = res.username;
         this.buildPortfolios();
-      });
+    });
 
   }
 
@@ -51,6 +54,7 @@ export class PortfolioComponent implements OnInit {
             this.watchlists.push(portfolio);
           }
         });
+        this.spinnerService.hide();
       }
     );
   }

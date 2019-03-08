@@ -1,4 +1,5 @@
 const db = require('../config/db.config.js');
+const scraper = require("@concide/stock-scraper")
 const CurrentAsset = db.assets;
 
 // Post a CurrentAsset
@@ -50,7 +51,7 @@ exports.findAsset = (req, res) => {
 		console.log(err);
 		res.status(500).json({msg: "error could not find asset", details: err});
 	});
-	};
+};
  
 // Update an Asset
 exports.update = (req, res) => {
@@ -91,4 +92,14 @@ exports.check = (req, res) => {
 				console.log(err);
 				res.status(500).json({msg: "error", details: err});
 			});
+};
+
+exports.GetPrice = (req, res) => {
+	const symbol = req.params.symbol;
+	scraper(symbol).then(data => {
+		res.json(data);
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
+	});
 };

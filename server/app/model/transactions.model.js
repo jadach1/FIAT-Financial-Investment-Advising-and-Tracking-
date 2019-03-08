@@ -5,8 +5,8 @@ module.exports = (sequelize, Sequelize) => {
 			autoIncrement: true,
 			primaryKey: true
 		},
-		username: {
-			type: Sequelize.STRING(18)
+		portfolioId: {
+			type: Sequelize.INTEGER
 		},
 		symbol: {
 			type: Sequelize.STRING(6)

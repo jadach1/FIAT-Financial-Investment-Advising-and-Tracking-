@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner'
 
 import { AppRoutingModule } from './module/app-routing.module';
 
@@ -44,9 +46,12 @@ import { AssetDetailsComponent } from './component/portfolio/asset-details/asset
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AuthenticationModule
+    AuthenticationModule,
+    NgbModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddAssetComponent]
 })
 export class AppModule { }

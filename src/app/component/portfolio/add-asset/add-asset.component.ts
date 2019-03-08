@@ -1,4 +1,4 @@
-import { Component, OnInit }      from '@angular/core'
+import { Component, OnInit, Input }      from '@angular/core'
 import { NavbarService }          from '../../../service/navbar.service'
 import { SidebarService }         from '../../../service/sidebar.service'
 import { UserService }            from '../../../service/user.service'
@@ -17,14 +17,19 @@ import { User }                   from '../../../model/user'
   styleUrls: ['./add-asset.component.css']
 })
 export class AddAssetComponent implements OnInit {
+  @Input() public username;
+  @Input() public symbol;
+  @Input() public passedInShares;
+  @Input() public portfolioId;
+
   Transaction   = new transaction();
   submitted     = false;
   assetIsNew    = true;
   newAsset      = new asset();
   existingAsset = new asset();
-  passedInShares: any;
   shareCount:     string;
-  private user: User;
+  stringUsername: string;
+  stringSymbol: string;
   
   constructor(
     public nav: NavbarService, 
@@ -37,53 +42,20 @@ export class AddAssetComponent implements OnInit {
     private route: ActivatedRoute ) 
     { 
       this.nav.show();
-      this.sidebar.show();
-
-      this.user = new User();
-
-      this.userService.currentUser().subscribe(
-        res =>this.user = res
-      );
+      this.sidebar.show();  
     }
 
    // upon initialization set the transaction to true/buy and the colors to green
    ngOnInit()
    {
-       // Get any parmaeter passed in from url
-       const passedInSymbol =  this.route.snapshot.paramMap.get('symbol');
-       this.Transaction.symbol = passedInSymbol;
-       this.passedInShares = this.route.snapshot.paramMap.get('shares');
+       this.stringUsername = this.username.toString();
        if ( this.passedInShares )
        { this.shareCount = "You currently have this many shares : "+this.passedInShares;}
-       if (passedInSymbol != null)
+       if (this.symbol != null)
        {
          this.assetIsNew = false;
+         this.stringSymbol = this.symbol.toString();
        }
-   }
- 
-   // Change the trasnaction from buy to sell or vice versa, change colors of input fields
-   private setTransaction(): void {
-     if ( this.Transaction.transaction === true )
-     {
-       document.getElementById("symbol").style.background="rgb(76, 243, 76)";
-       document.getElementById("shares").style.background="rgb(76, 243, 76)";
-       document.getElementById("price").style.background="rgb(76, 243, 76)";
-       document.getElementById("buydate").style.background="rgb(76, 243, 76)";
-     }
-     else if ( this.Transaction.transaction === false )
-     {
-       document.getElementById("symbol").style.background="rgb(253, 65, 65)";
-       document.getElementById("shares").style.background="rgb(253, 65, 65)";
-       document.getElementById("price").style.background="rgb(253, 65, 65)";
-       document.getElementById("buydate").style.background="rgb(253, 65, 65)";
-     }
-     else
-     {
-       document.getElementById("symbol").style.background="rgb(0, 0, 0)";
-       document.getElementById("shares").style.background="rgb(0, 0, 0)";
-       document.getElementById("price").style.background="rgb(0, 0, 0)";
-       document.getElementById("buydate").style.background="rgb(0, 0, 0)";
-     }
    }
  
    // new form, reset the state excep for the transaction state we will keep that the same
@@ -98,17 +70,17 @@ export class AddAssetComponent implements OnInit {
  
     // This function will grab the asset with the symbolName from the database and call the updateAsset functio, 
    // or return an error
-   private grabAsset(symbolName: string): void{
+   /*private grabAsset(symbolName: string): void{
      this.assetService.getAsset(symbolName)
        .subscribe(value => this.existingAsset = value ,
                   error =>  alert("Error connecting to database to grab an asset") , 
                   ()  => this.verifyIfAssetExists()
                  );           
- }
+    }*/
  
  // Establish if an asset exists or not
   verifyIfAssetExists() {
-    // validate symbol name
+    /*// validate symbol name
     if (this.Transaction.symbol.length > 6 )
     {
        alert("Error:  Symbol must be less than 6 characters long")
@@ -145,12 +117,12 @@ export class AddAssetComponent implements OnInit {
       }).catch(err=>{
            alert(err);
       })
-    }
+    }*/
   }
  
    // This takes 5 arguments and updates the asset in the database with the transaction recorded
    // depending on whether it is a buy or a sell order we will increase/decrease the totals
-   private updateExistingAsset(assetToUpdate : asset, currentTransaction : transaction,
+   /*private updateExistingAsset(assetToUpdate : asset, currentTransaction : transaction,
                                 currentAssetService : AssetService, 
                                currentTransactionService : TransactionsService): void {   
        // Because some calculations rely on others to complete first, we will execute these in a nested promise
@@ -242,7 +214,7 @@ export class AddAssetComponent implements OnInit {
              return ;  
        }).then(res=>{
              // If we have made it up to this point then it is safe to save the transaction as well.
-             currentTransactionService.addTransaction(currentTransaction, this.user.username)
+             currentTransactionService.addTransaction(currentTransaction, this.username)
              .subscribe();
              // And we can also set the submit variable to true, indicating a successful transaction
              
@@ -251,10 +223,17 @@ export class AddAssetComponent implements OnInit {
              alert("error occured: " + error);
        });
  
-   }
+   }*/
    
    goBack(): void {
      this.location.back();
+   }
+
+   addTransaction() : void {
+    this.submitted = true;
+    console.log(this.portfolioId);
+
+    this.transactionService.addTransaction(this.Transaction, this.portfolioId).subscribe();
    }
 
 }

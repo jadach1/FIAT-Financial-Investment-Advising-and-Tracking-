@@ -4,17 +4,19 @@
     <h4 style=" color: blue; text-align: center" >PORTFOLIO STATISTICS</h4>
     <table class = "table table-borderless" width = 100% cellspacing = "0">
       <thead>
-        <th>CURRENT VALUE OF PORTFOLIO (UNREALIZED):</th>
-        <th>ORIGINAL MONEY $ LEFT:                  </th>
-        <th>TOTAL MONEY $ INVESTED:                 </th>
-        <th>TOTAL MONEY $ PULLED OUT:               </th>
+        <th>CURRENT VALUE OF PORTFOLIO</th>
+        <th>GAIN/LOSS                  </th>
+        <th>TOTAL INVESTED:                 </th>
+        <th>TOTAL PULLED OUT:               </th>
+        <th>TOTAL REALIZED GAIN:            </th>
       </thead>
       <tbody>
         <tr>
-          <th>${{portfolio.currentTotal}}</th>
-          <th>${{portfolio.originalMoney}}</th>
-          <th>${{portfolio.totalMoneyIn}}</th>
-          <th>${{portfolio.totalMoneyOut}}</th>
+          <th>${{totalPortfolioValue}}</th>
+          <th>%{{totPercent | number:'1.1-2'}}</th>
+          <th>${{totIn}}</th>
+          <th>${{totOut}}</th>
+          <th>${{totOut - totIn}}</th>
         </tr>
       </tbody>
     </table>
@@ -23,10 +25,14 @@
 
     <!--BOTTOM TABLE DISPLAYING ASSET STATISTICS-->
 
-    <!--assettable-->
+    <!--asset table-->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Assets</h6>
+          <div class="row">
+          <div class="col-6"><h6 class="m-0 font-weight-bold text-primary">Assets</h6></div>
+          <div class="col-6 text-right"><button class="btn btn-dark" (click)="openModal('0',0, portfolioID)">Trade</button>
+          </div>
+        </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -35,19 +41,21 @@
                     <tr> 
                       <th>Symbol</th>
                       <th>Current Price</th>
-                      <th>Total Shares</th>
+                      <th>Average Buy Price</th>
+                      <th>Shares Owned</th>
                       <th>Current Total</th>
-                      <th>Profit Margin (unrealized)</th>
+                      <th>Gain/Loss (unrealized)</th>
                     </tr>
                   </thead>
                   <tbody >    
                     <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
                         <td><a  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</a></td>
-                        <td>${{ asset.price        }}</td>
-                        <td> {{ asset.shares       }}</td>
-                        <td>${{ asset.currentTotal }}</td>
-                        <td> {{ asset.unRealMargin }}%</td>
-                        <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/myPortfolio/addAsset', asset.symbol, asset.shares]"   >Trade</button>
+                        <td>{{ asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                        <td>{{ asset.avgprice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                        <td>{{ asset.shares}}</td>
+                        <td>{{asset.shares * asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                        <td>%{{asset.gain | number:'1.1-2'}}</td>
+                        <button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID)">Trade</button>
                         <button type="button" class="btn btn-dark"[routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
                         <p></p>
                       <br>
@@ -57,4 +65,4 @@
             </div>
         </div>
       </div>
-  </div>
+</div>

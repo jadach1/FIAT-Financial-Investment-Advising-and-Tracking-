@@ -1,6 +1,6 @@
 export class transaction {
     id: number;
-    username: string;
+    portfolioId: number;
     symbol: string;
     shares: any;
     price: any;

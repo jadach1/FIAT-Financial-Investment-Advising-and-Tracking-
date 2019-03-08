@@ -17,18 +17,17 @@ export class TransactionsService {
   private user: User;
 
   constructor(private http: HttpClient, private userService: UserService) { 
-    let username = <string>sessionStorage.getItem('currentUser');  
   }
  
   // get all transactions regardless of bought or sold
-  getAllTransactions (username: string): Observable<transaction[]> {
-    let data = {'username': username};
+  getAllTransactions (portfolioId: string): Observable<transaction[]> {
+    let data = {'portfolioId': portfolioId};
     return this.http.get<transaction[]>(this.Url+'allTransactions', {params: data})
   }
 
   // get all transactions depending on transaction type
-  getTransactions (transactionType: string, username: string): Observable<transaction[]> {
-    let data = {'username': username};
+  getTransactions (transactionType: string, portfolioId: string): Observable<transaction[]> {
+    let data = {'portfolioId': portfolioId};
     if(transactionType==="buy")
     {
       return this.http.get<transaction[]>(this.Url+'allTransactions/:true', {params: data})
@@ -40,8 +39,8 @@ export class TransactionsService {
   }
 
    // get all transactions of an Asset depending on transaction type
-   getTransactionsByAsset (transactionType: string, assetSymbol: string, username: string): Observable<transaction[]> {
-    let data = {'username': username};
+   getTransactionsByAsset (transactionType: string, assetSymbol: string, portfolioId: string): Observable<transaction[]> {
+    let data = {'portfolioId': portfolioId};
     console.log(data);
     if(transactionType==="true")
     {
@@ -56,15 +55,13 @@ export class TransactionsService {
     }
   }
 
-  addTransaction (asset: transaction, username: string): Observable<transaction> {
-    asset.username = username;
-    console.log(asset.username)
-    console.log(asset);
+  addTransaction (asset: transaction, portfolioID: number): Observable<transaction> {
+    asset.portfolioId = portfolioID;
     return this.http.post<transaction>(this.Url+'Transaction', asset, httpOptions);
   }
 
-  getTransactionSymbols(username: string): Observable<string[]>{
-    let data = {username: username};
+  getTransactionSymbols(portfolioId: string): Observable<string[]>{
+    let data = {'portfolioId': portfolioId};
     return this.http.get<string[]>(this.Url+'transactionsBySymbol', {params: data})
   }
 }

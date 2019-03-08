@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Portfolio2 } from '../model/portfolio2';
+import { testAsset } from '../model/testAsset';
+import { TransactionsService } from './transaction.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,7 +15,7 @@ const httpOptions = {
 })
 export class PortfolioService {
   private Url = 'http://localhost:8080/portfolio';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private transactionService: TransactionsService) { }
 
   getPortfolio(portfolioId: number): Observable<Portfolio2> {
     let data = {portfolioId: String(portfolioId)};
