@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavbarService     } from '../../../service/navbar.service';
+import { AdvisorService    } from '../../../service/advisor.service'
+
 
 @Component({
   selector: 'app-create-advisor',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateAdvisorComponent implements OnInit {
 
-  constructor() { }
+  public test: string = 'hellow world';
+  
+  constructor(public nav: NavbarService, public advisor: AdvisorService) { }
+
+  
 
   ngOnInit() {
+    this.nav.show();
   }
 
 }

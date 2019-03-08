@@ -1,7 +1,26 @@
 <app-nav></app-nav>
-  <div id = "wrapper">     
-    <app-sidebar></app-sidebar>
-      <p>
-        advisors works!
-      </p>
+<div id="wrapper">
+  <app-sidebar></app-sidebar>
+  <div id="advisor-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">  
+          <h1>My Advisors</h1>
+          <ul class="nav justify-content-center">
+              <li class="nav-item">
+                  <a routerLink="/advisor/createAdvisor" class="btn btn-light btn-sm" role="button" routerLinkActive="active">Create New Advisor</a> 
+              </li>
+          </ul>
+          <hr>
+          <p> Here we go {{test}}</p>
+          <table>
+          <!--  <tr *ngFor="let ad of array">
+              <td>fasf {{ad}}</td>
+            </tr> -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <app-footer></app-footer>

@@ -33,8 +33,17 @@ if (process.argv[2])
 module.exports = setupENV;
 
 // Set up the server connection, this is defaulted to local unless otherwise specified
-var port = 10017
-var hostname ='10.10.193.143'
+let port;
+let hostname;
+
+if (process.argv[3] == "local")
+{
+    port = 8080
+    hostname = 'localhost'
+} else {
+    port = 10017
+    hostname ='10.10.193.143'
+}
 
 
 require('./app/router/devuser.route.js')(app);
