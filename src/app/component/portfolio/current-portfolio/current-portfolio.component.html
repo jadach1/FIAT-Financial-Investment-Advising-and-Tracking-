@@ -1,68 +1,120 @@
 <!--TOP TABLE DISPLAYING OVERALL STATISTICS-->
 <div id="current-portfolio-content">
   <div class="container-fluid">
-    <h4 style=" color: blue; text-align: center" >PORTFOLIO STATISTICS</h4>
-    <table class = "table table-borderless" width = 100% cellspacing = "0">
-      <thead>
-        <th>CURRENT VALUE OF PORTFOLIO</th>
-        <th>GAIN/LOSS                  </th>
-        <th>TOTAL INVESTED:                 </th>
-        <th>TOTAL PULLED OUT:               </th>
-        <th>TOTAL REALIZED GAIN:            </th>
-      </thead>
-      <tbody>
-        <tr>
-          <th>${{totalPortfolioValue}}</th>
-          <th>%{{totPercent | number:'1.1-2'}}</th>
-          <th>${{totIn}}</th>
-          <th>${{totOut}}</th>
-          <th>${{totOut - totIn}}</th>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-    <hr>
 
-    <!--BOTTOM TABLE DISPLAYING ASSET STATISTICS-->
-
-    <!--asset table-->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <div class="row">
-          <div class="col-6"><h6 class="m-0 font-weight-bold text-primary">Assets</h6></div>
-          <div class="col-6 text-right"><button class="btn btn-dark" (click)="openModal('0',0, portfolioID)">Trade</button>
+    <div class="row">
+        <!-- Page Heading -->
+      <div class="col-12">
+          <div class="card text-white bg-success mb-3">
+              <div class="card-body">
+                  <div class="d-flex align-items-center" width="100%">
+                      <div class="mr-auto p-2">
+                          <button class="btn btn-dark" (click)="openModal('0',0, portfolioID)">Trade</button>
+                      </div>
+                      <div class="mr-auto p-2">
+                          <h1>Portfolio Overview</h1>
+                      </div>
+                      <div class="p-2">
+                        <h1>Portfolio Overview</h1>
+                      </div>
+                    </div>
+                  </div>
+              </div>
           </div>
+      </div>
+
+    <div class="row">
+      <!-- Page Heading -->
+        <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center" width="100%">
+                        <table class = "table table-borderless" width = 100% cellspacing = "0">
+                            <thead>
+                              <th class="text-center" style="font-size: 14px">CURRENT VALUE OF PORTFOLIO</th>
+                              <th class="text-center" style="font-size: 14px">GAIN/LOSS                  </th>
+                              <th class="text-center" style="font-size: 14px">TOTAL INVESTED:                 </th>
+                              <th class="text-center" style="font-size: 14px">TOTAL PULLED OUT:               </th>
+                              <th class="text-center" style="font-size: 14px">TOTAL REALIZED GAIN:            </th>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th class="text-center" style="font-size: 24px">{{totalPortfolioValue | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                                <th class="text-center" style="font-size: 24px" [style.color]="totPercent < 0  ? 'red' : 'white'">{{totPercent | number:'1.1-2'}}%</th>
+                                <th class="text-center" style="font-size: 24px">{{totIn | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                                <th class="text-center" style="font-size: 24px">{{totOut | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                                <th class="text-center" style="font-size: 24px" [style.color]="(totOut-totIn) < 0  ? 'red' : 'white'">{{totOut - totIn | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                      </div>
+                </div>
+            </div>
         </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr> 
-                      <th>Symbol</th>
-                      <th>Current Price</th>
-                      <th>Average Buy Price</th>
-                      <th>Shares Owned</th>
-                      <th>Current Total</th>
-                      <th>Gain/Loss (unrealized)</th>
-                    </tr>
-                  </thead>
-                  <tbody >    
-                    <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
-                        <td><a  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</a></td>
-                        <td>{{ asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
-                        <td>{{ asset.avgprice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
-                        <td>{{ asset.shares}}</td>
-                        <td>{{asset.shares * asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
-                        <td>%{{asset.gain | number:'1.1-2'}}</td>
-                        <button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID)">Trade</button>
-                        <button type="button" class="btn btn-dark"[routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
-                        <p></p>
-                      <br>
-                    </tr>   
-                  </tbody>
-              </table> 
+    </div>
+
+    
+
+
+    <div class="row">
+
+      <div class="col-8">
+        <!--BOTTOM TABLE DISPLAYING ASSET STATISTICS-->
+        <!--asset table-->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="row">
+              <div class="col-6"><h6 class="m-0 font-weight-bold text-primary">Assets</h6></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr> 
+                          <th>Symbol</th>
+                          <th>Current Price</th>
+                          <th>Average Buy Price</th>
+                          <th>Shares Owned</th>
+                          <th>Current Total</th>
+                          <th>Gain/Loss (unrealized)</th>
+                        </tr>
+                      </thead>
+                      <tbody >    
+                        <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
+                            <td><a  [routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</a></td>
+                            <td>{{ asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                            <td>{{ asset.avgprice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                            <td>{{ asset.shares}}</td>
+                            <td>{{asset.shares * asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                            <td>%{{asset.gain | number:'1.1-2'}}</td>
+                            <td style="border:none; text-align: center"><button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID)">Trade</button></td>
+                            <td style="border:none; text-align: center"><button type="button" class="btn btn-dark"[routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >DETAILS</button></td>
+                            <p></p>
+                          <br>
+                        </tr>   
+                      </tbody>
+                  </table> 
+                </div>
             </div>
         </div>
       </div>
+
+      <!--CHART-->
+      <div class="col-4">
+          <div class="card text-black bg-light mb-3" style="min-width: 100%">
+              <div class="card-header" *ngIf="stockData">5 Year Chart</div>
+              <div class="card-body">
+                  <canvas #portfolioChart>{{ chart }}</canvas>
+              </div>
+          </div>
+      </div>
+
+
+
+    </div>
+
+
+
+  </div>
 </div>

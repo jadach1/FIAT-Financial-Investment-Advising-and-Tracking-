@@ -52,7 +52,7 @@ export class AssetService {
     return this.http.put(this.Url+'currentassets', asset, httpOptions);
   }
 
-  getPrice( symbol: string): Observable<any> {
+  getPrice(symbol: string): Observable<any> {
     return this.http.get('http://localhost:8080/asset/' + symbol)
   }
 

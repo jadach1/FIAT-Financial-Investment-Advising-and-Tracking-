@@ -59,9 +59,4 @@ export class TransactionsService {
     asset.portfolioId = portfolioID;
     return this.http.post<transaction>(this.Url+'Transaction', asset, httpOptions);
   }
-
-  getTransactionSymbols(portfolioId: string): Observable<string[]>{
-    let data = {'portfolioId': portfolioId};
-    return this.http.get<string[]>(this.Url+'transactionsBySymbol', {params: data})
-  }
 }

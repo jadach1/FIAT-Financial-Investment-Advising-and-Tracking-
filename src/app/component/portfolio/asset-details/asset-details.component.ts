@@ -1,4 +1,4 @@
-import { Component, OnInit }        from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef }  from '@angular/core';
 import { transaction }              from '../../../model/transactions';
 import { asset }                    from '../../../model/asset';
 import { whatIfAsset }              from '../../../model/whatIfAsset';
@@ -12,6 +12,8 @@ import { UserService }              from '../../../service/user.service'
 import { AuthenticationService }    from '../../../service/authentication.service'
 import { User }                     from '../../../model/user';
 import { testAsset }                from '../../../model/testAsset'
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-asset-details',
@@ -19,6 +21,15 @@ import { testAsset }                from '../../../model/testAsset'
   styleUrls: ['./asset-details.component.css']
 })
 export class AssetDetailsComponent implements OnInit {
+
+  @ViewChild('stockChart') myCanvas: ElementRef;
+  public context: CanvasRenderingContext2D;
+  chart = [];
+
+  portfolioID: number;
+  symbol: string;
+  newAsset = new testAsset();
+  stockData: any;
 
   myAsset         = new asset();
   displayAsset    = new asset();
@@ -36,22 +47,134 @@ export class AssetDetailsComponent implements OnInit {
     private nav: NavbarService,
     private sidebar: SidebarService,
     private auth: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private spinnerService: Ng4LoadingSpinnerService
     ) { 
       this.nav.show();
       this.sidebar.show();
+      this.spinnerService.show();
+
+      this.portfolioID = parseInt(this.route.snapshot.paramMap.get('portfolioId'));
+      this.symbol = this.route.snapshot.paramMap.get('symbol');
 
       this.user = new User();
 
       this.userService.currentUser().subscribe(
-        res =>this.user = res
+        res =>{
+          this.user = res;
+          this.buildDetails();
+        }
       );
     }
 
   ngOnInit() {
-   this.grabAssetAndConvert();
+   //this.grabAssetAndConvert();
   }
 
+  private refresh(){
+    window.location.reload();
+  }
+
+  private buildDetails(){
+    let transactionList: transaction[];
+    transactionList = new Array();
+    this.newAsset.shares = 0;
+    this.newAsset.avgprice = 0;
+    this.newAsset.avgpriceSold = 0;
+    this.newAsset.sharesBought = 0;
+    this.newAsset.sharesSold = 0;
+    this.newAsset.totalMoneyIn = 0;
+    this.newAsset.totalMoneyOut= 0;
+
+    this.transactionService.getTransactionsByAsset(null, this.symbol, this.portfolioID.toString()).subscribe(
+      res => {
+        res.forEach(transaction => {
+            transactionList.push(transaction);
+
+            this.newAsset.symbol = transaction.symbol;
+            //buy
+            var buycount = 0, sellcount = 0;
+            if (transaction.transaction == true){
+              this.newAsset.shares += transaction.shares;
+              this.newAsset.totalMoneyIn += (transaction.shares * transaction.price);
+              this.newAsset.sharesBought += transaction.shares;
+
+              buycount+=1;
+            //sell
+            }else{
+              this.newAsset.shares -= transaction.shares;
+              this.newAsset.totalMoneyOut += (transaction.shares * transaction.price);
+              this.newAsset.sharesSold += transaction.shares;
+
+              sellcount += 1;
+            }
+
+            this.newAsset.avgprice = this.newAsset.totalMoneyIn / this.newAsset.sharesBought;
+            this.newAsset.avgpriceSold = this.newAsset.totalMoneyOut / this.newAsset.sharesSold;
+       
+        });
+
+        this.assetService.getPrice(this.symbol).subscribe(
+          data => {this.newAsset.currentPrice = data.data.price,
+            this.newAsset.gain = ((data.data.price - this.newAsset.avgprice) / this.newAsset.avgprice) * 100,
+            this.stockData = data;
+            console.log(this.stockData);
+            console.log(this.newAsset);
+            this.buildChart();
+            this.spinnerService.hide();
+          }      
+        );
+
+        this.transactions = transactionList;
+        console.log(this.transactions);
+        
+      }
+    )
+  }
+
+  private buildChart(){
+    this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
+
+    let stockLabels = new Array();
+    let stockPrices = new Array();
+
+    let arr = this.stockData.charts.chartDailyLast5Years.filter(function (value, index, ar) {
+      return (index % 30 == 0);
+    } );
+
+    arr.forEach(day => {
+      stockLabels.push(day.date);
+      stockPrices.push(day.close);
+    });
+    
+    this.chart = new Chart(this.context, {
+      type: 'line',
+      data: {
+        labels: stockLabels,
+        datasets: [{
+          label: this.myAsset.symbol,
+          backgroundColor: 'rgb(50, 200, 60)',
+          borderColor: 'rgb(0, 0, 0)',
+          data: stockPrices,
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            display: true
+          }],
+        }
+      }
+    });
+  }
+
+  /*
   private grabAssetAndConvert(): void {
      // Fetch our asset from DB and convert the numbers into strings, 'symbol' is param passed by router
      this.assetService.getAsset( this.route.snapshot.paramMap.get('symbol'))
@@ -152,4 +275,6 @@ export class AssetDetailsComponent implements OnInit {
       element.shares = element.shares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     });
   }
+  */
 }
+

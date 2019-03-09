@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject }     from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef }     from '@angular/core';
 import { asset }                 from '../../../model/asset';
 import { AssetService }          from '../../../service/asset.service';
 import { portfolio }             from '../../../model/portfolio';
@@ -14,6 +14,7 @@ import { NgbModal }              from '@ng-bootstrap/ng-bootstrap'
 import { PortfolioService }      from '../../../service/portfolio.service';
 import { TransactionsService }   from '../../../service/transaction.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-current-portfolio',
@@ -21,6 +22,11 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   styleUrls: ['./current-portfolio.component.css']
 })
 export class CurrentPortfolioComponent implements OnInit {
+
+  @ViewChild('portfolioChart') myCanvas: ElementRef;
+  public context: CanvasRenderingContext2D;
+  chart = [];
+  stockPrices = new Array();
 
   assets: testAsset[];
   portfolio = new portfolio();
@@ -141,8 +147,7 @@ export class CurrentPortfolioComponent implements OnInit {
               data => {newAsset.currentPrice = data.data.price,
                 newAsset.gain = ((data.data.price - newAsset.avgprice) / newAsset.avgprice) * 100,
                 this.totalPortfolioValue += data.data.price * newAsset.shares,
-                this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100,
-                this.spinnerService.hide();
+                this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100;     
               }      
             );
 
@@ -152,9 +157,9 @@ export class CurrentPortfolioComponent implements OnInit {
           
         });
         this.assets = assetList;
-        this.calculate(this.assets);
-        
-      }
+        this.calculate(this.assets); 
+        this.buildChart();       
+      }   
     );   
   }
 
@@ -168,15 +173,61 @@ export class CurrentPortfolioComponent implements OnInit {
      );
   }*/
 
+
+
   calculate(myAssets: testAsset[]){
     myAssets.forEach(element => 
     {
         this.totIn += element.totalMoneyIn;
         this.totOut += element.totalMoneyOut
         this.totDiff = this.totIn - this.totOut;
-    })
+        
+    });
+  }
 
-    
+  private buildChart(){
+
+    this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
+
+    let assetLabels = new Array();
+    let assetAmounts = new Array();
+    let colourList = new Array();
+
+    var dynamicColors = function() {
+      var r = Math.floor(Math.random() * 255);
+      var g = Math.floor(Math.random() * 255);
+      var b = Math.floor(Math.random() * 255);
+      return "rgba(" + r + "," + g + "," + b + ", 1)";
+   };
+
+    this.assets.forEach(asset => {
+      assetLabels.push(asset.symbol);
+      colourList.push(dynamicColors());
+      this.assetService.getPrice(asset.symbol).subscribe(
+        data => {
+          assetAmounts.push(Math.round(data.data.price * asset.shares));
+          this.spinnerService.hide();
+        }      
+      );
+    });
+  
+    var myChart = new Chart(this.context, {
+      type: 'pie',
+      data: {
+        labels: assetLabels,
+        datasets: [{
+          label: '# of Tomatoes',
+          data: assetAmounts,
+          backgroundColor: colourList,
+          borderColor: colourList,
+          borderWidth: 1
+        }]
+      },
+      options: {
+         cutoutPercentage: 20,
+         responsive: true  
+      }
+    });
   }
 
   openModal(symbol: string, shares: number, portfolio: number){

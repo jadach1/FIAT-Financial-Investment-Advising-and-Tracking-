@@ -1,11 +1,38 @@
 #asset-details-content{
   padding-left: 200px;
-  padding-top: 56px;
+  padding-top: 60px;
   padding-bottom: 50px;
   width: 100%;
 }
 
-#container {
+#symbol{
+  font-size: 100;
+}
+
+#logo{
+  height: 100%;
+  width: 100%;
+}
+
+.container-fluid{
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*#container {
     height: 100%;
     display: flex;
   }
@@ -50,4 +77,4 @@
   #tableClean {
     border: 0px transparent white;
     padding:0 15px 0 15px; 
-  }
+  }*/
