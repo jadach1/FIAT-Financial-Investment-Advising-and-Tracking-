@@ -7,6 +7,7 @@ import { PortfolioService } from '../../../service/portfolio.service'
 import { Portfolio2 } from '../../../model/portfolio2'
 import { Location } from '@angular/common';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { User } from '../../../model/user'
 
 @Component({
   selector: 'app-portfolio',
@@ -20,9 +21,10 @@ export class PortfolioComponent implements OnInit {
   private watchlists: Portfolio2[] = new Array();
   private newportfolio = new Portfolio2();
   private submitted = false;
+  private user: User;
 
   constructor(
-    public nav: NavbarService, 
+    public nav: NavbarService,
     public sidebar: SidebarService, 
     private authService: AuthenticationService, 
     private userService: UserService,
@@ -38,6 +40,7 @@ export class PortfolioComponent implements OnInit {
    
     this.userService.currentUser().subscribe(
       res => {
+        this.user = res;
         this.username = res.username;
         this.buildPortfolios();
     });

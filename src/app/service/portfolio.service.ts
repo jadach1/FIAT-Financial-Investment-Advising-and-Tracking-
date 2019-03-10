@@ -19,7 +19,7 @@ export class PortfolioService {
 
   getPortfolio(portfolioId: number): Observable<Portfolio2> {
     let data = {portfolioId: String(portfolioId)};
-    const url = this.Url + '/' + portfolioId;
+    const url = this.Url + '/get/' + portfolioId;
     return this.http.get<Portfolio2>(url, {params:data});
   }
 

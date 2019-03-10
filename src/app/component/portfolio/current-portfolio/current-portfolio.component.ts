@@ -28,6 +28,8 @@ export class CurrentPortfolioComponent implements OnInit {
   chart = [];
   stockPrices = new Array();
 
+  userPortfolio: any;
+
   assets: testAsset[];
   portfolio = new portfolio();
   portfolioID: number;
@@ -65,6 +67,11 @@ export class CurrentPortfolioComponent implements OnInit {
         this.username = res.username;
         //this.getAssets();
         this.buildPortfolio();
+    });
+
+    this.portfolioService.getPortfolio(this.portfolioID).subscribe(
+      res => {
+        this.userPortfolio = res;
     });
    }
  

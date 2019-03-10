@@ -2,7 +2,7 @@
 <div id="current-portfolio-content">
   <div class="container-fluid">
 
-    <div class="row">
+    <div class="row" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
         <!-- Page Heading -->
       <div class="col-12">
           <div class="card text-white bg-success mb-3">
@@ -12,7 +12,7 @@
                           <button class="btn btn-dark" (click)="openModal('0',0, portfolioID)">Trade</button>
                       </div>
                       <div class="mr-auto p-2">
-                          <h1>Portfolio Overview</h1>
+                          <h1 *ngIf="userPortfolio">{{userPortfolio.portfolioName}}</h1>
                       </div>
                       <div class="p-2">
                         <h1>Portfolio Overview</h1>
@@ -23,7 +23,7 @@
           </div>
       </div>
 
-    <div class="row">
+    <div class="row" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
       <!-- Page Heading -->
         <div class="col-12">
             <div class="card text-white bg-success mb-3">
@@ -52,9 +52,6 @@
             </div>
         </div>
     </div>
-
-    
-
 
     <div class="row">
 
@@ -110,11 +107,7 @@
           </div>
       </div>
 
-
-
     </div>
-
-
 
   </div>
 </div>

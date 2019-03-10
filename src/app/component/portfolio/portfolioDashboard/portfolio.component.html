@@ -1,18 +1,59 @@
 <div id="portfolio-content">
   <div class="container-fluid">
-    <!-- Page Heading -->
-      <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">My Portfolios</h1>
-      <h1 style="text-align:center"><button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button></h1>
-  
+
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2">
+                        <h1>Portfolio Overview</h1>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+
+        <!-- Portfolio Info Card -->
+          <div class="col-6" style="display: inline-flex; float: right;">
+            <div class="card text-black bg-light mb-3" style="min-width: 90%;">
+                    <div class="card-header"><h6>About Portfolios</h6></div>
+                    <div class="card-body">
+                      <p style="font-size: 14px;">"An investment portfolio can be thought of as a pie that is divided into pieces of varying sizes, representing a variety of asset classes and/or types of investments to accomplish an appropriate risk-return portfolio allocation. Many different types of securities can be used to build a diversified portfolio, but stocks, bonds and cash are generally considered a portfolio's core building blocks. Other potential asset classes include, but aren't limited to, real estate, gold and currency." - <a href="https://www.investopedia.com/terms/p/portfolio.asp">investopedia.com</a></p>
+                      <p>Currently our portfolios can only track stocks that trade on major indexes such as the NYSE.</p>
+                      <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
+                    </div>
+            </div>
+          </div>
+
+          <!-- Watchlist Info Card -->
+          <div class="col-6" style="display: inline-flex; float: right;">
+              <div class="card text-black bg-light mb-3" style="min-width: 90%;">
+                      <div class="card-header"><h6>About Watchlists</h6></div>
+                      <div class="card-body">
+                        <p style="font-size: 14px;">"A watchlist is a list of securities being monitored for potential trading or investing opportunities. An investor or trader may create a watchlist of several, dozens or even hundreds of trading instruments to make more informed and opportune investment decisions. A watchlist can help an investor track companies and stay abreast of financial or other news that could impact these instruments." - <a href="https://www.investopedia.com/terms/w/watchlist.asp">investopedia.com</a></p>
+                        <br>
+                        <p>Our watchlists function identially to our portfolios, allowing you to create imaginary portfolios and view their performance vs. your own.</p>
+                        <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
+                      </div>
+              </div>
+            </div>
+
+      </div>
+
+
       <div class="row">
       <!--left half of the page-->
-        <div class ="col-12" id="left-half">
-          <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Portfolios</h1>
+        <div class ="col-6" id="left-half">
         
           <!--portfolio table-->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Portfolios </h6>
+              <h4 style="color: green; font-weight: bold;">My Portfolios </h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -34,12 +75,12 @@
         </div>
 
         <!--right half of the page-->
-        <div class ="col-12" id="right-half">
-          <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Watchlists</h1>
+        <div class ="col-6" id="right-half">
+
             <!--watchlist table-->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Watchlists</h6>
+                <h4 style="color: green; font-weight: bold;">My Watchlists</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

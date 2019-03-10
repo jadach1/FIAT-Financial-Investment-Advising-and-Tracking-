@@ -8,7 +8,7 @@ module.exports = function(app) {
     app.get('/portfolio', Portfolio.findAll);
  
     // Retrieve a single portfolio by portfolioid
-    app.get('/portfolio/:portfolioid', Portfolio.findById);
+    app.get('/portfolio/get/:portfolioid', Portfolio.findById);
  
     // Update a portfolio with portfolioid
     app.put('/portfolio', Portfolio.update);
