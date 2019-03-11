@@ -1,29 +1,31 @@
-<app-nav></app-nav>
-<div id="wrapper">
-  <app-sidebar></app-sidebar>
-  <div id="current-portfolio-content">
+<app-portfolio></app-portfolio>
+
+<!--TOP TABLE DISPLAYING OVERALL STATISTICS-->
+<div id="current-portfolio-content">
+  <div class="container-fluid">
+    <h4 style=" color: purple;" >PORTFOLIO STATISTICS</h4>
+    <table>
+      <thead>
+        <th>CURRENT VALUE OF PORTFOLIO (UNREALIZED):</th>
+        <th>ORIGINAL MONEY $ LEFT:                  </th>
+        <th>TOTAL MONEY $ INVESTED:                 </th>
+        <th>TOTAL MONEY $ PULLED OUT:               </th>
+      </thead>
+      <tbody>
+        <tr>
+          <th>${{portfolio.currentTotal }}</th>
+          <th>${{portfolio.originalMoney}}</th>
+          <th>${{portfolio.totalMoneyIn }}</th>
+          <th>${{portfolio.totalMoneyOut}}</th>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <hr>
+
+    <!--BOTTOM TABLE DISPLAYING ASSET STATISTICS-->
     <div class="container-fluid">
-      <h4 style=" color: purple;" >OVERALL   </h4>
-      <table>
-        <thead>
-          <th>CURRENT TOTAL (UNREALIZED):</th>
-          <th>ORIGINAL INVESTMENT $ LEFT: </th>
-          <th>TOTAL $ INVESTED: </th>
-          <th>TOTAL $ PULLED OUT: </th>
-        </thead>
-        <tbody>
-          <tr>
-            <th>${{portfolio.currentTotal}}</th>
-            <th>${{portfolio.originalMoney}}</th>
-            <th>${{portfolio.totalMoneyIn}}</th>
-            <th>${{portfolio.totalMoneyOut}}</th>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <hr>
       <h5 style=" color: purple;" >All Assets I Am Currently Holding</h5>
-      <div class="btn-group btn-group-sm">
       <table >
         <thead>
           <tr> 
@@ -31,23 +33,23 @@
             <th>Current Price</th>
             <th>Total Shares</th>
             <th>Current Total</th>
+            <th>Profit Margin (unrealized)</th>
           </tr>
         </thead>
-        <tbody >
-            
+        <tbody >    
           <tr *ngFor="let asset of assets" [ngClass]="'tablerow'">
-              <td><button type="button"  [routerLink]="['/currentAssets/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</button></td>
-              <td>${{ asset.price }}</td>
-              <td>{{ asset.shares }}</td>
+              <td><button type="button"  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >{{ asset.symbol }}</button></td>
+              <td>${{ asset.price        }}</td>
+              <td> {{ asset.shares       }}</td>
               <td>${{ asset.currentTotal }}</td>
-              <button [routerLink]="['/Transactions/add', asset.symbol, asset.shares]" routerLinkActive="active" type="button" >Trade</button>
-              <button type="button"  [routerLink]="['/currentAssets/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
+              <td> {{ asset.unRealMargin }}%</td>
+              <button type="button"  [routerLink]="['/portfolio/myPortfolio/addAsset', asset.symbol, asset.shares]"   >Trade</button>
+              <button type="button"  [routerLink]="['/portfolio/myPortfolio/asset/', asset.symbol]" routerLinkActive="active" >DETAILS</button>
               <p></p>
             <br>
-          </tr>
-        
+          </tr>   
         </tbody>
       </table>
-      </div>
     </div>
+
   </div>

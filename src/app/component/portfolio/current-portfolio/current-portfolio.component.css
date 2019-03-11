@@ -1,8 +1,9 @@
 #current-portfolio-content{
     padding-left: 200px;
-    padding-top: 56px;
-    padding-bottom: 50px;
+    padding-top: -25px;
+    padding-bottom: 125px;
     width: 100%;
+    background-color: antiquewhite;
 }
 
 table, th, td

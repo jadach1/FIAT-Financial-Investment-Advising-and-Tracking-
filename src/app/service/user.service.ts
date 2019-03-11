@@ -25,7 +25,8 @@ interface logoutStatus {
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = 'http://localhost:8080/user';  // URL to node
+  private usersUrl = 'http://myvmlab.senecacollege.ca:6349/user';  // URL to node
+  //private usersUrl = '/user';  // URL to node
   constructor( 
     private http: HttpClient
   ) { }

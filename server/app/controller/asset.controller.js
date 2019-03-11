@@ -1,4 +1,4 @@
-const db = require('../config/devdb.config.js');
+const db = require('../config/db.config.js');
 const CurrentAsset = db.assets;
 
 // Post a CurrentAsset
