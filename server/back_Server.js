@@ -3,7 +3,7 @@ var express       = require("express");
 var path          = require("path");
 var app           = express();
 const cors        = require("cors");
-var bodyParser     = require('body-parser');
+var bodyParser    = require('body-parser');
 
 const corsOptions = {
     origin: '*',
@@ -40,6 +40,7 @@ var hostname ='10.10.193.143'
 require('./app/router/devuser.route.js')(app);
 require('./app/router/asset.route.js')(app);
 require('./app/router/transactions.route.js')(app);
+require('./app/router/portfolio.route.js')(app);
 
 let db = require('./app/config/db.config.js');
 

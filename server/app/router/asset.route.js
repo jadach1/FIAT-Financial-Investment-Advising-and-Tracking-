@@ -18,4 +18,6 @@ module.exports = function(capp) {
 
     // Retrieve all assets
     capp.get('/portfolio/currentassets', CurrentAssets.findAll);
+
+    capp.get('/asset/:symbol', CurrentAssets.GetPrice);
 }
