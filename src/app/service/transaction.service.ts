@@ -13,6 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TransactionsService {
+
   private Url = 'http://localhost:8080/portfolio/';  // URL to web api
   private user: User;
 

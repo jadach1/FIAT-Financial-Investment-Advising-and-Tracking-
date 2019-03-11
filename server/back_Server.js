@@ -5,8 +5,20 @@ var app           = express();
 const cors        = require("cors");
 var bodyParser    = require('body-parser');
 
-app.use(cors());
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+}
+
+app.use(function(req, res, next) {
+    res.header("Content-type: application/json");
+    res.header("Access-Control-Allow-Origin: http://myvmlab.senecacollege.ca:6350");
+    next();
+});
+
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
+
 
 // initialize the variable which we will use to create the database env
 let setupENV = "cloud";
@@ -21,8 +33,8 @@ if (process.argv[2])
 module.exports = setupENV;
 
 // Set up the server connection, this is defaulted to local unless otherwise specified
-var port = process.env.PORT || 8080
-var hostname ='localhost'
+var port = 10017
+var hostname ='10.10.193.143'
 
 
 require('./app/router/devuser.route.js')(app);

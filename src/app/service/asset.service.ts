@@ -18,12 +18,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AssetService {
+
   private Url = 'http://localhost:8080/portfolio/';  // URL to web api
   private singleAsset: testAsset;
   private assetList: testAsset[];
   private transactionList: transaction[];
   private symbolList: string[];
   private username: string;
+
 
   constructor(private http: HttpClient, private transactionService: TransactionsService, private userService: UserService) {
     this.username = <string>sessionStorage.getItem('currentUser'); 
