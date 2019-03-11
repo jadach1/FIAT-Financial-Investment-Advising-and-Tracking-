@@ -5,6 +5,8 @@ var app           = express();
 const cors        = require("cors");
 var bodyParser    = require('body-parser');
 
+/* UNCOMMENT THIS FOR VM
+
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200
@@ -14,10 +16,14 @@ app.use(function(req, res, next) {
     res.header("Content-type: application/json");
     res.header("Access-Control-Allow-Origin: http://myvmlab.senecacollege.ca:6350");
     next();
-});
+});*/
 
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+//REMOVE THIS FOR VM
+app.use(cors());
+
+//UNCOMMENT THIS FOR VM
+//app.use(cors(corsOptions));
 
 
 // initialize the variable which we will use to create the database env
@@ -32,9 +38,15 @@ if (process.argv[2])
 // export the varaible for the connection file myENV.js
 module.exports = setupENV;
 
+/*USE THESE FOR VM (UNCOMMENT)
 // Set up the server connection, this is defaulted to local unless otherwise specified
 var port = 10017
 var hostname ='10.10.193.143'
+*/
+
+//REMOVE THIS FOR VM (COMMENT)
+var port = process.env.PORT || 8080;
+var hostname = 'localhost';
 
 
 require('./app/router/devuser.route.js')(app);
