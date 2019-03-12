@@ -11,7 +11,7 @@
                   <div class="form-group">
                     <label for="symbol">Company Symbol</label>
                       <input  type="text" name="symbol" id="symbol" placeholder={{stringSymbol}} 
-                              class="form-control"      autofocus   style="color:yellow"
+                              class="form-control"      autofocus
                               required    maxlength="6" pattern="([0-9A-Za-z.]{1,6})" 
                               [(ngModel)]="Transaction.symbol"      #symbol="ngModel"
                               >
@@ -63,16 +63,16 @@
                                 <label class="radioButton">BUY
                                   <input  type="radio"  name="Buy" id="Buy"
                                           required [value]="true" class="form-control"
-                                          [(ngModel)]="Transaction.transaction" #Buy="ngModel" 
+                                          [(ngModel)]="Transaction.transaction" #transaction="ngModel" checked="checked"
                                           >
                                   <span class="checkmark"></span>
                                 </label> 
                             </li>
-                            <li class="nav-item"  style="color:white ; background-color: red">
-                                <label class="radioButton">SELL
-                                  <input  type="radio"  name="transaction" id="transaction"
+                            <li *ngIf="passedInShares" class="nav-item"  style="color:white ; background-color: red">
+                                <label  class="radioButton">SELL
+                                  <input type="radio"  name="transaction" id="transaction"
                                           required [value]="false" class="form-control" 
-                                          [(ngModel)]="Transaction.transaction" #transaction="ngModel" 
+                                          [(ngModel)]="Transaction.transaction" #transaction="ngModel"
                                           >
                                   <span class="checkmark"></span>
                                 </label> 
@@ -86,7 +86,7 @@
                     </div>
             
                   <div class="btn-group btn-group-md">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-dark" (click) = "back()">Back</button>
                       <button type="button" class="btn btn-dark" (click)="addTransaction()" [disabled]="!transactionForm.form.valid" >Submit</button>      
                     <button type="button" class="btn btn-dark" (click)="newTransaction()" >Clear</button>
                   </div>
@@ -97,7 +97,7 @@
               <p>Submitted Successfully!<span class="badge badge-light"></span></p>
             
               <div class="btn-group btn-group-sm" >
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-dark" (click)="back()">Back</button>
                     <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
               </div>
             </div>

@@ -104,7 +104,7 @@ export class CurrentPortfolioComponent implements OnInit {
                   asset.sharesSold += transaction.shares;
                 }
 
-                asset.avgprice = asset.totalMoneyIn / asset.sharesBought;
+                asset.avgprice = asset.totalMoneyIn / (asset.sharesBought);
                 asset.avgpriceSold = asset.totalMoneyOut / asset.sharesSold;
                 
                 found = true;
@@ -147,7 +147,7 @@ export class CurrentPortfolioComponent implements OnInit {
               sellcount += 1;
             }
 
-            newAsset.avgprice = newAsset.totalMoneyIn / newAsset.sharesBought;
+            newAsset.avgprice = newAsset.totalMoneyIn / (newAsset.sharesBought);
             newAsset.avgpriceSold = newAsset.totalMoneyOut / newAsset.sharesSold;
 
             this.assetService.getPrice(transaction.symbol).subscribe(

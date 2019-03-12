@@ -56,6 +56,8 @@ export class AddAssetComponent implements OnInit {
          this.assetIsNew = false;
          this.stringSymbol = this.symbol.toString();
        }
+
+       console.log(this.passedInShares);
    }
  
    // new form, reset the state excep for the transaction state we will keep that the same
@@ -66,6 +68,11 @@ export class AddAssetComponent implements OnInit {
      this.existingAsset = new asset();
      this.submitted = false;
      this.assetIsNew = true;
+   }
+
+   //just reload the page to update
+   back(): void{
+     window.location.reload();
    }
  
     // This function will grab the asset with the symbolName from the database and call the updateAsset functio, 

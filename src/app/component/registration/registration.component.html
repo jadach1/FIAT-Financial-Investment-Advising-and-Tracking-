@@ -3,66 +3,66 @@
   <form #registrationForm="ngForm">
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel">
+      <input type="text" pattern="([0-9A-Za-z.]{1,16})" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel" maxlength="16">
       <div [hidden]="username.valid || username.pristine"
              class="alert alert-danger">
-            Username is required
+            Username is invalid
         </div>
     </div>
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
+      <input type="password" pattern="([0-9A-Za-z.!?@#$%^&*()]{1,16})" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel" maxlength="16">
       <div [hidden]="password.valid || password.pristine"
              class="alert alert-danger">
-            Password is required
+            Password is invalid
         </div>
     </div>
 
     <div class="form-group">
       <label for="firsname">First Name</label>
-      <input type="text" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel">
+      <input type="text" required pattern="([A-Za-z]{1,16})" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" maxlength="16">
       <div [hidden]="firstname.valid || firstname.pristine"
              class="alert alert-danger">
-            First name is required
+            First name is invalid
         </div>
     </div>
 
     <div class="form-group">
       <label for="lastname">Last Name</label>
-      <input type="text" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel">
+      <input type="text" required pattern="([A-Za-z.]{1,16})" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel" maxlength="16">
       <div [hidden]="lastname.valid || lastname.pristine"
              class="alert alert-danger">
-            Last name is required
+            Last name is invalid
         </div>
     </div>
 
     <div class="form-group">
       <label for="alterEgo">Email</label>
-      <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email" #email="ngModel">
-      <div [hidden]="email.valid || email.pristine"
+      <input type="email" pattern="([0-9A-Za-z.!@#$%^&*()]{1,26})"class="form-control" id="email" [(ngModel)]="user.email" name="email" #email="ngModel" maxlength="26">
+      <div [hidden]="email.valid"
              class="alert alert-danger">
-            Email is required
+            Email is invalid
         </div>
     </div>
 
     <div class="form-group">
       <label for="recoveryQuestion">Recovery Question</label>
       <select class="form-control" id="recoveryQuestion" required [(ngModel)]="user.recoveryQuestion" name="recoveryQuestion" #recoveryQuestion="ngModel">
-        <option *ngFor="let ques of questions" [value]="ques">{{ques}}</option>
+        <option *ngFor="let ques of questions" required [value]="ques">{{ques}}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="recoveryAnswer">Recovery Answer</label>
-      <input type="text" class="form-control" id="recoveryAnswer" [(ngModel)]="user.recoveryAnswer" name="recoveryAnswer" #recoveryAnswer="ngModel">
+      <input type="text" required pattern="([0-9A-Za-z.]{1,20})"class="form-control" id="recoveryAnswer" [(ngModel)]="user.recoveryAnswer" name="recoveryAnswer" #recoveryAnswer="ngModel" maxlength="20">
       <div [hidden]="recoveryAnswer.valid || recoveryAnswer.pristine"
              class="alert alert-danger">
              recoveryAnswer is required
         </div>
     </div>
 
-    <button type="button" class="btn btn-dark" (click)="addUser()">Register</button>
+    <button type="button" [disabled]="!registrationForm.form.valid" class="btn btn-dark" (click)="addUser()" data-dismiss="modal">Register</button>
 
   </form>
 </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router'
 import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
+import { AuthenticationService } from '../../service/authentication.service'
 
 @Component({
   selector: 'app-registration',
@@ -15,7 +17,9 @@ export class RegistrationComponent {
   questions = ['What was your first pets name?', 'What is your mothers maiden name?',
   'What street do you live on?', 'What is your favourite colour?'];
 
-  constructor( private UserService: UserService) {}
+  constructor( private UserService: UserService,
+    private authService: AuthenticationService,
+    private router: Router) {}
            
   addUser() {
     console.log(
@@ -34,7 +38,18 @@ export class RegistrationComponent {
   private save(): void {
     console.log("adding user");
     this.UserService.addUser(this.user)
-        .subscribe();
+        .subscribe(res=>
+          this.login()
+        );
+  }
+
+  public login(): void{
+    this.authService.login(this.user)
+      .subscribe(
+        res => "",
+        err => alert("error on login"),
+        () => this.router.navigateByUrl('/dashboard')
+      );
   }
 
 
