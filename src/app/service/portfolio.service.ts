@@ -29,7 +29,6 @@ export class PortfolioService {
   }
  
   addPortfolio (portfolio: Portfolio2): Observable<Portfolio2> {
-    alert("callinh portfolio")
     return this.http.post<Portfolio2>(this.Url+'/create', portfolio, httpOptions);
   }
  
