@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PortfolioService {
-  private Url = 'http://localhost:8080/portfolio';
+  private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio';
   constructor(private http: HttpClient, private transactionService: TransactionsService) { }
 
   getPortfolio(portfolioId: number): Observable<Portfolio2> {
@@ -29,6 +29,7 @@ export class PortfolioService {
   }
  
   addPortfolio (portfolio: Portfolio2): Observable<Portfolio2> {
+    alert("callinh portfolio")
     return this.http.post<Portfolio2>(this.Url+'/create', portfolio, httpOptions);
   }
  

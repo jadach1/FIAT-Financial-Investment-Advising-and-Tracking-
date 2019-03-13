@@ -21,7 +21,7 @@ const httpOptions = {
 export class AuthenticationService implements AuthService {
 
   private loginURL = 'http://myvmlab.senecacollege.ca:6349/user';  // URL to node
-// private loginURL = '/user';  // URL to node
+  // private loginURL = '/user';  // URL to node
   private username;
 
   constructor(
