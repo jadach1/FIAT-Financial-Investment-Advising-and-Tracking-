@@ -7,10 +7,10 @@ var bodyParser    = require('body-parser');
 
 
 // start local
-// node back_Server local $database 
+// node back_Server local cloud 
 
-// start server
-// node back_Server prod $database
+// start VM server
+// node back_Server prod fiat
 
 // If we don't get at least 2 parameters we will not execute
 if (!process.argv[2] && !process.argv[3])

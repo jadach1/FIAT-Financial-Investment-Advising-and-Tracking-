@@ -69,7 +69,9 @@ export class PortfolioComponent implements OnInit {
 
   private save(){
     this.newportfolio.username = this.username;
-    this.portfolioService.addPortfolio(this.newportfolio).subscribe();
-    window.location.reload();
+    this.portfolioService.addPortfolio(this.newportfolio).subscribe(
+      ()=> window.location.reload()
+    );
+    
   }
 }

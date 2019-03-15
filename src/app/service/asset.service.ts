@@ -19,7 +19,7 @@ const httpOptions = {
 })
 export class AssetService {
 
-  private Url = 'http://localhost:8080/portfolio/';  // URL to web api
+  private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
   private singleAsset: testAsset;
   private assetList: testAsset[];
   private transactionList: transaction[];
@@ -55,7 +55,7 @@ export class AssetService {
   }
 
   getPrice(symbol: string): Observable<any> {
-    return this.http.get('http://localhost:8080/asset/' + symbol)
+    return this.http.get('http://myvmlab.senecacollege.ca:6349/asset/' + symbol)
   }
 
 }
