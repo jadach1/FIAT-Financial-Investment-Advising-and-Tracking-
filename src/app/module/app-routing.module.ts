@@ -17,10 +17,8 @@ const routes: Routes = [
   { path: 'home',                                           component: HomeComponent, canActivate:             [PublicGuard]},
   { path: 'dashboard',                                      component: DashboardComponent, canActivate:        [ProtectedGuard]},
   { path: 'portfolio',                                      component: PortfolioComponent, canActivate:        [ProtectedGuard]},
-  { path: 'portfolio/myPortfolio',                          component: CurrentPortfolioComponent, canActivate: [ProtectedGuard]},
-  { path: 'portfolio/myPortfolio/addAsset',                 component: AddAssetComponent, canActivate:         [ProtectedGuard]},
-  { path: 'portfolio/myPortfolio/addAsset/:symbol/:shares', component: AddAssetComponent, canActivate:         [ProtectedGuard]},
-  { path: 'portfolio/myPortfolio/asset/:symbol',            component: AssetDetailsComponent, canActivate:     [ProtectedGuard]},
+  { path: 'portfolio/:portfolioId',                         component: CurrentPortfolioComponent, canActivate: [ProtectedGuard]},
+  { path: 'portfolio/:portfolioId/:symbol',                 component: AssetDetailsComponent, canActivate: [ProtectedGuard]},
   { path: 'advisors',                                       component: AdvisorsComponent, canActivate:         [ProtectedGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }

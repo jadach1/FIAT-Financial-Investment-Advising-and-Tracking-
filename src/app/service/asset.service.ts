@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { asset } from '../model/asset';
 import { Observable} from 'rxjs';
+import { TransactionsService } from '../service/transaction.service'
+import { transaction } from '../model/transactions'
+import { testAsset } from '../model/testAsset'
+import { of } from 'rxjs'
+import { UserService } from '../service/user.service'
+import { User } from '../model/user'
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,9 +18,18 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AssetService {
-  private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
 
-  constructor(private http: HttpClient) { }
+  private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
+  private singleAsset: testAsset;
+  private assetList: testAsset[];
+  private transactionList: transaction[];
+  private symbolList: string[];
+  private username: string;
+
+
+  constructor(private http: HttpClient, private transactionService: TransactionsService, private userService: UserService) {
+    this.username = <string>sessionStorage.getItem('currentUser'); 
+   }
 
   // Return a single asset from the database table assets
   getAsset(symbol: string): Observable<asset> {
@@ -37,5 +53,10 @@ export class AssetService {
   updateAsset (asset: asset): Observable<any> {
     return this.http.put(this.Url+'currentassets', asset, httpOptions);
   }
+
+  getPrice(symbol: string): Observable<any> {
+    return this.http.get('http://myvmlab.senecacollege.ca:6349/asset/' + symbol)
+  }
+
 }
 

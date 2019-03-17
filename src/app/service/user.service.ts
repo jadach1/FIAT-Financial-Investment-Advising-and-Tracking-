@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from '../model/user';
+import { headersToString } from 'selenium-webdriver/http';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -25,19 +26,20 @@ interface logoutStatus {
   providedIn: 'root'
 })
 export class UserService {
+
   private usersUrl = 'http://myvmlab.senecacollege.ca:6349/user';  // URL to node
-  //private usersUrl = '/user';  // URL to node
+
   constructor( 
     private http: HttpClient
   ) { }
  
   getUser(username: string): Observable<User> {
+    let data = {username: username};
     const url = this.usersUrl + '/' + username;
-    return this.http.get<User>(url);
+    return this.http.get<User>(url, {params:data});
   }
  
   addUser (user: User): Observable<User> {
-    console.log(this.usersUrl+'/register');
     return this.http.post<User>(this.usersUrl+'/register', user, httpOptions);
   }
  

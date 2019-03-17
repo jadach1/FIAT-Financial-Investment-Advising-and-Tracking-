@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top" *ngIf="nav.visible">
 
-    <a class="navbar-brand mr-1" href="index.html" routerLink="/">FIAT</a>
+    <a class="navbar-brand mr-1" href="index.html" routerLink="/"><img src="../../../assets/img/onlylogo.PNG" style="max-width: 40px; max-height: 40px">&nbsp;&nbsp;FIAT</a>
   
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -11,7 +11,7 @@
       </li>
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{user.firstname}} {{user.lastname}}
+          <span *ngIf=user>{{user.firstname}} {{user.lastname}}</span>
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">

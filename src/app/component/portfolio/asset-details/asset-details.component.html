@@ -1,190 +1,125 @@
-<app-portfolio></app-portfolio>
-
+<!-- Begin Page Content -->
 <div id="asset-details-content">
     <div class="container-fluid">
-        <h6 id="heading2">
-            Asset - {{myAsset.symbol}}  - OVERVIEW 
-            <button [routerLink]="['/portfolio/myPortfolio/addAsset', myAsset.symbol, myAsset.shares]" type="button" >
-                    Trade
-            </button>
-        </h6>
-        <div id="container">
-            <div id="leftForm">
-                <div id="heading">
-                    CURRENT PRICE   ${{displayAsset.price}} PER SHARE   
-                </div>  
+        
+        <div class="row">
+          <!-- Page Heading -->
+            <div class="col-12">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center" width="100%">
+                            <div class="mr-auto p-2"><img class="img-fluid" id="logo" *ngIf="stockData" src={{stockData.data.logo}}></div>
+                            <div class="mr-auto p-2"><h1 *ngIf="stockData">{{stockData.data.company}}</h1></div>
+                            <div class="mr-auto p-2"><h1 id="symbol">{{newAsset.symbol | uppercase}}</h1></div>
+                            <div class="p-2"><h1 id="price">{{newAsset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</h1></div>
+                            <div class="p-2"><button type="button" class="btn btn-dark" (click)="refresh()">Refresh</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- Update current asset price -->
-                <label for="newPrice">New Price </label>
-                <input type="number"          name="newPrice"      id="newPrice" placeholder="price per share" 
-                        required               class="form-control" 
-                        [(ngModel)]="newPrice" #symbol="ngModel"  >
-                <button type="button" (click)="updatePrice(newPrice)">UPDATE PRICE</button>
-                
-                <!--Asset details table -->
-                <table id="Margin1 tableClean">
-                    <thead>
-                        <tr>
-                                <th></th>
-                                <th>SHARES</th>
-                                <th>AVG PRICE</th>
-                                <th>CURRENT PRICE</th>
-                                <th>CURRENT TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                                <td id="gold">CURRENT</td>
-                                <td>{{displayAsset.shares}}</td>
-                                <td>${{displayAsset.avgprice}}</td>
-                                <td>${{displayAsset.price}}</td>
-                                <td>${{displayAsset.currentTotal}}</td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                                <th></th>
-                                <th>SOLD SHARES</th>
-                                <th>AVG PRICE SOLD</th>
-                                <th>TOTAL $ SOLD</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                                <td id="gold">SOLD</td>
-                                <td>{{displayAsset.sharesSold}}</td>
-                                <td>${{displayAsset.avgpriceSold}}</td>
-                                <td>${{displayAsset.totalMoneyOut}}</td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>REALIZED</th>
-                            <th>MARGIN</th>
-                            <th>UNREALIZED</th>
-                            <th>MARGIN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr></tr>
-                        <tr>
-                            <td id="gold">PROFIT</td>
-                            <td>${{displayAsset.realProfit}}</td>
-                            <td>%{{displayAsset.realMargin}}</td>
-                            <td>${{displayAsset.unRealProfit}}</td>
-                            <td>%{{displayAsset.unRealMargin}}</td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>TOTAL $ INVESTED</th>
-                            <th>TOTAL $ WITHDRAWN</th>
-                            <th>ORIGINAL $ LEFT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr></tr>
-                        <tr>
-                            <td id="gold">MORE INFROMATION</td>
-                            <td>${{displayAsset.totalMoneyIn}}</td>
-                            <td>${{displayAsset.totalMoneyOut}}</td>
-                            <td>${{displayAsset.originalMoney}}</td>
-                        </tr>
-                    </tbody>
-                </table>          
+        <div class="row">
 
-                <!--What if Scenario table -->
-                <table id="Margin1">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th id="heading">WHAT IF SCENARIO</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>What if I sold at this price right now?</td>      
-                            <td>
-                                <form #form="ngForm">
-                                    <div class="form-group">
-                                        <label for="whatIfPrice">Price</label>
-                                        <input type="number"  name="whatIfPrice"              placeholder="price"  id="whatIfPrice"
-                                                required       pattern="^\d{0,4}(\.\d{0,2})?$" class="form-control"
-                                                [(ngModel)]="whatIf.whatIfPrice"               #whatIfPrice="ngModel"  >
-                                        <div   [hidden]="whatIfPrice.valid || whatIfPrice.pristine"
-                                                class="alert alert-danger">
-                                                Invalid price
-                                        </div>
-                                    </div>
-                                </form>
-                            </td>
-                            <td>
-                                <button type="button" (click)="whatIfScenario(whatIfPrice)">WHAT IF?</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Total Money I would Get</td>
-                            <td>${{whatIf.totalMoneyOut}}</td>
-                        </tr>
-                        <tr>
-                            <td>Pure Profit</td>
-                            <td>${{whatIf.pureProfit}}</td>
-                        </tr>
-                        <tr>
-                            <td>Margin</td>
-                            <td>%{{whatIf.pureProfitMargin}}</td>
-                        </tr>
-                        <tr>
-                            <td>HOW MANY SHARES DO I NEED TO SELL TO GET MY ORIGINAL MONEY BACK?</td>
-                            <td>{{whatIf.sharesToSell}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-7" style="display: inline-flex; float: left;">
+                <div class="card text-black bg-light mb-3" style="min-width:100%">
+                        <div class="card-header">My Asset Details</div>
+                        <div class="card-body">
+                            <table class="table-responsive" id="assetDetails" cellspacing="5" cellpadding="20">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="font-size: 14px">My Shares</th>
+                                        <th class="text-center" style="font-size: 14px">Average Buy Price</th>
+                                        <th class="text-center" style="font-size: 14px">Current Share Price</th>
+                                        <th class="text-center" style="font-size: 14px">Profit/Loss Per Share</th>
+                                        <th class="text-center" style="font-size: 14px"> Total Profit/Loss</th>
+                                        <th class="text-center" style="font-size: 14px">Gain/Loss</th>
+                                    </tr>
+                                </thead>
+                                    <tr>
+                                        <td class="text-center" style="font-size: 24px">{{newAsset.shares}}</td>
+                                        <td class="text-center" style="font-size: 24px">{{newAsset.avgprice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                        <td class="text-center" style="font-size: 24px" [style.color]="newAsset.avgprice > newAsset.currentPrice  ? 'red' : 'green'">{{newAsset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                        <td class="text-center" style="font-size: 24px" [style.color]="newAsset.gain < 0  ? 'red' : 'green'">{{newAsset.currentPrice - newAsset.avgprice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                        <td class="text-center" style="font-size: 24px" [style.color]="newAsset.gain < 0  ? 'red' : 'green'">{{(newAsset.currentPrice - newAsset.avgprice) * newAsset.shares | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                        <td class="text-center" style="font-size: 24px" [style.color]="newAsset.gain < 0  ? 'red' : 'green'">{{newAsset.gain | number:'1.1-2'}}%</td>
+                                    </tr>
+                            </table>
+                                
+                        </div>
+                </div>
             </div>
 
-            <!--Transaction History table -->
-            <div id="rightForm">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                            <button (click)="displayTransactions('true')" style="color:whitesmoke; background-color:green">ONLY BOUGHT TRANSACTIONS</button>
-                    </li>
-                    <li class="nav-item">
-                            <button (click)="displayTransactions('false')" style="color:whitesmoke; background-color:red">ONLY SOLD TRANSACTIONS</button>
-                    </li>
-                    <li class="nav-item">
-                            <button (click)="displayTransactions('all')" style="color:black; background-color:whitesmoke" >ALL TRANSACTIONS</button>
-                    </li>
-                </ul>
-                <p id="heading">MY TRANSACTIONS</p>
-                <table id="tableClean">
-                    <thead>
-                    <tr>
-                        <th>Shares</th>
-                        <th>Price</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Gain</th>
-                    </tr>
-                    </thead>
-                    <tbody>    
-                    <tbody>
-                    <tbody>    
-                        <tr *ngFor="let transaction of transactions" 
-                            [style.background-color]="transaction.transaction == false ? 'red' : 'green'" 
-                            style="color:white">  
-                            <td> {{ transaction.shares }}</td>
-                            <td>${{ transaction.price  }}</td>
-                            <td> {{ transaction.buydate}}</td>   
-                            <td>${{ transaction.total  }}</td>
-                            <td> {{ transaction.total  }}%</td>
-                            <br>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-5" style="display: inline-flex; float: right;">
+                <div class="card text-black bg-light mb-3" style="min-width: 100%;">
+                        <div class="card-header" *ngIf="stockData">{{stockData.data.company}}</div>
+                        <div class="card-body">
+                            <p *ngIf="stockData">{{stockData.data.description}}</p>
+
+                            <table class = "table-responsive" *ngIf="stockData">
+                                <tr>
+                                    <th>CEO:&nbsp;&nbsp;</th>
+                                    <td>{{stockData.data.CEO}}</td>
+                                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sector:&nbsp;&nbsp;</th>
+                                    <td>{{stockData.data.sector}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Previous Year Sales:&nbsp;&nbsp;</th>
+                                    <td>{{stockData.data.sales}}</td>
+                                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dividend:&nbsp;&nbsp;</th>
+                                    <td>{{stockData.data.dividend | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Website:&nbsp;&nbsp;</th>
+                                    <td><a href={{stockData.data.website}}>{{stockData.data.website}}</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                </div>
             </div>
-    
-        </div>    
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-4">
+                <div class="card text-black bg-light mb-3" style="min-width: 100%;">
+                        <div class="card-header" *ngIf="stockData">My Transaction History</div>
+                        <div class="card-body " style="overflow-y:auto;">
+                        
+                            <table class="table-striped" id="assetDetails" cellpadding="20" style="align-content: center">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Shares</th>
+                                        <th>Share Price</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                    <tr *ngFor="let transaction of transactions" >
+                                        <td>{{transaction.buydate}}</td>
+                                        <td>{{transaction.shares}}</td>
+                                        <td>{{transaction.price | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                        <td *ngIf="transaction.transaction">Buy</td>
+                                        <td *ngIf="!transaction.transaction">Sell</td>
+                                    </tr>
+                            </table>
+                        </div>
+                </div>
+            </div>
+
+            <div class="col-8">
+                    <div class="card text-black bg-light mb-3" style="min-width: 100%;">
+                            <div class="card-header" *ngIf="stockData">5 Year Chart</div>
+                            <div class="card-body">
+                                <canvas #stockChart>{{ chart }}</canvas>
+                            </div>
+                    </div>
+                </div>
+
+        </div>
     </div>
 </div>
+        
+            
+            

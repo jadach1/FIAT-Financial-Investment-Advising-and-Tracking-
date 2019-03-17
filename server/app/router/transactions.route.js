@@ -21,5 +21,4 @@ module.exports = function(capp) {
 
     // Retrieve all Transactions
     capp.get('/portfolio/allTransactions', Transaction.findAll);
-
 }

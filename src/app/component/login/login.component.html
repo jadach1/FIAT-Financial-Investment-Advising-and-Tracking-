@@ -3,14 +3,18 @@
       <form #loginForm="ngForm">
         <div class="form-group">
           <label for="username2">Username</label>
-          <input type="text" class="form-control" id="username2" [formControl] = "username2">
+          <input type="text" required pattern="([0-9A-Za-z.]{1,16})" class="form-control" id="username2" [formControl] = "username2" maxlength="16">
+          <div [hidden]="username2.valid || username2.pristine"
+             class="alert alert-danger">
+            Username is invalid
+        </div>
         </div>
     
         <div class="form-group">
           <label for="password2">Password</label>
-          <input type="text" class="form-control" id="password2" required [formControl] = "password2">
+          <input type="password" pattern="([0-9A-Za-z.!?@#$%^&*()]{1,16})" class="form-control" id="password2" required [formControl] = "password2" maxlength="16">
         </div>
     
-        <button type="button" class="btn btn-dark" (click)="login()" data-dismiss="modal">Login</button>
+        <button type="button" [disabled]="!loginForm.form.valid" class="btn btn-dark" (click)="login()" data-dismiss="modal">Login</button>
       </form>
     </div>
