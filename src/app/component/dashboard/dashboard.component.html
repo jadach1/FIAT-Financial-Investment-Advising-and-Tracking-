@@ -1,226 +1,27 @@
-<!-- Begin Page Content -->
 <div id="dashboard-content">
-<div class="container-fluid">
-  <!-- Page Heading -->
-    <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Dashboard</h1>
+  <div class="container-fluid">
 
-    <div class="row">
-    <!--right half of the page-->
-    <div class ="col-6">
-
-    <!--Portfolio Table-->
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Portfolios</h6>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Portfolio Name</th>
-                <th># of Assets</th>
-                <th>Profit $</th>
-                <th>Gain/Loss %</th>
-                <th>Top Gainer %</th>
-                <th>Top Loser %</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th>Portfolio Name</th>
-                <th># of Assets</th>
-                <th>Profit</th>
-                <th>Gain/Loss</th>
-                <th>Top Gainer</th>
-                <th>Top Loser</th>
-              </tr>
-            </tfoot>
-            <tbody>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!--Watchlist Table-->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Watchlists</h6>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="watchlistTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Watchlist Name</th>
-                  <th># of Assets</th>
-                  <th>Profit $</th>
-                  <th>Gain/Loss %</th>
-                  <th>Top Gainer %</th>
-                  <th>Top Loser %</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Watchlist Name</th>
-                  <th># of Assets</th>
-                  <th>Profit</th>
-                  <th>Gain/Loss</th>
-                  <th>Top Gainer</th>
-                  <th>Top Loser</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <!-- end left half-->
-    
-    <!--right half of the page-->
-    <div class="col-6">
-
-        <div>
-            <canvas #dashboardChart>{{ chart }}</canvas>
-        </div>
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Advisor Highlights</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="advisorTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Advisor Name</th>
-                      <th>Buy Alert</th>
-                      <th>Sell Alert</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>joe joeyson</td>
-                      <td>$MSFT</td>
-                      <td>$NVDA</td>
-                    </tr>
-                    <tr>
-                      <td>doug dougerson</td>
-                      <td>$SPY</td>
-                      <td>$SPY</td>
-                    </tr>
-                  </tbody>
-                </table>
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2">
+                        <h1>Welcome, {{user.firstname}} {{user.lastname}}</h1>
+                      </div>
+                    </div>
+                  </div>
               </div>
-            </div>
+          </div>
+      </div>
+
+      <div class="row">
+
+        <!-- Portfolio Info Card -->
+          <div class="col-12" style="display: inline-flex; float: right;">
           </div>
 
-        </div>
-        <!-- /right half -->
       </div>
-      <!-- /row -->
-
-
-  </div>
+    </div>
 </div>
-  <!-- /.container-fluid -->

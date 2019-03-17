@@ -20,7 +20,7 @@ export class NavComponent implements OnInit {
   constructor(private router: Router, public nav: NavbarService, private authService: AuthenticationService, private userService: UserService) { 
     this.user = new User();
     this.userService.currentUser().subscribe(
-      res =>this.user = res
+      res => this.user = res
     );
   }
 

@@ -1,5 +1,6 @@
 <div class="container">
   <h1>Registration Form</h1>
+  <div [hidden]="submitted">
   <form #registrationForm="ngForm">
     <div class="form-group">
       <label for="username">Username</label>
@@ -62,7 +63,19 @@
         </div>
     </div>
 
-    <button type="button" [disabled]="!registrationForm.form.valid" class="btn btn-dark" (click)="addUser()" data-dismiss="modal">Register</button>
+    <button type="button" [disabled]="!registrationForm.form.valid" class="btn btn-dark" (click)="addUser()">Register</button>
 
   </form>
+  </div>
+  
+  <div [hidden]="!submitted">
+    <p>Registration Successful<span class="badge badge-light"></span></p>
+    <p>Please click the verification link sent to your email to login.<span class="badge badge-light"></span></p>
+  
+    <div class="btn-group btn-group-sm" >
+          <button type="button" class="btn btn-dark" data-dismiss="modal">OK</button>
+    </div>
+  </div>
+
+
 </div>

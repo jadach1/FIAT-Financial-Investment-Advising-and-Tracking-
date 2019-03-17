@@ -38,9 +38,7 @@ export class RegistrationComponent {
   private save(): void {
     console.log("adding user");
     this.UserService.addUser(this.user)
-        .subscribe(res=>
-          this.login()
-        );
+        .subscribe();
   }
 
   public login(): void{
