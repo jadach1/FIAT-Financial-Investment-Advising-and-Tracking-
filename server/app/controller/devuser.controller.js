@@ -1,6 +1,16 @@
 const db = require('../config/db.config.js');
+const nodemailer = require('nodemailer');
 const User = db.users;
- 
+const Token = db.tokens;
+
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: 'fiatseneca@gmail.com',
+		pass: 'fiatseneca123'
+	}
+});
+
 // Post a User
 exports.create = (req, res) => {	
 	// Save to PostgreSQL database
@@ -12,7 +22,39 @@ exports.create = (req, res) => {
 				"email": req.body.email,
 				"recoveryQuestion" : req.body.recoveryQuestion,
 				"recoveryAnswer": req.body.recoveryAnswer, 
-			}).then(users => {		
+				"isVerified" : false
+			}).then(users => {
+				//create random verification hash
+				rand=Math.floor((Math.random() * 100) + 54);
+
+				//store token in the db
+				Token.create({
+					"hash": rand,
+					"username": req.body.username
+				}).catch(err => {
+					res.status(500).json({msg: "error", details: err});
+				});
+
+				//create the link
+    		host=req.get('host');
+				link="http://"+req.get('host')+"/verify?id="+rand;		
+				
+				//send from fiatseneca to supplied email
+				const mailOptions = {
+					from: 'fiatseneca@gmail.com',
+					to: req.body.email,
+					subject: 'FIAT - Validate your email',
+					html : "Hello, " + req.body.firstname + "<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>" 
+				};
+
+				//attempt the send
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+					}
+				});
 			// Send created user to client
 			res.json(users);
 		}).catch(err => {
@@ -20,6 +62,22 @@ exports.create = (req, res) => {
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
+exports.verify = (req,res) => {
+	Token.findByPk(req.query.id).then(Hash => {
+		User.update(
+			{isVerified: true},
+			{where: {username: Hash.username}}
+		).then(result =>
+			res.redirect('http://myvmlab.senecacollege.ca:6350/home')
+		).catch(err =>
+			console.log(err)
+		)
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
+	});
+}
  
 // Find a User by Id
 exports.findById = (req, res) => {	
@@ -60,7 +118,7 @@ exports.delete = (req, res) => {
 exports.login = (req, res) => {	
 	console.log(req.body.username);
 	User.findByPk(req.body.username).then(User => {
-		if (User && req.body.password == User.password){
+		if (User && req.body.password == User.password && User.isVerified == true){
 			console.log(User.username + " logged in");
 			res.send(generateTokens());
 		}else{

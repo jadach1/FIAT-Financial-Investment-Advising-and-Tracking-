@@ -1,5 +1,13 @@
 const db = require('../config/db.config.js');
 const User = db.users;
+
+var transporter = nodemailer.createTransport({
+	service: 'mail',
+	auth: {
+		user: 'fiatseneca@mail.com',
+		pass: 'fiatseneca'
+	}
+});
  
 // Post a User
 exports.create = (req, res) => {	
@@ -13,6 +21,19 @@ exports.create = (req, res) => {
 				"recoveryQuestion" : req.body.recoveryQuestion,
 				"recoveryAnswer": req.body.recoveryAnswer, 
 			}).then(users => {		
+				var mailOptions = {
+					from: 'fiatseneca@mail.com',
+					to: req.body.email,
+					subject: 'Sending Email using Node.js',
+					text: 'That was easy!'
+				};
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+					}
+				});
 			// Send created user to client
 			res.json(users);
 		}).catch(err => {
@@ -58,7 +79,7 @@ exports.delete = (req, res) => {
 
 // Login user
 exports.login = (req, res) => {	
-	console.log(req.body.username);
+	console.log("dsfdsffsd");
 	User.findByPk(req.body.username).then(User => {
 		if (User && req.body.password == User.password){
 			console.log(User.username + " logged in");

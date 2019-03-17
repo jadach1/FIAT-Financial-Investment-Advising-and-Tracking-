@@ -27,6 +27,7 @@
     "google-finance-data": "0.0.5",
     "ng4-loading-spinner": "^1.2.3",
     "ngx-auth": "^5.0.0",
+    "nodemailer": "^5.1.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

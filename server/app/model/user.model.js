@@ -7,21 +7,24 @@ module.exports = (sequelize, Sequelize) => {
 		password: {
 			type:Sequelize.STRING,
 		},
-	  firstname: {
+	  	firstname: {
 			type: Sequelize.STRING,
-	  },
-	  lastname: {
+	  	},
+	  	lastname: {
 			type: Sequelize.STRING,
-	  },
-	  email: {
+	  	},
+	  	email: {
 			type: Sequelize.STRING,
-	  },
-	  recoveryQuestion: {
+	  	},
+	  	recoveryQuestion: {
 			type: Sequelize.STRING,
 		},
 		recoveryAnswer: {
 			type: Sequelize.STRING,
-	  }
+		},
+		isVerified: {
+			type: Sequelize.BOOLEAN,
+		}
 	});
 	
 	return User;

@@ -16,4 +16,7 @@ module.exports = function(app) {
     app.post('/user/login', user.login);
 
     app.post('/user/refresh', user.refresh);
+
+    //verify user
+    app.get('/verify', user.verify);
 }

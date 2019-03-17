@@ -5,7 +5,6 @@ var app           = express();
 const cors        = require("cors");
 var bodyParser    = require('body-parser');
 
-
 // start local
 // node back_Server local cloud 
 
