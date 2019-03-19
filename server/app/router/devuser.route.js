@@ -7,6 +7,9 @@ module.exports = function(app) {
     // Retrieve a single user by username
     app.get('/user/:username', user.findById);
  
+    // Check if user exists
+    app.get('/jacob/:field/:value', user.checkUserName)
+
     // Update a user with username
     app.put('/user', user.update);
  

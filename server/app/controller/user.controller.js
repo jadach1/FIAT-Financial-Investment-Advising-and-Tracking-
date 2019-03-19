@@ -101,6 +101,22 @@ exports.refresh = (req, res) => {
 	})
 }
 
+// Return a true or false value to see if an Asset already exists
+exports.checkUserName = (req, res) => {
+	
+	console.log("working check username");
+	db.sequelize
+		.query('select count(*) from users where username = \'admin\';')
+			.then(count => {
+				// Send All TransactionObjects to Client
+				res.json(count);
+				console.log("we are checking to see if asset exists " + count);
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({msg: "error", details: err});
+			});
+};
+
 function generateTokens() {
     return {
       accessToken: 'access-token-' + Math.random(),
