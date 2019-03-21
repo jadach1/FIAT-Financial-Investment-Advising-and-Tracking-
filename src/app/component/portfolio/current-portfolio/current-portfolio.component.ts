@@ -214,27 +214,34 @@ export class CurrentPortfolioComponent implements OnInit {
         data => {
           assetAmounts.push(Math.round(data.data.price * asset.shares));
           this.spinnerService.hide();
+        },
+        err => {
+          console.log("There was an error in portfolio whilst trying to connect to the database")
+        },
+        // Chart will be built here
+        () => {
+          var myChart = new Chart(this.context, {
+            type: 'pie',
+            data: {
+              labels: assetLabels,
+              datasets: [{
+                label: '# of Tomatoes',
+                data: assetAmounts,
+                backgroundColor: colourList,
+                borderColor: colourList,
+                borderWidth: 1
+              }]
+            },
+            options: {
+               cutoutPercentage: 20,
+               responsive: true  
+            }
+          });
         }      
       );
     });
   
-    var myChart = new Chart(this.context, {
-      type: 'pie',
-      data: {
-        labels: assetLabels,
-        datasets: [{
-          label: '# of Tomatoes',
-          data: assetAmounts,
-          backgroundColor: colourList,
-          borderColor: colourList,
-          borderWidth: 1
-        }]
-      },
-      options: {
-         cutoutPercentage: 20,
-         responsive: true  
-      }
-    });
+    
   }
 
   openModal(symbol: string, shares: number, portfolio: number){

@@ -4,25 +4,42 @@
   <form #registrationForm="ngForm">
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" pattern="([0-9A-Za-z.]{1,16})" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel" maxlength="16">
+      <input type="text"  autofocus     name="username"
+             required     maxlength="16" pattern="([0-9A-Za-z]{1,16})" 
+             class="form-control" id="username" 
+             required [(ngModel)]="user.username"  #username="ngModel" >
       <div [hidden]="username.valid || username.pristine"
              class="alert alert-danger">
             Username is invalid
         </div>
     </div>
 
+    <!-- PASSWORD FORM FIELD-->
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" pattern="([0-9A-Za-z.!?@#$%^&*()]{1,16})" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel" maxlength="16">
-      <div [hidden]="password.valid || password.pristine"
+      <input type="password"  id="password" required name="password"
+             class="form-control"  minlength="8" maxlength="24"
+             pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" 
+             [(ngModel)]="user.password" #password="ngModel" >
+             <div [hidden]="password.valid || password.pristine"
              class="alert alert-danger">
             Password is invalid
-        </div>
+            Please include at least 1 uppercase character, 1 lowercase character, and 1 number
+            Please make sure your password is at least 8 characters in length
+            </div>  
+    </div>
+
+    <!-- PASSWORD CONFIRMATION FORM FIELD-->
+    <div class="form-group">
+      <label for="password">Confirm Password</label>
+      <input type="password"  id="passwordC" required name="passwordC"
+             class="form-control"   
+             [(ngModel)]="confirmPassword" #passwordC="ngModel" >
     </div>
 
     <div class="form-group">
       <label for="firsname">First Name</label>
-      <input type="text" required pattern="([A-Za-z]{1,16})" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" maxlength="16">
+      <input type="text" required pattern="([A-Za-z.-']{1,40})" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" maxlength="16">
       <div [hidden]="firstname.valid || firstname.pristine"
              class="alert alert-danger">
             First name is invalid
@@ -31,7 +48,7 @@
 
     <div class="form-group">
       <label for="lastname">Last Name</label>
-      <input type="text" required pattern="([A-Za-z.]{1,16})" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel" maxlength="16">
+      <input type="text" required pattern="([A-Za-z.'-]{1,40})" class="form-control" id="lastname" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel" maxlength="16">
       <div [hidden]="lastname.valid || lastname.pristine"
              class="alert alert-danger">
             Last name is invalid
@@ -40,7 +57,7 @@
 
     <div class="form-group">
       <label for="alterEgo">Email</label>
-      <input type="email" pattern="([0-9A-Za-z.!@#$%^&*()]{1,26})"class="form-control" id="email" [(ngModel)]="user.email" name="email" #email="ngModel" maxlength="26">
+      <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email" #email="ngModel" maxlength="26">
       <div [hidden]="email.valid"
              class="alert alert-danger">
             Email is invalid
@@ -69,11 +86,11 @@
   </div>
   
   <div [hidden]="!submitted">
-    <p>Registration Successful<span class="badge badge-light"></span></p>
-    <p>Please click the verification link sent to your email to login.<span class="badge badge-light"></span></p>
+    <p><span class="badge badge-light">Registration {{registrationStatus}}</span></p>
+    <p>{{registrationString}}<span class="badge badge-light"></span></p>
   
     <div class="btn-group btn-group-sm" >
-          <button type="button" class="btn btn-dark" data-dismiss="modal">OK</button>
+          <button type="button" (click)="openForm()" class="btn btn-dark" data-dismiss="modal">OK</button>
     </div>
   </div>
 
