@@ -142,6 +142,7 @@ exports.refresh = (req, res) => {
  This function takes 2 parameters, a field name and a value.
  It will search the users table in the DB
  It will count how many $value objects are returned from the $field 
+ It will return a single number
 */
 exports.checkUserName = (req, res) => {
 	const field = req.params.field
@@ -151,7 +152,7 @@ exports.checkUserName = (req, res) => {
 		.query('select count(*) from users where ' + field + '=\'' + value + '\';')
 			.then(obj => {
 				// Send All TransactionObjects to Client
-				res.json(obj);
+				res.json(obj[0][0].count);
 				console.log("we are checking to see if asset exists = " + obj[0][0].count);
 			}).catch(err => {
 				console.log(err);

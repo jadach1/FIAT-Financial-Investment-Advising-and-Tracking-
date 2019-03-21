@@ -8,7 +8,7 @@ module.exports = function(app) {
     app.get('/user/:username', user.findById);
  
     // Check if user exists
-    app.get('/jacob/:field/:value', user.checkUserName)
+    app.get('/user/:field/:value', user.checkUserName)
 
     // Update a user with username
     app.put('/user', user.update);
