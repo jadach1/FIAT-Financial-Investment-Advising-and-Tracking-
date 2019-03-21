@@ -12,7 +12,7 @@
                     <label for="symbol">Company Symbol</label>
                       <input  type="text" name="symbol" id="symbol" placeholder={{stringSymbol}} 
                               class="form-control"      autofocus
-                              required    maxlength="6" pattern="([0-9A-Za-z.]{1,6})" 
+                              required    maxlength="6" pattern="([0-9A-Za-z.-]{1,6})" 
                               [(ngModel)]="Transaction.symbol"      #symbol="ngModel"
                               >
                       <div    [hidden]="symbol.valid || symbol.pristine"
