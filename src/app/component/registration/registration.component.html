@@ -39,7 +39,7 @@
 
     <div class="form-group">
       <label for="firstname">First Name</label>
-      <input type="text" required pattern="([A-Za-z.-']{1,40})" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" maxlength="16">
+      <input type="text" required pattern="([A-Za-z.'-]{1,40})" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" maxlength="16">
       <div [hidden]="firstname.valid || firstname.pristine"
              class="alert alert-danger">
             First name is invalid
