@@ -6,7 +6,7 @@
       <label for="username">Username</label>
       <input type="text"  autofocus     name="username"
              required     maxlength="16" pattern="([0-9A-Za-z]{1,16})" 
-             class="form-control" id="username" 
+             class="form-control" id="username"  autofocus
              required [(ngModel)]="user.username"  #username="ngModel" >
       <div [hidden]="username.valid || username.pristine"
              class="alert alert-danger">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="form-group">
-      <label for="firsname">First Name</label>
+      <label for="firstname">First Name</label>
       <input type="text" required pattern="([A-Za-z.-']{1,40})" class="form-control" id="firstname" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" maxlength="16">
       <div [hidden]="firstname.valid || firstname.pristine"
              class="alert alert-danger">
@@ -57,8 +57,10 @@
 
     <div class="form-group">
       <label for="alterEgo">Email</label>
-      <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email" #email="ngModel" maxlength="26">
-      <div [hidden]="email.valid"
+      <input type="email" id="email" name="email"
+             required     pattern="^([a-zA-Z0-9._])+([@]){1}([a-zA-Z])+([.]){1}([a-zA-Z])+$"
+             class="form-control"  [(ngModel)]="user.email"  #email="ngModel">
+      <div   [hidden]="email.valid || email.pristine" 
              class="alert alert-danger">
             Email is invalid
         </div>
@@ -85,6 +87,9 @@
   </form>
   </div>
   
+  <!-- 
+    Alert the user of either a successful or unsuccessful registration
+  -->
   <div [hidden]="!submitted">
     <p><span class="badge badge-light">Registration {{registrationStatus}}</span></p>
     <p>{{registrationString}}<span class="badge badge-light"></span></p>
