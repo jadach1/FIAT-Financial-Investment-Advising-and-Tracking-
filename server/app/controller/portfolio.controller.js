@@ -20,7 +20,6 @@ exports.create = (req, res) => {
 // Find a Portfolio by Id
 exports.findById = (req, res) => {	
 	    Portfolio.findByPk(req.query.portfolioId).then(Portfolio => {
-			console.log(Portfolio);
 			res.json(Portfolio);
 		}).catch(err => {
 			console.log(err);

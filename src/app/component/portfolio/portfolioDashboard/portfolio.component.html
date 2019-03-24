@@ -1,3 +1,5 @@
+<app-nav></app-nav>
+<app-sidebar></app-sidebar>
 <div id="portfolio-content">
   <div class="container-fluid">
 
@@ -116,7 +118,7 @@
                         <div> 
                             <div class="form-group">
                                 <label for="portfolioName">Portfolio Name</label>
-                                <input type="text" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
+                                <input required type="text" maxlength="16" pattern="([0-9A-Za-z]{1,16})" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
                                 <div [hidden]="portfolioName.valid || portfolioName.pristine"
                                        class="alert alert-danger">
                                        Portfolio Name is required
@@ -144,14 +146,10 @@
                                   </label> 
                               </li>
                           </ul>  
-                          <div [hidden]="newportfolio.valid || newportfolio.pristine"
-                                class="alert alert-danger">
-                                portfolio type is required
-                          </div>
                         </div>
                       </div>
     
-                      <div><button type="button" class="btn btn-dark" (click)="addPortfolio()">Create</button></div>
+                      <div><button type="button" class="btn btn-dark" [disabled]="!portfolioForm.form.valid"  (click)="addPortfolio()">Create</button></div>
                       
                       </form>
               </div>

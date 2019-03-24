@@ -6,5 +6,6 @@ export class transaction {
     price: any;
     buydate: Date;
     transaction: Boolean;
+    currency: Boolean; //true cad, false usd
 }
 

@@ -10,7 +10,21 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/portfolio">
           <i class="fas fa-fw fa-table"></i>
-          <span> Portfolio</span></a>
+          <span> Portfolio Overview</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#subPages" data-toggle="collapse" class="collapsed" style="color: rgba(255, 255, 255, 0.5); padding-left:15px;">
+          <i class="fas fa-fw fa-table"></i> 
+          <span> My Portfolios </span> 
+          <i class="fas fa-angle-down"></i></a>
+
+          <div id="subPages" class="collapse ">
+            <ul class="nav">
+              <li *ngFor="let portfolio of portfolios"><a [routerLink]="['/portfolio/', portfolio.portfolioId]" class="nav-link">{{portfolio.portfolioName}}</a></li>
+              <hr>
+              <li *ngFor="let watchlist of watchlists"><a [routerLink]="['/portfolio/', watchlist.portfolioId]" class="nav-link">{{watchlist.portfolioName}}</a></li>
+            </ul>
+          </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/advisors">

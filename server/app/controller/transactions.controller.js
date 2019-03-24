@@ -11,8 +11,7 @@ exports.create = (req, res) => {
 				"price": 			   req.body.price,
         		"buydate": 			   req.body.buydate,
 				"transaction": 		   req.body.transaction,
-				"gain": 			   req.body.gain,
-				"total": 			   req.body.total
+				"currency":            req.body.currency
 			}).then(TransactionObject => {		
 			console.log("Creating Transaction");	
 			// Send created TransactionObject to client

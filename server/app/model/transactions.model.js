@@ -22,7 +22,10 @@ module.exports = (sequelize, Sequelize) => {
 		},
 		transaction: {
 				type: Sequelize.BOOLEAN
-		}
+		},
+		currency: {
+			type: Sequelize.BOOLEAN
+	}
   	});
 	
 	return myTransaction;
