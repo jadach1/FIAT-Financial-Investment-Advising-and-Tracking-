@@ -58,5 +58,9 @@ export class AssetService {
     return this.http.get('http://myvmlab.senecacollege.ca:6349/asset/' + symbol)
   }
 
+  getConversion(): Observable<any> {
+    return this.http.get('http://myvmlab.senecacollege.ca:6349/convert')
+  }
+
 }
 
