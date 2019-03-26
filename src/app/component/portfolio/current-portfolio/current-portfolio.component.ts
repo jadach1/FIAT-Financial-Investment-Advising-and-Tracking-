@@ -45,7 +45,7 @@ export class CurrentPortfolioComponent implements OnInit {
   totPercent: any = 0;
   totalPortfolioValue: any = 0;
   loading: boolean;
-  exchangeRate: any = 1.34; // 1 usd is 1.34 cad
+  exchangeRate: any = 1; // set 1 for now
   
   constructor(private assetService: AssetService, 
     private nav: NavbarService, 
@@ -63,22 +63,29 @@ export class CurrentPortfolioComponent implements OnInit {
     this.nav.show();
     this.sidebar.show();
 
-    /*this.assetService.getExchange().subscribe(res=> {
-      this.exchangeRate = res;
-    });*/
-
-    console.log(this.exchangeRate);
-
     this.spinnerService.show();
 
+    //get portfolioid
     this.portfolioID = parseInt(this.route.snapshot.paramMap.get('portfolioId'));
 
+    //get currency user
     this.userService.currentUser().subscribe(
       res => {
         this.username = res.username;
         this.buildPortfolio();
     });
 
+    //get latest conversion rate
+    this.assetService.getConversion().subscribe(
+      res => {
+        res = JSON.parse(res);
+        this.exchangeRate = res.quotes.USDCAD;
+      }
+    )
+
+    console.log(this.exchangeRate);
+
+    //retrieve portfolio transactions
     this.portfolioService.getPortfolio(this.portfolioID).subscribe(
       res => {
         this.userPortfolio = res;

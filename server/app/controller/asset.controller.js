@@ -1,5 +1,6 @@
 const db = require('../config/db.config.js');
 const scraper = require("@concide/stock-scraper")
+const http = require('http');
 const CurrentAsset = db.assets;
 
 // Post a CurrentAsset
@@ -101,5 +102,22 @@ exports.GetPrice = (req, res) => {
 	}).catch(err => {
 		console.log(err);
 		res.status(500).json({msg: "error", details: err});
+	});
+};
+
+exports.Convert = (req, response) => {
+	http.get('http://www.apilayer.net/api/live?access_key=25ce7abf8cf89da77c7b5b7d8f1cc555&currencies=USD,CAD&format=1', (res) =>{
+		res.setEncoding('utf-8');
+		var body = "";
+	
+		res.on('data', function(data) {
+			body += data;
+		});
+	
+		res.on('end', () => {
+			response.json(body);
+		});
+	}).on("error", (err) => {
+		console.log("Error: " + err.message);
 	});
 };
