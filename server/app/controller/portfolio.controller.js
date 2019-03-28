@@ -1,8 +1,11 @@
+
+
 const db = require('../config/db.config.js');
 const Portfolio = db.portfolios;
  
 // Post a portfolio
 exports.create = (req, res) => {	
+
 	// Save to PostgreSQL database
 	Portfolio.create({
                 "username": req.body.username, 
@@ -63,3 +66,21 @@ exports.findAll = (req, res) => {
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
+// Fetch all portfolio names associated with a username
+exports.getNames = (req, res) => {
+	let arrayOfNames = []
+
+	db.sequelize.query('select distinct \"portfolioName\", \"portfolioId\" from portfolios where username = \'' + req.params.username + '\';')
+		.then( obj => {
+			obj[1]['rows'].forEach(element => {
+				arrayOfNames.push({id: element.portfolioId, name: element.portfolioName})	
+			})
+		}).then( obj => {
+			res.json(arrayOfNames)
+			console.log(arrayOfNames)
+		}).catch( err => {
+			console.log(err);
+			res.status(500).json({msg: "error", details: err});
+		})
+}

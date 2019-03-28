@@ -10,6 +10,8 @@ import { UserService } from '../service/user.service'
 import { User } from '../model/user'
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
+
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -19,7 +21,8 @@ const httpOptions = {
 })
 export class AssetService {
 
-  private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
+  //private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
+  private Url = 'http://localhost:8080/portfolio/';
   private singleAsset: testAsset;
   private assetList: testAsset[];
   private transactionList: transaction[];
@@ -58,5 +61,10 @@ export class AssetService {
     return this.http.get('http://myvmlab.senecacollege.ca:6349/asset/' + symbol)
   }
 
+  // Get all portfolio names related to the user currently logged in
+  getAssetNames (id: string): Observable<any[]> {
+    console.log("call")
+    return this.http.get<any[]>(this.Url + 'getAssetNames/' + id);
+  }
 }
 
