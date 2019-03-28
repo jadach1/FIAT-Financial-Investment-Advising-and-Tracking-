@@ -26,6 +26,7 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
 import { CreateAdvisorComponent } from './component/advisors/create-advisor/create-advisor.component';
 import { AdvisorDetailsComponent } from './component/advisors/advisor-details/advisor-details.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

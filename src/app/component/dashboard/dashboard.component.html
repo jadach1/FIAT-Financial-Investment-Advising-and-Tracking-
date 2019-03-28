@@ -19,11 +19,41 @@
       </div>
 
       <div class="row">
-
-        <!-- Portfolio Info Card -->
-          <div class="col-12" style="display: inline-flex; float: right;">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="75%">
+                      <div class="p-2">
+                        <select id="role" ng-model="portfolio" (change)="selectName(portfolio.id);">
+                          <option value="">--select Portfolio--</option>
+                          <option [ngValue]="portfolio.id"   *ngFor="let portfolio of pNames"  >{{portfolio.name}} {{portfolio.id}}</option>
+                          
+                       </select>
+                       <select id="role2"  >
+                        <option value="">--select Asset--</option>
+                        <option value="asset" *ngFor="let asset of assets" >{{asset}}</option>
+                     </select>
+                      </div>
+                    </div>
+                  </div>
+              </div>
           </div>
+      </div>
 
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2">
+                         NEWS 
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
       </div>
     </div>
 </div>
