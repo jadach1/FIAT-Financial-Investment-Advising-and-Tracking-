@@ -20,19 +20,19 @@
 
       <div class="row">
         <!-- Page Heading -->
-          <div class="col-12">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                   <div class="d-flex justify-content-center" width="75%">
-                      <div class="p-2">
-                        <select id="role" ng-model="portfolio" (change)="selectName(portfolio.id);">
+          <div class="col-12">Select Asset Based on Portfolio 1
+            <div class="card text-white bg-success mb-3">Select Asset Based on Portfolio 2
+                <div class="card-body">Select Asset Based on Portfolio 3
+                   <div class="d-flex justify-content-center" width="75%">Select Asset Based on Portfolio 4
+                      <div class="p-2">Select Asset Based on Portfolio 5
+                        <select id="role"  (change)="selectName($event.target.value);">
                           <option value="">--select Portfolio--</option>
-                          <option [ngValue]="portfolio.id"   *ngFor="let portfolio of pNames"  >{{portfolio.name}} {{portfolio.id}}</option>
+                          <option [ngValue]="portfolio.id" *ngFor="let portfolio of pNames"  >{{portfolio.name}}</option>
                           
                        </select>
                        <select id="role2"  >
                         <option value="">--select Asset--</option>
-                        <option value="asset" *ngFor="let asset of assets" >{{asset}}</option>
+                        <option  [ngValue]="asset" *ngFor="let asset of assets" >{{asset}}</option>
                      </select>
                       </div>
                     </div>
