@@ -11,6 +11,7 @@ import { UserService }           from '../../service/user.service'
 import { AssetService }          from  '../../service/asset.service'
 import { PortfolioService }      from '../../service/portfolio.service'
 import { User }                  from 'src/app/model/user';
+import { NewsService }           from '../../service/news.service'
 
 
 /*
@@ -21,6 +22,16 @@ user needs to see the portfolio Name
 interface portfolioNames{
   id  : any,
   name: any
+}
+
+/*
+This is the used by the dashboard news feed
+*/
+interface newsObject{
+  title:       any
+  description: any
+  url:         any 
+  author:      any
 }
 
 @Component({
@@ -35,29 +46,57 @@ export class DashboardComponent implements OnInit {
   pNames  : portfolioNames[]
   assets  : any[]
   assetsInPortfolios = new Array()
+  news = {}
+  arrayOfNews = [{}]
 
-  constructor( public nav: NavbarService, 
-               public sidebar: SidebarService, 
-               private authService: AuthenticationService, 
-               private userService: UserService,
-               private PortfolioService: PortfolioService,
-               private assetService: AssetService) {
+  constructor( public nav:               NavbarService        , public sidebar:       SidebarService, 
+               private authService:      AuthenticationService, private userService:  UserService,
+               private PortfolioService: PortfolioService     , private assetService: AssetService,
+               private newsService:             NewsService) {
 
-              this.nav.show(); 
-              this.sidebar.show();
-              this.user = new User();
-              this.userService.currentUser()
-                .subscribe(
-                  res => this.user = res,
-                  err => console.log("error connecting to database"),
-                  ()  => this.fetchPortfolioNames()
-                );
+                  this.nav.show(); 
+                  this.sidebar.show();
+                  this.user = new User();
+                  this.userService.currentUser()
+                    .subscribe(
+                      res => this.user = res,
+                      err => console.log("error connecting to database"),
+                      ()  => this.fetchPortfolioNames()
+                    );
   } // constructor ends
  
   ngOnInit() {
-      
+    this.getNews();
   }
 
+  private getNews(){
+    this.newsService.getNews("nvda")
+    .subscribe(
+              res => this.news = res,
+              err => console.log("error in get news"),
+              () => this.parseNews()
+              )
+  }
+
+  private parseNews(){
+       this.news['articles'].forEach( (element, index) => {
+
+                    // console.log("first index is  " + index)
+                    // console.log(Object.keys(element))
+                          this.arrayOfNews[index] = {
+                              title: element['title'],
+                              description: element['description'],
+                              author: element['author'],
+                              url: element['url']
+                              // title: "title",
+                              // description: "desc",
+                              // author: "author",
+                              // url: "url"
+                            }
+                            //console.log("done " + index)
+                        })
+                      console.log(this.arrayOfNews)
+  }
   /*
     https://newsapi.org/v2/everything?q=nvda&from=2019-03-27&sortBy=publishedAt&apiKey=334280a9530a40ffaf133c91f01013e6
     need today's date in the form or yyyy-mm-dd

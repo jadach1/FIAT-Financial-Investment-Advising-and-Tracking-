@@ -30,7 +30,9 @@ export class AssetService {
   private username: string;
 
 
-  constructor(private http: HttpClient, private transactionService: TransactionsService, private userService: UserService) {
+  constructor(private http:               HttpClient, 
+              private transactionService: TransactionsService, 
+              private userService:        UserService) {
     this.username = <string>sessionStorage.getItem('currentUser'); 
    }
 

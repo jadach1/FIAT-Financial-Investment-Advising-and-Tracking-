@@ -44,11 +44,18 @@
       <div class="row">
         <!-- Page Heading -->
           <div class="col-12">
-            <div class="card text-white bg-success mb-3">
+            <div class="card text-white bg-success mb-3">NEWS
                 <div class="card-body">
                    <div class="d-flex justify-content-center" width="100%">
-                      <div class="p-2">
-                         NEWS 
+                      <div class="p-2" >
+                        <table *ngFor="let news of arrayOfNews">
+                          <thead> {{news.title}}  </thead>
+                          <tbody> By: {{news.author}}
+                            <tr > description: </tr>
+                            <tr>  {{news.description}}  </tr>
+                            <tr> --------------------------------------------------------------------------- </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
