@@ -83,7 +83,7 @@ export class AddAssetComponent implements OnInit {
    addTransaction() : void {
     this.submitted = true;
     if (this.Transaction.shares > this.passedInShares && this.Transaction.transaction == false){
-      this.Transaction.shares == this.passedInShares;
+      this.Transaction.shares = this.passedInShares;
     }
     this.transactionService.addTransaction(this.Transaction, this.portfolioId).subscribe();
    }

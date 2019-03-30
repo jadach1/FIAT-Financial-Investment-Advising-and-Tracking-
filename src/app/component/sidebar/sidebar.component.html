@@ -12,20 +12,19 @@
           <i class="fas fa-fw fa-table"></i>
           <span> Portfolio Overview</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#subPages" data-toggle="collapse" class="collapsed" style="color: rgba(255, 255, 255, 0.5); padding-left:15px;">
-          <i class="fas fa-fw fa-table"></i> 
-          <span> My Portfolios </span> 
-          <i class="fas fa-angle-down"></i></a>
 
-          <div id="subPages" class="collapse ">
-            <ul class="nav">
-              <li *ngFor="let portfolio of portfolios"><a [routerLink]="['/portfolio/', portfolio.portfolioId]" class="nav-link">{{portfolio.portfolioName}}</a></li>
-              <hr>
-              <li *ngFor="let watchlist of watchlists"><a [routerLink]="['/portfolio/', watchlist.portfolioId]" class="nav-link">{{watchlist.portfolioName}}</a></li>
-            </ul>
-          </div>
-      </li>
+      <div id="subPages">
+        <ul class="nav-item">
+          <li style="color: rgba(255, 255, 255, 0.5)">My Portfolios</li>
+          <li *ngFor="let portfolio of portfolios"><a [routerLink]="['/portfolio/', portfolio.portfolioId]" class="nav-link">{{portfolio.portfolioName}}</a></li> 
+        </ul>
+
+        <ul class="nav-item">
+          <li style="color: rgba(255, 255, 255, 0.5)">My Watchlists</li>
+          <li *ngFor="let watchlist of watchlists"><a [routerLink]="['/portfolio/', watchlist.portfolioId]" class="nav-link">{{watchlist.portfolioName}}</a></li>
+        </ul>
+      </div>
+
       <li class="nav-item">
         <a class="nav-link" routerLink="/advisors">
           <i class="fas fa-fw fa-chart-area"></i>

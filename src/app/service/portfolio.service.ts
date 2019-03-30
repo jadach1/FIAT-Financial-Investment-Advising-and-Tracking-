@@ -32,9 +32,8 @@ export class PortfolioService {
     return this.http.post<Portfolio2>(this.Url+'/create', portfolio, httpOptions);
   }
  
-  deletePortfolio (portfolio: Portfolio2): Observable<Portfolio2> {
-    const username = portfolio.username;
-    const url = this.Url+'/'+username;
+  deletePortfolio (portfolioID: Number): Observable<Portfolio2> {
+    const url = this.Url+'/'+portfolioID;
     return this.http.delete<Portfolio2>(url, httpOptions);
   }
  

@@ -72,6 +72,11 @@ export class PortfolioComponent implements OnInit {
     this.portfolioService.addPortfolio(this.newportfolio).subscribe(
       ()=> window.location.reload()
     );
-    
+  }
+
+  private deletePortfolio(portfolioID: Number){
+    this.portfolioService.deletePortfolio(portfolioID).subscribe(
+      ()=> window.location.reload()
+    );
   }
 }

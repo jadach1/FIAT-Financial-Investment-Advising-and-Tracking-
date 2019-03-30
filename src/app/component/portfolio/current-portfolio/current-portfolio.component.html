@@ -27,7 +27,7 @@
 
     <div class="row" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
       <!-- Page Heading -->
-        <div class="col-12">
+        <div class="col-5">
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-center" width="100%">
@@ -35,17 +35,11 @@
                             <thead>
                               <th class="text-center" style="font-size: 14px">CURRENT VALUE OF PORTFOLIO (CAD)</th>
                               <th class="text-center" style="font-size: 14px">CURRENT GAIN/LOSS (CAD) </th>
-                              <th class="text-center" style="font-size: 14px">TOTAL INVESTED (CAD):                 </th>
-                              <th class="text-center" style="font-size: 14px">TOTAL PULLED OUT (CAD):               </th>
-                              <th class="text-center" style="font-size: 14px">TOTAL REALIZED GAIN (CAD):            </th>
                             </thead>
                             <tbody>
                               <tr>
                                 <th class="text-center" style="font-size: 24px">{{totalPortfolioValue | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
                                 <th class="text-center" style="font-size: 24px" [style.color]="totPercent < 0  ? 'red' : 'white'">{{totPercent | number:'1.1-2'}}%</th>
-                                <th class="text-center" style="font-size: 24px">{{totIn | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
-                                <th class="text-center" style="font-size: 24px">{{totOut | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
-                                <th class="text-center" style="font-size: 24px" [style.color]="(totOut-totIn) < 0  ? 'red' : 'white'">{{totOut - totIn | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
                               </tr>
                             </tbody>
                           </table>
@@ -53,6 +47,29 @@
                 </div>
             </div>
         </div>
+        <div class="col-7">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                      <div class="d-flex justify-content-center" width="100%">
+                          <table class = "table table-borderless" width = 100% cellspacing = "0">
+                              <thead>
+                                <th class="text-center" style="font-size: 14px">TOTAL INVESTED (CAD):                 </th>
+                                <th class="text-center" style="font-size: 14px">TOTAL PULLED OUT (CAD):               </th>
+                                <th class="text-center" style="font-size: 14px">TOTAL REALIZED GAIN (CAD):            </th>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th class="text-center" style="font-size: 24px">{{totIn | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                                  <th class="text-center" style="font-size: 24px">{{totOut | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                                  <th class="text-center" style="font-size: 24px" [style.color]="(totOut-totIn) < 0  ? 'red' : 'white'">{{totOut - totIn | currency:'USD':'symbol-narrow':'1.2-2'}}</th>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">

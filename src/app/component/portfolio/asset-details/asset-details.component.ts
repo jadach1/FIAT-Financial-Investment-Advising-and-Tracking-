@@ -61,12 +61,21 @@ export class AssetDetailsComponent implements OnInit {
 
       this.user = new User();
 
+      //get latest conversion rate
+      this.assetService.getConversion().subscribe(
+        res => {
+          res = JSON.parse(res);
+          this.exchangeRate = res.quotes.USDCAD;
+        }
+      )
+
       this.userService.currentUser().subscribe(
         res =>{
           this.user = res;
           this.buildDetails();
         }
       );
+
     }
 
   ngOnInit() {
@@ -124,18 +133,20 @@ export class AssetDetailsComponent implements OnInit {
 
         this.assetService.getPrice(this.symbol).subscribe(
           data => {
-            if (this.newAsset.currency == true){
-              this.newAsset.currentPrice = (data.data.price*this.exchangeRate);
-              this.newAsset.gain = (((data.data.price*this.exchangeRate) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
+            if (data.data == undefined){
             }else{
-              this.newAsset.currentPrice = (data.data.price);
-              this.newAsset.gain = (((data.data.price) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
-            }
-            this.stockData = data;
-            this.buildChart();
-            this.spinnerService.hide();
-          }      
-        );
+              if (this.newAsset.currency == true){
+                this.newAsset.currentPrice = (data.data.price*this.exchangeRate);
+                this.newAsset.gain = (((data.data.price*this.exchangeRate) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
+              }else{
+                this.newAsset.currentPrice = (data.data.price);
+                this.newAsset.gain = (((data.data.price) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
+              }
+              this.stockData = data;
+              this.buildChart();
+              this.spinnerService.hide();
+            }  
+          });
 
         this.transactions = transactionList;
         
@@ -150,7 +161,7 @@ export class AssetDetailsComponent implements OnInit {
     let stockPrices = new Array();
 
     let arr = this.stockData.charts.chartDailyLast5Years.filter(function (value, index, ar) {
-      return (index % 30 == 0);
+      return (index % 20 == 0);
     } );
 
     arr.forEach(day => {

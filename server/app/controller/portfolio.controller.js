@@ -41,11 +41,12 @@ exports.update = (req, res) => {
  
 // Delete a Portfolio by Id
 exports.delete = (req, res) => {
+	console.log("doksdfkofdsokdfskofsd");
 	const portfolioid = req.params.portfolioid;
 	Portfolio.destroy({
-			where: { portfolioid: portfolioid }
+			where: { portfolioId: portfolioid }
 		}).then(() => {
-			res.status(200).json( { msg: 'Deleted Successfully -> PortfolioID = ' + username } );
+			res.status(200).json( { msg: 'Deleted Successfully -> PortfolioID = ' + portfolioid } );
 		}).catch(err => {
 			console.log(err);
 			res.status(500).json({msg: "error", details: err});
