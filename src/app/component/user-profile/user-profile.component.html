@@ -1,5 +1,4 @@
 <div class="container">
-  <h1>User Profile</h1>
   <form #registrationForm="ngForm" *ngIf="user">
     <div class="form-group">
       <label for="name">Username</label>
@@ -49,25 +48,23 @@
 <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Change password?</h5>
+      <div class="modal-header" style="background-color: green">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: white" >Change password?</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
         </div>
-<div class="container">
+<div class="container" style="background-color: whitemsoke">
   
   <form #registrationForm="ngForm" *ngIf="user">
     <div class="form-group">
       <label for="alterEgo">New Password</label>
-      <input type="text" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
+      <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
     </div>
 
     <div class="form-group">
       <label for="recoveryQuestion">Recovery Question</label>
-      <select class="form-control" id="recoveryQuestion" required [(ngModel)]="user.recoveryQuestion" name="recoveryQuestion" #recoveryQuestion="ngModel" disabled>
-        <option *ngFor="let ques of questions" [value]="ques">{{ques}}</option>
-      </select>
+      <input type="text" class="form-control" id="recoveryQuestion" [(ngModel)]="user.recoveryQuestion" name="recoveryQuestion" #recoveryQuestion="ngModel" disabled>
     </div>
 
     <div class="form-group">
@@ -79,9 +76,9 @@
         </div>
     </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="updateUser()" data-dismiss="modal">Save</button>
-      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+    <div class="modal-footer" style="background-color: green">
+      <button type="button" class="btn btn-dark" (click)="updateUser()" data-dismiss="modal">Save</button>
+      <button class="btn btn-dark" type="button" data-dismiss="modal">Cancel</button>
       <!-- <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#changePasswordModal">Save</button> -->
     </div>
   </form>

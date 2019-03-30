@@ -75,6 +75,7 @@ export class CurrentPortfolioComponent implements OnInit {
         this.buildPortfolio();
     });
 
+
     //get latest conversion rate
     this.assetService.getConversion().subscribe(
       res => {
@@ -173,22 +174,25 @@ export class CurrentPortfolioComponent implements OnInit {
             newAsset.avgpriceSold = newAsset.totalMoneyOut / newAsset.sharesSold;
 
             this.assetService.getPrice(transaction.symbol).subscribe(
-              data => {            
-                //if canadian convert to cad
-                if (transaction.currency == true){
-                  newAsset.currentPrice = (data.data.price*this.exchangeRate);
-                  newAsset.gain = (((data.data.price*this.exchangeRate) - newAsset.avgprice) / newAsset.avgprice) * 100;
-                }else{
-                  newAsset.currentPrice = (data.data.price);
-                  newAsset.gain = (((data.data.price) - newAsset.avgprice) / newAsset.avgprice) * 100;
-                }
-                if (!data.data.price){
+              data => {         
+                if (data.data === undefined){
                   this.totalPortfolioValue += (newAsset.shares * newAsset.avgprice);
                 }else{
                   this.totalPortfolioValue += (data.data.price*this.exchangeRate) * newAsset.shares;
+
+                  //if canadian convert to cad
+                  if (transaction.currency == true){
+                    newAsset.currentPrice = (data.data.price*this.exchangeRate);
+                    newAsset.gain = (((data.data.price*this.exchangeRate) - newAsset.avgprice) / newAsset.avgprice) * 100;
+                  }else{
+                    newAsset.currentPrice = (data.data.price);
+                    newAsset.gain = (((data.data.price) - newAsset.avgprice) / newAsset.avgprice) * 100;
+                  }
+
                 }
+ 
                 this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100;  
-              }      
+              }
             );
             assetList.push(newAsset);       
           }
@@ -242,7 +246,12 @@ export class CurrentPortfolioComponent implements OnInit {
       colourList.push(dynamicColors());
       this.assetService.getPrice(asset.symbol).subscribe(
         data => {
-          assetAmounts.push(Math.round(data.data.price * asset.shares));
+          if (data.data === undefined){
+            assetAmounts.push(Math.round(asset.shares*asset.avgprice));
+          }
+          else{
+            assetAmounts.push(Math.round(data.data.price * asset.shares));
+          } 
           this.spinnerService.hide();
         },
         err => {
@@ -264,7 +273,10 @@ export class CurrentPortfolioComponent implements OnInit {
             },
             options: {
                cutoutPercentage: 20,
-               responsive: true  
+               responsive: true,
+               legend: {
+                display: false
+               },  
             }
           });
         }      
