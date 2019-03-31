@@ -24,15 +24,6 @@ interface portfolioNames{
   name: any
 }
 
-/*
-This is the used by the dashboard news feed
-*/
-interface newsObject{
-  title:       any
-  description: any
-  url:         any 
-  author:      any
-}
 
 @Component({
   selector: 'app-dashboard',
@@ -43,16 +34,33 @@ interface newsObject{
 export class DashboardComponent implements OnInit {
 
   user    : User
-  pNames  : portfolioNames[]
-  assets  : any[]
-  assetsInPortfolios = new Array()
-  news = {}
-  arrayOfNews = [{}]
+  pNames  : portfolioNames[] // list of portfolio names
+  assets  : any[]            // list of asset names
+  // assetsInPortfolios = new Array() 
+  news = {}                  // object to hold the raw json after the fetch
+  arrayOfNews = [{}]         // after we parse the news
+  hide = true
+  searchString:    string  // search box string
+  readMoreTitle:   string   // modal
+  readMoreContent: string   // modal
+  contentURL:      string   // modal
+
+  /*
+  Below we have the variables which we will use to build our URL to fetch news information from
+  // example of full url
+  // https://newsapi.org/v2/everything?q=nvda&from=2019-03-27&sortBy=publishedAt&apiKey=334280a9530a40ffaf133c91f01013e6
+  */
+  private url         = "https://newsapi.org/v2/everything?q="
+  private searchSymbol
+  private appendToURL = "&from="
+  private date
+  private key         = "&sortBy=publishedAt&apiKey=334280a9530a40ffaf133c91f01013e6"
+  private URLstring: any
 
   constructor( public nav:               NavbarService        , public sidebar:       SidebarService, 
                private authService:      AuthenticationService, private userService:  UserService,
                private PortfolioService: PortfolioService     , private assetService: AssetService,
-               private newsService:             NewsService) {
+               private newsService:      NewsService) {
 
                   this.nav.show(); 
                   this.sidebar.show();
@@ -66,11 +74,21 @@ export class DashboardComponent implements OnInit {
   } // constructor ends
  
   ngOnInit() {
-    this.getNews();
+   
   }
 
-  private getNews(){
-    this.newsService.getNews("nvda")
+  // gets called when user enters submit button beside search box
+  private searchFor() {
+    if ( !this.searchString  )
+    {
+      this.searchString = "Why Donald Trump is so great"
+    }
+    this.createURL(this.searchString)
+  }
+
+  // gets a json object
+  private getNews(urlString: string){
+    this.newsService.getNews(urlString)
     .subscribe(
               res => this.news = res,
               err => console.log("error in get news"),
@@ -78,37 +96,21 @@ export class DashboardComponent implements OnInit {
               )
   }
 
+  // we parse the json object we got into a news reel object
   private parseNews(){
        this.news['articles'].forEach( (element, index) => {
-
-                    // console.log("first index is  " + index)
-                    // console.log(Object.keys(element))
                           this.arrayOfNews[index] = {
                               title: element['title'],
                               description: element['description'],
                               author: element['author'],
-                              url: element['url']
-                              // title: "title",
-                              // description: "desc",
-                              // author: "author",
-                              // url: "url"
+                              url: element['url'],
+                              content: element['content']
                             }
-                            //console.log("done " + index)
                         })
-                      console.log(this.arrayOfNews)
   }
-  /*
-    https://newsapi.org/v2/everything?q=nvda&from=2019-03-27&sortBy=publishedAt&apiKey=334280a9530a40ffaf133c91f01013e6
-    need today's date in the form or yyyy-mm-dd
-    need symbol
-    need to reconstruct string
 
-    need to call news service
-    news service has an interface
-    title
-    description
-    url 
-    author
+  /*
+  We make a call to the portfolio service to get all portfolio names associated with this user
   */
   private fetchPortfolioNames(): void{
     this.PortfolioService.getPortfolioNames(this.user.username)
@@ -119,18 +121,11 @@ export class DashboardComponent implements OnInit {
       )
   }
 
-  private fetchAssets(idNumber: any): void{
-    console.log("called")
-    this.assetService.getAssetNames(idNumber)
-    .subscribe(
-      res=> this.assets = res,
-      err=> console.log("error connecting to database in dashboard to get assets"),
-      ()=> console.log("done")
-    )
-  }
-
+  /*
+  After the user makes a selection from the drop-down menu, we will cross reference there selected 
+  portfolio name with the id, and call another function to fetch all the assets associated with that ID
+  */
   public selectName(event): void {
-
     this.pNames.forEach((element)=>{
         if ( event === element.name)
         {
@@ -140,5 +135,60 @@ export class DashboardComponent implements OnInit {
     }) // end of for loop
   }  // end of selectName
 
+  /*
+  Once we have all the portfolio names we can fetch all the subsequent assets in those portfolios
+  */
+  private fetchAssets(idNumber: any): void{
+    this.assetService.getAssetNames(idNumber)
+    .subscribe(
+      res=> this.assets = res,
+      err=> console.log("error connecting to database in dashboard to get assets"),
+      ()=> console.log("done")
+    )
+  }
+
+  private hideIt() {
+    this.hide = false
+  }
+
+  private setUpModal(title: any, content: any) {
+    this.readMoreTitle = title
+    this.readMoreContent = content
+  }
+
+
+  /*
+    this function generates a date in the format
+    yyyy-mm-dd
+  */
+  private  generateDate(): void {
+    const date  = new Date()
+    const day   = date.getDate()
+    const month = date.getMonth()
+    const year  = date.getFullYear()
+    this.date   = year+"-"+month+"-"+day
+  }
+
+  private  setSymbol(symbol: string): void {
+    this.searchSymbol = symbol
+  }
+
+  /*
+  This function will create a url for us to fetch the news feed,
+  we will generate today's date , and set the search symbol we are interested in,
+  we will then return the finished url 
+  */
+  private async createURL(symbol: string){
+      await this.generateDate()
+      await this.setSymbol(symbol)
+      this.URLstring =  this.url + this.searchSymbol + this.appendToURL + this.date + this.key
+      this.getNews(this.URLstring)
+      this.hide = false // show the form
+  }
+
+  // redirect to desired url
+  private redirect(url: any) {
+    window.open(url)
+  }
 }
 
