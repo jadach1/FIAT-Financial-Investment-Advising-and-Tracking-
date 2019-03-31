@@ -121,3 +121,21 @@ exports.Convert = (req, response) => {
 		console.log("Error: " + err.message);
 	});
 };
+// Fetch all Asset names associated with a portfolio, for dashboard
+exports.GetAllAssetNames = (req, res) => {
+	
+	let arrayOfAssets = []
+
+	db.sequelize.query('select distinct \"symbol\" from transactions where \"portfolioId\" ='+req.params.id+';')
+		.then( obj => {
+			obj[1]['rows'].forEach(element => {
+				arrayOfAssets.push(element.symbol)	
+			})
+		}).then( obj => {
+			res.json(arrayOfAssets)
+			console.log(arrayOfAssets)
+		}).catch( err => {
+			console.log(err);
+			res.status(500).json({msg: "error", details: err});
+		})
+}
