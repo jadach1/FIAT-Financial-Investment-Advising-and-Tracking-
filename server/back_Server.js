@@ -76,6 +76,7 @@ require('./app/router/devuser.route.js')(app);
 require('./app/router/asset.route.js')(app);
 require('./app/router/transactions.route.js')(app);
 require('./app/router/portfolio.route.js')(app);
+require('./app/router/advisor.route.js')(app);
 
 let db = require('./app/config/db.config.js');
 

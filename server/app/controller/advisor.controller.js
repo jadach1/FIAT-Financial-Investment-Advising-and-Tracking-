@@ -1,5 +1,5 @@
 const db = require('../config/db.config.js');
-const Advisor = db.advisor;
+const Advisor = db.advisors;
 
 // Post a Advisor
 exports.create = (req, res) => {	
