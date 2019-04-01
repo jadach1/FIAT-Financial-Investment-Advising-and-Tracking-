@@ -20,38 +20,63 @@
 
       <div class="row">
 
-        <!-- Portfolio Info Card -->
+        <!-- Advisor Info Card -->
           <div class="col-6" style="display: inline-flex; float: right;">
             <div class="card text-black bg-light mb-3" style="min-width: 90%;">
                     <div class="card-header"><h6>About Advisors</h6></div>
                     <div class="card-body">
                       <p style="font-size: 14px;">Create an advisor here</p>
-                      <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
+                      <!-- <button type="button" class="btn btn-sm" role="button" routerLink="/createadvisor">Create Advisor</button> -->
+                      <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#createAdvisor-modal">Create New</button>
                     </div>
             </div>
           </div>
 
-          <!--watchlist table-->
+                    <!--portfolio table-->
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                        <h4 style="color: green; font-weight: bold;">My Portfolios </h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Portfolio Name</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                              <tr *ngFor="let portfolio of portfolios" [ngClass]="'tablerow'">
+                                <td>{{ portfolio.portfolioName}}</td>
+                                <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', portfolio.portfolioId]">View</button></td>
+                              </tr>  
+                            </table> 
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+          <!--Advisors table-->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h4 style="color: green; font-weight: bold;">My Advisors</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="watchlistTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="advisorsTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Watchlist Name</th>
-                      <th>Algorithms</th>
                       <th>Portfolio Name</th>
+                      <!-- <th>Models</th> -->
+                      <th>Advisor Name</th>
                       <th></th>
                     </tr>
                   </thead>
-                    <tr [ngClass]="'tablerow'">
-                      <td>Advisor 1</td>
-                      <td style="text-align:center;">my algs</td>
-                      <td style="text-align:center;">portfolio name</td>
-                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', watchlist.portfolioId]">View Portfolio</button></td>
+                    <tr *ngFor="let portfolio of portfolios" [ngClass]="'tablerow'">
+                      <td>{{ advisor.portfolioId}}</td>
+                      <!-- <td>{{ advisor.}}</td> -->
+                      <td>{{ advisor.advisorName}}</td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', portfolio.portfolioId]">View Portfolio</button></td>
                     </tr>  
                   </table> 
                 </div>
@@ -62,39 +87,153 @@
 </div>
 
 <div [hidden]="submitted">
-<div class="modal fade" id="portfolio-modal" role="dialog">
-    <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="container">
-            <h1>Add New Portfolio</h1>    
-                <form #portfolioForm="ngForm">
-                    <div class="form-group">
-                        <div> 
-                            <div class="form-group">
-                                <label for="portfolioName">Advisor</label>
-                                <input required type="text" maxlength="16" pattern="([0-9A-Za-z]{1,16})" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
-                              </div>
-    
-                          <label for="portfolioType">Algorithms</label>
-                          <ul class="nav justify-content-center">
-                              <li *ngFor="let model of models" class="nav-item">
-                                  <label class="checkbox">alg1
-                                    <input  type="checkbox"  name="check" id="check"
-                                            required [value]="true" class="form-control"
-                                            [(ngModel)]="newportfolio.portfolioType" #portfolioTypeP="ngModel" 
+  <div class="modal fade" id=createAdvisor-modal role="dialog">
+      <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="container">
+              <h1>Add New Advisor</h1>    
+                  <form #advisorForm="ngForm">
+                      <div class="form-group">
+                          <div> 
+                              <div class="form-group">
+                                  <label for="advisorName">Advisor Name</label>
+                                  <input required type="text" maxlength="16" pattern="([0-9A-Za-z]{1,16})" class="form-control" id="advisorName" required [(ngModel)]="newadvisor.advisorName" name="advisorName" #portfolioName="ngModel">
+                                  <div [hidden]="advisorName.valid || advisorName.pristine"
+                                         class="alert alert-danger">
+                                         Advisor Name is required
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="portfolioId">Portfolio to watch</label>
+                                  <select class="form-control" id="portfolioId" required [(ngModel)]="advisor.portfolioId" name="portfolioId" #portfolioId="ngModel">
+                                    <option *ngFor="let portfolio of portfolios" required [value]="portfolio">{{ portfolio.portfolioId}}</option>
+                                  </select>
+                                </div>
+      
+                            <label for="technicals">Technical Models</label>
+                            <ul class="nav justify-content-center">
+                                <li class="nav-item">
+                                    <label class="checkbox">MACD
+                                      <input  type="checkbox"  name="macd" id="macd"
+                                              required [value]="false" class="form-control"
+                                              [(ngModel)]="newadvisor.macd" #macd="ngModel" 
+                                              >
+                                      <span class="checkmark"></span>
+                                    </label> 
+                                </li>
+                                <li class="nav-item">
+                                    <label class="checkbox">SMA 
+                                      <input  type="checkbox"  name="sma" id="sma"
+                                              required [value]="false" class="form-control" 
+                                              [(ngModel)]="newadvisor.sma" #sma="ngModel" 
+                                              >
+                                      <span class="checkmark"></span>
+                                    </label> 
+                                </li>
+                                <li class="nav-item">
+                                  <label class="checkbox">EMA 
+                                    <input  type="checkbox"  name="ema" id="sma"
+                                            required [value]="false" class="form-control" 
+                                            [(ngModel)]="newadvisor.ema" #ema="ngModel" 
                                             >
                                     <span class="checkmark"></span>
                                   </label> 
                               </li>
-                          </ul>  
+                              <li class="nav-item">
+                                <label class="checkbox">WMA 
+                                  <input  type="checkbox"  name="wma" id="wma"
+                                          required [value]="false" class="form-control" 
+                                          [(ngModel)]="newadvisor.wma" #wma="ngModel" 
+                                          >
+                                  <span class="checkmark"></span>
+                                </label> 
+                            </li>
+                            <li class="nav-item">
+                              <label class="checkbox">RSI 
+                                <input  type="checkbox"  name="rsi" id="rsi"
+                                        required [value]="false" class="form-control" 
+                                        [(ngModel)]="newadvisor.rsi" #rsi="ngModel" 
+                                        >
+                                <span class="checkmark"></span>
+                              </label> 
+                          </li>
+                          <li class="nav-item">
+                            <label class="checkbox">STOCHRSI 
+                              <input  type="checkbox"  name="stochrsi" id="stochrsi"
+                                      required [value]="false" class="form-control" 
+                                      [(ngModel)]="newadvisor.stochrsi" #stochrsi="ngModel" 
+                                      >
+                              <span class="checkmark"></span>
+                            </label> 
+                        </li>
+                        <li class="nav-item">
+                          <label class="checkbox">STOCH 
+                            <input  type="checkbox"  name="stoch" id="stoch"
+                                    required [value]="false" class="form-control" 
+                                    [(ngModel)]="newadvisor.stoch" #stoch="ngModel" 
+                                    >
+                            <span class="checkmark"></span>
+                          </label> 
+                      </li>
+                      <li class="nav-item">
+                        <label class="checkbox">WILLR 
+                          <input  type="checkbox"  name="willr" id="willr"
+                                  required [value]="false" class="form-control" 
+                                  [(ngModel)]="newadvisor.willr" #willr="ngModel" 
+                                  >
+                          <span class="checkmark"></span>
+                        </label> 
+                    </li>
+                    <li class="nav-item">
+                      <label class="checkbox">ULTOSC 
+                        <input  type="checkbox"  name="ultosc" id="ultosc"
+                                required [value]="false" class="form-control" 
+                                [(ngModel)]="newadvisor.ultosc" #ultosc="ngModel" 
+                                >
+                        <span class="checkmark"></span>
+                      </label> 
+                  </li>
+                  <li class="nav-item">
+                    <label class="checkbox">ADXR 
+                      <input  type="checkbox"  name="adxr" id="adxr"
+                              required [value]="false" class="form-control" 
+                              [(ngModel)]="newadvisor.adxr" #adxr="ngModel" 
+                              >
+                      <span class="checkmark"></span>
+                    </label> 
+                </li>
+                <li class="nav-item">
+                  <label class="checkbox">MOM 
+                    <input  type="checkbox"  name="mom" id="mom"
+                            required [value]="false" class="form-control" 
+                            [(ngModel)]="newadvisor.mom" #mom="ngModel" 
+                            >
+                    <span class="checkmark"></span>
+                  </label> 
+              </li>
+              <li class="nav-item">
+                <label class="checkbox">CCI 
+                  <input  type="checkbox"  name="cci" id="cci"
+                          required [value]="false" class="form-control" 
+                          [(ngModel)]="newadvisor.cci" #cci="ngModel" 
+                          >
+                  <span class="checkmark"></span>
+                </label> 
+            </li>
+                            </ul>  
+                          </div>
                         </div>
-                      </div>
-    
-                      <div><button type="button" class="btn btn-dark" [disabled]="!portfolioForm.form.valid"  (click)="addPortfolio()">Create</button></div>
-                      
-                      </form>
-              </div>
-        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-dark" [disabled]="!advisorForm.form.valid"  (click)="addAdvisor()">Create</button>
+                          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                          <!-- <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#changePasswordModal">Save</button> -->
+                        </div>
+                        <!-- <div><button type="button" class="btn btn-dark" [disabled]="!advisorForm.form.valid"  (click)="addAdvisor()">Create</button></div> -->
+                        
+                        </form>
+                </div>
+          </div>
+      </div>
     </div>
   </div>
-</div>

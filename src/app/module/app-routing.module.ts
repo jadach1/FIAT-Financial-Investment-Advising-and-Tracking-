@@ -9,6 +9,7 @@ import { CurrentPortfolioComponent }  from '../component/portfolio/current-portf
 import { AddAssetComponent }          from '../component/portfolio/add-asset/add-asset.component';
 import { AssetDetailsComponent }      from '../component/portfolio/asset-details/asset-details.component';
 import { AdvisorsComponent }          from '../component/advisors/advisors.component';
+import { CreateAdvisorComponent }          from '../component/advisors/create-advisor/create-advisor.component';
 import { HomeComponent }              from '../component/home/home.component';
 import { DashboardComponent }         from '../component/dashboard/dashboard.component';
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'portfolio/:portfolioId',                         component: CurrentPortfolioComponent, canActivate: [ProtectedGuard]},
   { path: 'portfolio/:portfolioId/:symbol',                 component: AssetDetailsComponent, canActivate: [ProtectedGuard]},
   { path: 'advisors',                                       component: AdvisorsComponent, canActivate:         [ProtectedGuard]},
+  { path: 'createadvisor',                                  component: CreateAdvisorComponent, canActivate:         [ProtectedGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
 ]
