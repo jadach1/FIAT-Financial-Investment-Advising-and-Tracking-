@@ -10,6 +10,7 @@ import { AuthenticationService } from '../../../service/authentication.service'
 import { testAsset }             from '../../../model/testAsset'
 import { ActivatedRoute }        from '@angular/router';
 import { Location }              from '@angular/common';
+import { AddAssetComponent }     from '../../portfolio/add-asset/add-asset.component'
 
 import { NgbModal }              from '@ng-bootstrap/ng-bootstrap'
 import { PortfolioService }      from '../../../service/portfolio.service';
