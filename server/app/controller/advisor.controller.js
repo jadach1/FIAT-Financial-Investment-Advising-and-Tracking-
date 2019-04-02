@@ -76,3 +76,20 @@ exports.findAll = (req, res) => {
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
+exports.alphaData = (req, response) => {
+	http.get('https://www.alphavantage.co/query?function=MACD&symbol=AAPL&interval=daily&series_type=open&apikey=A4MNDIDEKI72ARZJ', (res) =>{
+		res.setEncoding('utf-8');
+		var body = "";
+	
+		res.on('data', function(data) {
+			body += data;
+		});
+	
+		res.on('end', () => {
+			response.json(body);
+		});
+	}).on("error", (err) => {
+		console.log("Error: " + err.message);
+	});
+};

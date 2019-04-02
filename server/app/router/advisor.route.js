@@ -15,4 +15,6 @@ module.exports = function(app) {
     // Delete a advisor with advisorId
     app.delete('/advisor/:advisorid', Advisor.delete);
 
+   app.get('/alphaData', Advisor.alphaData);
+
 }

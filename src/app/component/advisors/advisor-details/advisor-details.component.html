@@ -1,7 +1,7 @@
 <app-nav></app-nav>
 <app-sidebar></app-sidebar>
 <!--TOP TABLE DISPLAYING OVERALL STATISTICS-->
-<div id="current-portfolio-content">
+<div id="advisorDetails-content">
   <div class="container-fluid">
 
     <div class="row" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
@@ -10,14 +10,14 @@
           <div class="card text-white bg-success mb-3">
               <div class="card-body">
                   <div class="d-flex align-items-center" width="100%">
-                      <div class="mr-auto p-2">
+                      <!-- <div class="mr-auto p-2">
                           <button class="btn btn-dark" (click)="openModal('0',0, portfolioID)">Buy New Asset</button>
-                      </div>
+                      </div> -->
                       <div class="mr-auto p-2">
                           <h1 *ngIf="userPortfolio">{{userPortfolio.portfolioName}}</h1>
                       </div>
                       <div class="p-2">
-                        <h1>Portfolio Overview</h1>
+                        <h1>Advisor details</h1>
                       </div>
                     </div>
                   </div>
@@ -25,9 +25,9 @@
           </div>
       </div>
 
-    <div class="row" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
+    <!-- <div class="row" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"> -->
       <!-- Page Heading -->
-        <div class="col-12">
+        <!-- <div class="col-12">
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-center" width="100%">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
 
@@ -75,8 +75,7 @@
                           <th>Current Price (CAD)</th>
                           <th>Average Buy Price</th>
                           <th>Shares Owned</th>
-                          <th>Current Total</th>
-                          <th>Gain/Loss (unrealized)</th>
+                          <th>Advice</th>
                         </tr>
                       </thead>
                       <tbody >    
@@ -86,11 +85,11 @@
                             <td *ngIf="asset.currentPrice == 0">Price Not Available</td>
                             <td>{{ asset.avgprice | currency:'CAD':'symbol-narrow':'1.2-2'}}</td>
                             <td>{{ asset.shares}}</td>
-                            <td *ngIf="asset.currentPrice != 0">{{asset.shares * asset.currentPrice | currency:'CAD':'symbol-narrow':'1.2-2'}}</td>
-                            <td *ngIf="asset.currentPrice == 0">{{asset.avgprice * asset.shares | currency:'CAD':'symbol-narrow':'1.2-2'}}</td>
-                            <td [style.color]="asset.gain < 0  ? 'red' : 'green'">%{{asset.gain | number:'1.1-2'}}</td>
-                            <td style="border:none; text-align: center"><button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID, asset.currency)">Trade</button></td>
-                            <td style="border:none; text-align: center"><button type="button" class="btn btn-dark"[routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >DETAILS</button></td>
+                            <td></td>
+                            <!-- <td *ngIf="asset.currentPrice == 0">{{asset.avgprice * asset.shares | currency:'CAD':'symbol-narrow':'1.2-2'}}</td>
+                            <td [style.color]="asset.gain < 0  ? 'red' : 'green'">%{{asset.gain | number:'1.1-2'}}</td> -->
+                            <!-- <td style="border:none; text-align: center"><button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID, asset.currency)">Trade</button></td>
+                            <td style="border:none; text-align: center"><button type="button" class="btn btn-dark"[routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >DETAILS</button></td> -->
                             <p></p>
                           <br>
                         </tr>   
@@ -115,11 +114,10 @@
                   <thead>
                       <tr> 
                         <th>Symbol</th>
-                        <th>Current Price (USD)</th>
+                        <th>Current Price (CAD)</th>
                         <th>Average Buy Price</th>
                         <th>Shares Owned</th>
-                        <th>Current Total</th>
-                        <th>Gain/Loss (unrealized)</th>
+                        <th>Advice</th>
                       </tr>
                     </thead>
                     <tbody >    
@@ -129,11 +127,11 @@
                           <td *ngIf="asset.currentPrice == 0">Price Not Available</td>
                           <td>{{ asset.avgprice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                           <td>{{ asset.shares}}</td>
-                          <td *ngIf="asset.currentPrice != 0">{{asset.shares * asset.currentPrice | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
-                          <td *ngIf="asset.currentPrice == 0">{{asset.avgprice * asset.shares | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
-                          <td [style.color]="asset.gain < 0  ? 'red' : 'green'">%{{asset.gain | number:'1.1-2'}}</td>
-                          <td style="border:none; text-align: center"><button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID, asset.currency)">Trade</button></td>
-                          <td style="border:none; text-align: center"><button type="button" class="btn btn-dark"[routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >DETAILS</button></td>
+                          <td></td>
+                          <!-- <td *ngIf="asset.currentPrice == 0">{{asset.avgprice * asset.shares | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                          <td [style.color]="asset.gain < 0  ? 'red' : 'green'">%{{asset.gain | number:'1.1-2'}}</td> -->
+                          <!-- <td style="border:none; text-align: center"><button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID, asset.currency)">Trade</button></td>
+                          <td style="border:none; text-align: center"><button type="button" class="btn btn-dark"[routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >DETAILS</button></td> -->
                           <p></p>
                         <br>
                       </tr>   

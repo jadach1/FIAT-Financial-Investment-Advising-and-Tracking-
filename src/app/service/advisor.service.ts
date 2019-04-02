@@ -19,7 +19,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AdvisorService {
-  private Url = 'http://myvmlab.senecacollege.ca:6349/advisor';
+  //private Url = 'http://myvmlab.senecacollege.ca:6349/advisor';
+  private Url = 'http://localhost:8080/advisor';
   constructor(private http: HttpClient, private portfolioService: PortfolioService) { }
 
   getAdvisor(advisorId: number): Observable<advisor> {
@@ -47,5 +48,9 @@ export class AdvisorService {
     return this.http.put(this.Url, advisor, httpOptions);
   }
 
-
+  getMacd(advisor: advisor): Observable<any> {
+    //build query string based on passed data
+    let data = {queryparams: }//query string here
+    return this.http.get('http://localhost:8080/alphaData', {params: data});
+  }
 }

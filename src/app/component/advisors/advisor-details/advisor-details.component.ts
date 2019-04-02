@@ -11,6 +11,8 @@ import { testAsset }             from '../../../model/testAsset'
 import { ActivatedRoute }        from '@angular/router';
 import { Location }              from '@angular/common';
 import { AddAssetComponent }     from '../../portfolio/add-asset/add-asset.component'
+import { AdvisorService } from '../../../service/advisor.service';
+import { advisor } from '../../../model/advisor';
 
 import { NgbModal }              from '@ng-bootstrap/ng-bootstrap'
 import { PortfolioService }      from '../../../service/portfolio.service';
@@ -47,8 +49,14 @@ export class AdvisorDetailsComponent implements OnInit {
   totalPortfolioValue: any = 0;
   loading: boolean;
   exchangeRate: any = 1; // set 1 for now
+
+  private advisors: advisor[] = new Array();
+  macd: number[] = [12, 26];
+  rsi: number[] = [30, 70];
+
   
-  constructor(private assetService: AssetService, 
+  
+  constructor(private assetService: AssetService,
     private nav: NavbarService, 
     private sidebar: SidebarService, 
     private http: HttpClient,
@@ -59,6 +67,7 @@ export class AdvisorDetailsComponent implements OnInit {
     private modalService: NgbModal,
     private portfolioService: PortfolioService,
     private transactionService: TransactionsService,
+    private advisorService : AdvisorService,
     private spinnerService: Ng4LoadingSpinnerService
     ) {
     this.nav.show();
@@ -221,6 +230,10 @@ export class AdvisorDetailsComponent implements OnInit {
         this.totDiff = this.totIn - this.totOut;
       }  
     });
+  }
+
+  advice(){
+    
   }
 
   private buildChart(){

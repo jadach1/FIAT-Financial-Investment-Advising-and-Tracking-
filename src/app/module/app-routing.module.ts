@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'portfolio/:portfolioId',                         component: CurrentPortfolioComponent, canActivate: [ProtectedGuard]},
   { path: 'portfolio/:portfolioId/:symbol',                 component: AssetDetailsComponent, canActivate:     [ProtectedGuard]},
   { path: 'advisors',                                       component: AdvisorsComponent, canActivate:         [ProtectedGuard]},
-  { path: 'advisordetails',                                 component: AdvisorDetailsComponent, canActivate:   [ProtectedGuard]},
+  { path: 'advisordetails/:portfolioId',                                 component: AdvisorDetailsComponent, canActivate:   [ProtectedGuard]},
   { path: 'createadvisor',                                  component: CreateAdvisorComponent, canActivate:    [ProtectedGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
