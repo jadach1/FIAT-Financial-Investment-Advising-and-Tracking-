@@ -9,7 +9,8 @@ import { CurrentPortfolioComponent }  from '../component/portfolio/current-portf
 import { AddAssetComponent }          from '../component/portfolio/add-asset/add-asset.component';
 import { AssetDetailsComponent }      from '../component/portfolio/asset-details/asset-details.component';
 import { AdvisorsComponent }          from '../component/advisors/advisors.component';
-import { CreateAdvisorComponent }          from '../component/advisors/create-advisor/create-advisor.component';
+import { CreateAdvisorComponent }     from '../component/advisors/create-advisor/create-advisor.component';
+import { AdvisorDetailsComponent }    from '../component/advisors/advisor-details/advisor-details.component';
 import { HomeComponent }              from '../component/home/home.component';
 import { DashboardComponent }         from '../component/dashboard/dashboard.component';
 
@@ -19,9 +20,10 @@ const routes: Routes = [
   { path: 'dashboard',                                      component: DashboardComponent, canActivate:        [ProtectedGuard]},
   { path: 'portfolio',                                      component: PortfolioComponent, canActivate:        [ProtectedGuard]},
   { path: 'portfolio/:portfolioId',                         component: CurrentPortfolioComponent, canActivate: [ProtectedGuard]},
-  { path: 'portfolio/:portfolioId/:symbol',                 component: AssetDetailsComponent, canActivate: [ProtectedGuard]},
+  { path: 'portfolio/:portfolioId/:symbol',                 component: AssetDetailsComponent, canActivate:     [ProtectedGuard]},
   { path: 'advisors',                                       component: AdvisorsComponent, canActivate:         [ProtectedGuard]},
-  { path: 'createadvisor',                                  component: CreateAdvisorComponent, canActivate:         [ProtectedGuard]},
+  { path: 'advisordetails',                                 component: AdvisorDetailsComponent, canActivate:   [ProtectedGuard]},
+  { path: 'createadvisor',                                  component: CreateAdvisorComponent, canActivate:    [ProtectedGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
 ]
