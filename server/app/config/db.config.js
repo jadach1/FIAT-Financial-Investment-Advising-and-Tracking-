@@ -21,6 +21,7 @@ db.sequelize = sequelize;
  
 //Models/tables
 db.users        = require('../model/user.model.js')(sequelize, Sequelize);
+db.advisors     = require('../model/advisor.model.js')(sequelize, Sequelize);
 db.assets       = require('../model/asset.model')(sequelize, Sequelize);
 db.transactions = require('../model/transactions.model')(sequelize, Sequelize);
 db.portfolios   = require('../model/portfolio.model')(sequelize, Sequelize);
