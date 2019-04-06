@@ -9,4 +9,5 @@ export class testAsset {
     totalMoneyOut: any = 0;
     currentPrice: any = 0;
     gain: any = 0;
+    currency: any;
 }

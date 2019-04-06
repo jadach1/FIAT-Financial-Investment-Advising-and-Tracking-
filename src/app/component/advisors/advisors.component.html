@@ -1,3 +1,100 @@
-<p>
-  advisors works!
-</p>
+<app-nav></app-nav>
+<app-sidebar></app-sidebar>
+<div id="advisor-content">
+  <div class="container-fluid">
+
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2">
+                        <h1>Advisor Overview</h1>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+
+        <!-- Portfolio Info Card -->
+          <div class="col-6" style="display: inline-flex; float: right;">
+            <div class="card text-black bg-light mb-3" style="min-width: 90%;">
+                    <div class="card-header"><h6>About Advisors</h6></div>
+                    <div class="card-body">
+                      <p style="font-size: 14px;">Create an advisor here</p>
+                      <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
+                    </div>
+            </div>
+          </div>
+
+          <!--watchlist table-->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h4 style="color: green; font-weight: bold;">My Advisors</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="watchlistTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Watchlist Name</th>
+                      <th>Algorithms</th>
+                      <th>Portfolio Name</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                    <tr [ngClass]="'tablerow'">
+                      <td>Advisor 1</td>
+                      <td style="text-align:center;">my algs</td>
+                      <td style="text-align:center;">portfolio name</td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', watchlist.portfolioId]">View Portfolio</button></td>
+                    </tr>  
+                  </table> 
+                </div>
+            </div>
+          </div>
+
+    </div>
+</div>
+
+<div [hidden]="submitted">
+<div class="modal fade" id="portfolio-modal" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="container">
+            <h1>Add New Portfolio</h1>    
+                <form #portfolioForm="ngForm">
+                    <div class="form-group">
+                        <div> 
+                            <div class="form-group">
+                                <label for="portfolioName">Advisor</label>
+                                <input required type="text" maxlength="16" pattern="([0-9A-Za-z]{1,16})" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
+                              </div>
+    
+                          <label for="portfolioType">Algorithms</label>
+                          <ul class="nav justify-content-center">
+                              <li *ngFor="let model of models" class="nav-item">
+                                  <label class="checkbox">alg1
+                                    <input  type="checkbox"  name="check" id="check"
+                                            required [value]="true" class="form-control"
+                                            [(ngModel)]="newportfolio.portfolioType" #portfolioTypeP="ngModel" 
+                                            >
+                                    <span class="checkmark"></span>
+                                  </label> 
+                              </li>
+                          </ul>  
+                        </div>
+                      </div>
+    
+                      <div><button type="button" class="btn btn-dark" [disabled]="!portfolioForm.form.valid"  (click)="addPortfolio()">Create</button></div>
+                      
+                      </form>
+              </div>
+        </div>
+    </div>
+  </div>
+</div>

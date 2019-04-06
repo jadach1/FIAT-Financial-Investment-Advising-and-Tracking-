@@ -1,27 +1,61 @@
 <!-- Begin Page Content -->
-<div class="modal-body">
+<div class="modal-header" style="background-color: green">
+  <h5 class="modal-title" id="exampleModalLabel" style="color: white; font-weight: bold;">New Transaction</h5>
+    <button class="close" type="button" (click) = "back()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body" style="background-color: whitesmoke">
   <div class="container-fluid">
       <div class="row">
           <div class="col-sm-2"><!-- Just here for formatting the page--> </div>
           <div class='col-sm-8'>
-            <h3>Add New Transaction</h3>
             <div [hidden]="submitted">
                 <form #transactionForm="ngForm">
             
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="newtrans">
                     <label for="symbol">Company Symbol</label>
                       <input  type="text" name="symbol" id="symbol" placeholder={{stringSymbol}} 
                               class="form-control"      autofocus
-                              required    maxlength="6" pattern="([0-9A-Za-z.]{1,6})" 
-                              [(ngModel)]="Transaction.symbol"      #symbol="ngModel"
+                              required    maxlength="6" pattern="([0-9A-Za-z.-]{1,6})" 
+                              [(ngModel)]="Transaction.symbol"      #symbol="ngModel" style="text-transform:uppercase"
                               >
                       <div    [hidden]="symbol.valid || symbol.pristine"
                               class="alert alert-danger">
                               The symbol is not valid
                       </div>
                   </div>
+
+                  <div class="form-group" *ngIf="!newtrans">
+                    <label for="symbol">Company Symbol</label><br>
+                    <label for="symbol" style="font-weight: bold">{{stringSymbol}}</label>
+                  </div>
                   
-                    <div class="form-group">
+                    <div *ngIf="shareCount && !Transaction.transaction" class="form-group">
+                    <label for="shares">{{shareCount}}</label>
+                      <input  type="number" name="shares"           id="shares"            placeholder="Number of shares" 
+                              required      pattern="([0-9]{1,6})"  class="form-control"
+                              [(ngModel)]="Transaction.shares"      #shares="ngModel" max={{passedInShares}}
+                            >
+                      <div  [hidden]="shares.valid || shares.pristine"
+                            class="alert alert-danger">
+                            Invlid number of shares
+                      </div>
+                  </div>
+
+                  <div *ngIf="shareCount && Transaction.transaction" class="form-group">
+                    <label for="shares">{{shareCount}}</label>
+                      <input  type="number" name="shares"           id="shares"            placeholder="Number of shares" 
+                              required      pattern="([0-9]{1,6})"  class="form-control"
+                              [(ngModel)]="Transaction.shares"      #shares="ngModel"
+                            >
+                      <div  [hidden]="shares.valid || shares.pristine"
+                            class="alert alert-danger">
+                            Invlid number of shares
+                      </div>
+                  </div>
+
+                  <div *ngIf="!shareCount" class="form-group">
                     <label for="shares">Amount of shares: maximum is 999,999 <p>{{shareCount}}</p></label>
                       <input  type="number" name="shares"           id="shares"            placeholder="Number of shares" 
                               required      pattern="([0-9]{1,6})"  class="form-control"
@@ -34,44 +68,74 @@
                   </div>
                 
                     <div class="form-group">
-                      <label for="price">Price: maximum is $9999.99</label>
+                      <label for="price">Price: maximum is $999999.999</label>
                       <input  type="number"  id="price"  name="price"    placeholder="price per share"
-                              required pattern="^\d{0,4}(\.\d{0,2})?$"   class="form-control" 
+                              required pattern="^\d{0,6}(\.\d{0,3})?$"   class="form-control" 
                               [(ngModel)]="Transaction.price"            #price="ngModel">
+                              <div *ngIf="currencyType && passedInShares" class="form-group">
+                                <label style="text-align: center; font-weight: bold">CAD</label>
+                              </div>
+                              <div *ngIf="!currencyType && passedInShares" class="form-group">
+                                <label style="text-align: center; font-weight: bold">USD</label>
+                              </div>
+
                       <div    [hidden]="price.valid || price.pristine"
                               class="alert alert-danger">
                               Invalid price
                       </div>
                   </div>
+
+                  <div *ngIf="currencyType == null" class="form-group">
+                      <ul class="nav justify-content-center">
+                          <li class="nav-item">
+                              <label class="radioButton">CAD
+                                <input  type="radio"  name="currency" id="currency"
+                                        required [value]="true" class="form-check-input"
+                                        [(ngModel)]="Transaction.currency" #currency="ngModel" checked="checked"
+                                        >
+                                <span class="checkmark"></span>
+                              </label> 
+                          </li>
+                          <li class="nav-item">
+                              <label  class="radioButton">USD
+                                <input type="radio"  name="usd" id="usd"
+                                        required [value]="false" class="form-check-input"
+                                        [(ngModel)]="Transaction.currency" #currency="ngModel"
+                                        >
+                                <span class="checkmark"></span>
+                              </label> 
+                          </li>
+                      </ul>  
+                  </div>
                   
-                      <div class="form-group">
-                        <label for="buydate">Transaction Date </label>
-                        <input  type="date" class="form-control" id="buydate" name="buydate"
-                                required    placeholder="date purchased"
-                                [(ngModel)]="Transaction.buydate"             #buydate="ngModel">
-                        <div  [hidden]="buydate.valid || buydate.pristine"
-                              class="alert alert-danger">
-                              date is required
-                        </div>
-                      </div>
+                  <div class="form-group">
+                    <label for="buydate">Transaction Date </label>
+                    <input  type="date" class="form-control" id="buydate" name="buydate"
+                            required    placeholder="date purchased"
+                            [(ngModel)]="Transaction.buydate"             #buydate="ngModel">
+                    <div  [hidden]="buydate.valid || buydate.pristine"
+                          class="alert alert-danger">
+                          date is required
+                    </div>
+                  </div>
                 
                   <div class="form-group">
                       <div>  
                         <p>Transaction Type</p>
                         <ul class="nav justify-content-center">
-                            <li class="nav-item"  style="color:white ; background-color: green">
+                            <li class="nav-item"  style="color:white ; color: green">
                                 <label class="radioButton">BUY
-                                  <input  type="radio"  name="Buy" id="Buy"
-                                          required [value]="true" class="form-control"
+                                  <input  type="radio" name="Buy" id="Buy"
+                                          required [value]="true" class="form-check-input"
                                           [(ngModel)]="Transaction.transaction" #transaction="ngModel" checked="checked"
                                           >
                                   <span class="checkmark"></span>
                                 </label> 
                             </li>
-                            <li *ngIf="passedInShares" class="nav-item"  style="color:white ; background-color: red">
+                            <li *ngIf="passedInShares" class="nav-item"  style="color:white ; color: red">
                                 <label  class="radioButton">SELL
                                   <input type="radio"  name="transaction" id="transaction"
-                                          required [value]="false" class="form-control" 
+                                          required [value]="false" class="form-check-input" 
                                           [(ngModel)]="Transaction.transaction" #transaction="ngModel"
                                           >
                                   <span class="checkmark"></span>
@@ -84,25 +148,25 @@
                         </div>
                       </div>
                     </div>
-            
-                  <div class="btn-group btn-group-md">
-                    <button type="button" class="btn btn-dark" (click) = "back()">Back</button>
-                      <button type="button" class="btn btn-dark" (click)="addTransaction()" [disabled]="!transactionForm.form.valid" >Submit</button>      
-                    <button type="button" class="btn btn-dark" (click)="newTransaction()" >Clear</button>
-                  </div>
                 </form> 
             </div>
-            
-            <div [hidden]="!submitted">
+
+            <div [hidden] = "!submitted">
               <p>Submitted Successfully!<span class="badge badge-light"></span></p>
-            
-              <div class="btn-group btn-group-sm" >
-                    <button type="button" class="btn btn-dark" (click)="back()">Back</button>
-                    <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
-              </div>
             </div>
 
       </div>
     </div>
   </div>      
+</div>
+<div [hidden]="submitted" class="modal-footer" style="background-color: green">
+    <button type="button" class="btn btn-dark" (click)="addTransaction()" [disabled]="!transactionForm.form.valid" >Submit</button>
+    <button type="button" class="btn btn-dark" (click)="transactionForm.reset()" >Clear</button>
+    <button type="button" class="btn btn-dark" (click) = "back()">Cancel</button>
+</div>
+<div [hidden]="!submitted" class="modal-footer" style="background-color: green">
+    <div class="btn-group btn-group-sm" >
+        <button type="button" class="btn btn-dark" (click)="back()">Back</button>
+        <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
+  </div>
 </div>

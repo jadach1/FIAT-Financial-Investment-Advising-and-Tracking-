@@ -10,10 +10,16 @@ module.exports = function(app) {
     // Update a user with username
     app.put('/user', user.update);
   
+    // Check if user exists
+    app.get('/jacob', user.checkUserName)
+    
     // Delete a user with username
     app.delete('/user/:username', user.delete);
 
     app.post('/user/login', user.login);
 
     app.post('/user/refresh', user.refresh);
+
+    //verify user
+    app.get('/verify', user.verify);
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef }     from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { asset }                 from '../../../model/asset';
 import { AssetService }          from '../../../service/asset.service';
 import { portfolio }             from '../../../model/portfolio';
@@ -30,6 +31,8 @@ export class CurrentPortfolioComponent implements OnInit {
 
   userPortfolio: any;
 
+  cadAssets: testAsset[];
+  usdAssets: testAsset[];
   assets: testAsset[];
   portfolio = new portfolio();
   portfolioID: number;
@@ -42,10 +45,12 @@ export class CurrentPortfolioComponent implements OnInit {
   totPercent: any = 0;
   totalPortfolioValue: any = 0;
   loading: boolean;
+  exchangeRate: any = 1; // set 1 for now
   
   constructor(private assetService: AssetService, 
     private nav: NavbarService, 
     private sidebar: SidebarService, 
+    private http: HttpClient,
     private auth: AuthenticationService, 
     private userService: UserService, 
     private location: Location,
@@ -60,15 +65,28 @@ export class CurrentPortfolioComponent implements OnInit {
 
     this.spinnerService.show();
 
+    //get portfolioid
     this.portfolioID = parseInt(this.route.snapshot.paramMap.get('portfolioId'));
 
+    //get currency user
     this.userService.currentUser().subscribe(
       res => {
         this.username = res.username;
-        //this.getAssets();
         this.buildPortfolio();
     });
 
+
+    //get latest conversion rate
+    this.assetService.getConversion().subscribe(
+      res => {
+        res = JSON.parse(res);
+        this.exchangeRate = res.quotes.USDCAD;
+      }
+    )
+
+    console.log(this.exchangeRate);
+
+    //retrieve portfolio transactions
     this.portfolioService.getPortfolio(this.portfolioID).subscribe(
       res => {
         this.userPortfolio = res;
@@ -128,6 +146,11 @@ export class CurrentPortfolioComponent implements OnInit {
             newAsset.sharesSold = 0;
             newAsset.totalMoneyIn = 0;
             newAsset.totalMoneyOut= 0;
+            if (transaction.currency == true){
+              newAsset.currency = true;
+            }else{
+              newAsset.currency = false;
+            }
 
             newAsset.symbol = transaction.symbol;
             //buy
@@ -151,44 +174,55 @@ export class CurrentPortfolioComponent implements OnInit {
             newAsset.avgpriceSold = newAsset.totalMoneyOut / newAsset.sharesSold;
 
             this.assetService.getPrice(transaction.symbol).subscribe(
-              data => {newAsset.currentPrice = data.data.price,
-                newAsset.gain = ((data.data.price - newAsset.avgprice) / newAsset.avgprice) * 100,
-                this.totalPortfolioValue += data.data.price * newAsset.shares,
-                this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100;     
-              }      
-            );
+              data => {         
+                if (data.data === undefined){
+                  this.totalPortfolioValue += (newAsset.shares * newAsset.avgprice);
+                }else{
+                  this.totalPortfolioValue += (data.data.price*this.exchangeRate) * newAsset.shares;
 
-            assetList.push(newAsset);
-            
+                  //if canadian convert to cad
+                  if (transaction.currency == true){
+                    newAsset.currentPrice = (data.data.price*this.exchangeRate);
+                    newAsset.gain = (((data.data.price*this.exchangeRate) - newAsset.avgprice) / newAsset.avgprice) * 100;
+                  }else{
+                    newAsset.currentPrice = (data.data.price);
+                    newAsset.gain = (((data.data.price) - newAsset.avgprice) / newAsset.avgprice) * 100;
+                  }
+
+                }
+ 
+                this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100;  
+              }
+            );
+            assetList.push(newAsset);       
           }
           
         });
+        this.cadAssets = assetList.filter(x => x.currency == true);
+        this.usdAssets = assetList.filter(x => x.currency == false);
         this.assets = assetList;
-        this.calculate(this.assets); 
+        this.calculate(this.cadAssets); 
+        this.calculate(this.usdAssets); 
         this.buildChart();       
       }   
     );   
   }
 
-  /*getAssets(){
-    return this.assetService.getAllAssets()
-    .subscribe(
-      asset => {
-       this.assets = asset;
-       //this.calculate(this.assets);
-      }
-     );
-  }*/
-
-
-
   calculate(myAssets: testAsset[]){
     myAssets.forEach(element => 
     {
+      //if currency is usd convert usd to cad
+      if (element.currency == false){
+        this.totIn += (element.totalMoneyIn*this.exchangeRate);
+        this.totOut += (element.totalMoneyOut*this.exchangeRate);
+        this.totDiff = this.totIn - this.totOut;
+      }
+      //if currency is usd leave as is
+      else{
         this.totIn += element.totalMoneyIn;
         this.totOut += element.totalMoneyOut
         this.totDiff = this.totIn - this.totOut;
-        
+      }  
     });
   }
 
@@ -212,32 +246,47 @@ export class CurrentPortfolioComponent implements OnInit {
       colourList.push(dynamicColors());
       this.assetService.getPrice(asset.symbol).subscribe(
         data => {
-          assetAmounts.push(Math.round(data.data.price * asset.shares));
+          if (data.data === undefined){
+            assetAmounts.push(Math.round(asset.shares*asset.avgprice));
+          }
+          else{
+            assetAmounts.push(Math.round(data.data.price * asset.shares));
+          } 
           this.spinnerService.hide();
+        },
+        err => {
+          console.log("There was an error in portfolio whilst trying to connect to the database")
+        },
+        // Chart will be built here
+        () => {
+          var myChart = new Chart(this.context, {
+            type: 'pie',
+            data: {
+              labels: assetLabels,
+              datasets: [{
+                label: '# of Tomatoes',
+                data: assetAmounts,
+                backgroundColor: colourList,
+                borderColor: colourList,
+                borderWidth: 1
+              }]
+            },
+            options: {
+               cutoutPercentage: 20,
+               responsive: true,
+               legend: {
+                display: false
+               },  
+            }
+          });
         }      
       );
     });
   
-    var myChart = new Chart(this.context, {
-      type: 'pie',
-      data: {
-        labels: assetLabels,
-        datasets: [{
-          label: '# of Tomatoes',
-          data: assetAmounts,
-          backgroundColor: colourList,
-          borderColor: colourList,
-          borderWidth: 1
-        }]
-      },
-      options: {
-         cutoutPercentage: 20,
-         responsive: true  
-      }
-    });
+    
   }
 
-  openModal(symbol: string, shares: number, portfolio: number){
+  openModal(symbol: string, shares: number, portfolio: number, currency: boolean){
     const modalRef = this.modalService.open(AddAssetComponent);
     modalRef.componentInstance.username = this.username;
     modalRef.componentInstance.passedInShares = shares;
@@ -245,6 +294,9 @@ export class CurrentPortfolioComponent implements OnInit {
       modalRef.componentInstance.symbol = symbol;
     }
     modalRef.componentInstance.portfolioId = this.portfolioID;
+    modalRef.componentInstance.currencyType = currency;
   }
 
 }
+
+

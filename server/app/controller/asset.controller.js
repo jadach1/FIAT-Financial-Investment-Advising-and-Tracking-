@@ -1,5 +1,6 @@
 const db = require('../config/db.config.js');
 const scraper = require("@concide/stock-scraper")
+const http = require('http');
 const CurrentAsset = db.assets;
 
 // Post a CurrentAsset
@@ -103,3 +104,38 @@ exports.GetPrice = (req, res) => {
 		res.status(500).json({msg: "error", details: err});
 	});
 };
+
+exports.Convert = (req, response) => {
+	http.get('http://www.apilayer.net/api/live?access_key=25ce7abf8cf89da77c7b5b7d8f1cc555&currencies=USD,CAD&format=1', (res) =>{
+		res.setEncoding('utf-8');
+		var body = "";
+	
+		res.on('data', function(data) {
+			body += data;
+		});
+	
+		res.on('end', () => {
+			response.json(body);
+		});
+	}).on("error", (err) => {
+		console.log("Error: " + err.message);
+	});
+};
+// Fetch all Asset names associated with a portfolio, for dashboard
+exports.GetAllAssetNames = (req, res) => {
+	
+	let arrayOfAssets = []
+
+	db.sequelize.query('select distinct \"symbol\" from transactions where \"portfolioId\" ='+req.params.id+';')
+		.then( obj => {
+			obj[1]['rows'].forEach(element => {
+				arrayOfAssets.push(element.symbol)	
+			})
+		}).then( obj => {
+			res.json(arrayOfAssets)
+			console.log(arrayOfAssets)
+		}).catch( err => {
+			console.log(err);
+			res.status(500).json({msg: "error", details: err});
+		})
+}

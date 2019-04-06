@@ -1,226 +1,103 @@
-<!-- Begin Page Content -->
+<app-nav></app-nav>
+<app-sidebar></app-sidebar>
 <div id="dashboard-content">
-<div class="container-fluid">
-  <!-- Page Heading -->
-    <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Dashboard</h1>
+  <div class="container-fluid">
 
-    <div class="row">
-    <!--right half of the page-->
-    <div class ="col-6">
-
-    <!--Portfolio Table-->
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Portfolios</h6>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Portfolio Name</th>
-                <th># of Assets</th>
-                <th>Profit $</th>
-                <th>Gain/Loss %</th>
-                <th>Top Gainer %</th>
-                <th>Top Loser %</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th>Portfolio Name</th>
-                <th># of Assets</th>
-                <th>Profit</th>
-                <th>Gain/Loss</th>
-                <th>Top Gainer</th>
-                <th>Top Loser</th>
-              </tr>
-            </tfoot>
-            <tbody>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-              <tr>
-                <td>TFSA Portfolio</td>
-                <td>32</td>
-                <td>$1023.45</td>
-                <td>%23.2</td>
-                <td>%13.3</td>
-                <td>%-0.9</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!--Watchlist Table-->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Watchlists</h6>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="watchlistTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Watchlist Name</th>
-                  <th># of Assets</th>
-                  <th>Profit $</th>
-                  <th>Gain/Loss %</th>
-                  <th>Top Gainer %</th>
-                  <th>Top Loser %</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Watchlist Name</th>
-                  <th># of Assets</th>
-                  <th>Profit</th>
-                  <th>Gain/Loss</th>
-                  <th>Top Gainer</th>
-                  <th>Top Loser</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-                <tr>
-                  <td>Fun Watchlist</td>
-                  <td>32</td>
-                  <td>$1023.45</td>
-                  <td>%23.2</td>
-                  <td>%13.3</td>
-                  <td>%-0.9</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <!-- end left half-->
-    
-    <!--right half of the page-->
-    <div class="col-6">
-
-        <div>
-            <canvas #dashboardChart>{{ chart }}</canvas>
-        </div>
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Advisor Highlights</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="advisorTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Advisor Name</th>
-                      <th>Buy Alert</th>
-                      <th>Sell Alert</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>joe joeyson</td>
-                      <td>$MSFT</td>
-                      <td>$NVDA</td>
-                    </tr>
-                    <tr>
-                      <td>doug dougerson</td>
-                      <td>$SPY</td>
-                      <td>$SPY</td>
-                    </tr>
-                  </tbody>
-                </table>
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2">
+                        <h1>Welcome, {{user.firstname}} {{user.lastname}}</h1>
+                      </div>
+                    </div>
+                  </div>
               </div>
-            </div>
           </div>
-
-        </div>
-        <!-- /right half -->
       </div>
-      <!-- /row -->
 
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <p id="newsTitle">Search for News either by selecting an Asset from your Portfolio or typing in your own symbol</p>
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="75%">
+                      <div class="p-2">
+                        <select id="role"  (change)="selectName($event.target.value);">
+                          <option value="">--select Portfolio--</option>
+                          <option [ngValue]="portfolio.id" *ngFor="let portfolio of pNames"  >{{portfolio.name}}</option> 
+                          </select>
 
-  </div>
+                          <select id="role2" (change)="createURL($event.target.value);">
+                            <option value="">--select Asset--</option>
+                            <option  [ngValue]="asset" *ngFor="let asset of assets" >{{asset}}</option>
+                          </select>
+
+                         <input type="text"  placeholder="Search for ... " name="searchBar" class="searchBar" [(ngModel)]="searchString" />
+                          <button type="button"  class="searchBar" (click)="searchFor()">SEARCH</button>
+                    </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div [hidden]="hide">
+      <div class="row">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+              <p id="news">NEWS REEL</p>
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2" >
+                        <table *ngFor="let news of arrayOfNews" id="table1">
+                            <tr id="title"> Title: {{news.title}} </tr>
+                            <tr id="author"> By: {{news.author}} </tr>
+                            <tr id="desc">    DESCRIPTION: </tr>
+                            <tr id= "descr">  {{news.description}}  </tr> 
+                            <tr > 
+                                <button id="readmore" type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#news-modal" (click)="setUpModal(news.title, news.content)">
+                                    Read More
+                                </button> 
+                                 <button id="fullSite" type="button" class="btn btn-light" (click)="redirect(news.url)">
+                                    Take Me To The Source
+                                </button>
+                            </tr>
+                            <tr id="line"> ------------------------------------------------------------------------------------------------------------------------------------------------------ </tr>
+                        </table>
+                        <p id="attribution">Powered by News API</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+
+    </div>
 </div>
-  <!-- /.container-fluid -->
+
+
+
+    <div class="modal fade" id="news-modal" role="dialog">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <h1>{{readMoreTitle}}</h1>    
+              <div id="modalContent">
+                  {{readMoreContent}}
+              </div>   
+             <!--  <iframe id="inlineFrame"
+                  title="g"
+                  width="300"
+                  height="200"
+                  [src]="contentURL">
+              </iframe>    -->     
+            </div>
+        </div>
+      </div>
+    </div>

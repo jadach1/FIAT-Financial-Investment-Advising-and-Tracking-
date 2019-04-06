@@ -7,6 +7,9 @@ module.exports = function(app) {
     // Retrieve a single user by username
     app.get('/user/:username', user.findById);
  
+    // Check if user exists
+    app.get('/user/:field/:value', user.checkUserName)
+
     // Update a user with username
     app.put('/user', user.update);
  
@@ -16,4 +19,7 @@ module.exports = function(app) {
     app.post('/user/login', user.login);
 
     app.post('/user/refresh', user.refresh);
+
+    //verify user
+    app.get('/verify', user.verify);
 }

@@ -1,3 +1,5 @@
+<app-nav></app-nav>
+<app-sidebar></app-sidebar>
 <div id="portfolio-content">
   <div class="container-fluid">
 
@@ -17,56 +19,26 @@
       </div>
 
       <div class="row">
-
-        <!-- Portfolio Info Card -->
-          <div class="col-6" style="display: inline-flex; float: right;">
-            <div class="card text-black bg-light mb-3" style="min-width: 90%;">
-                    <div class="card-header"><h6>About Portfolios</h6></div>
-                    <div class="card-body">
-                      <p style="font-size: 14px;">"An investment portfolio can be thought of as a pie that is divided into pieces of varying sizes, representing a variety of asset classes and/or types of investments to accomplish an appropriate risk-return portfolio allocation. Many different types of securities can be used to build a diversified portfolio, but stocks, bonds and cash are generally considered a portfolio's core building blocks. Other potential asset classes include, but aren't limited to, real estate, gold and currency." - <a href="https://www.investopedia.com/terms/p/portfolio.asp">investopedia.com</a></p>
-                      <p>Currently our portfolios can only track stocks that trade on major indexes such as the NYSE.</p>
-                      <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
-                    </div>
-            </div>
-          </div>
-
-          <!-- Watchlist Info Card -->
-          <div class="col-6" style="display: inline-flex; float: right;">
-              <div class="card text-black bg-light mb-3" style="min-width: 90%;">
-                      <div class="card-header"><h6>About Watchlists</h6></div>
-                      <div class="card-body">
-                        <p style="font-size: 14px;">"A watchlist is a list of securities being monitored for potential trading or investing opportunities. An investor or trader may create a watchlist of several, dozens or even hundreds of trading instruments to make more informed and opportune investment decisions. A watchlist can help an investor track companies and stay abreast of financial or other news that could impact these instruments." - <a href="https://www.investopedia.com/terms/w/watchlist.asp">investopedia.com</a></p>
-                        <br>
-                        <p>Our watchlists function identially to our portfolios, allowing you to create imaginary portfolios and view their performance vs. your own.</p>
-                        <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
-                      </div>
-              </div>
-            </div>
-
-      </div>
-
-
-      <div class="row">
       <!--left half of the page-->
         <div class ="col-6" id="left-half">
         
           <!--portfolio table-->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h4 style="color: green; font-weight: bold;">My Portfolios </h4>
+              <h4 style="color: green; font-weight: bold;">My Portfolios <button style="float: right;" type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button></h4>
+              
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="portfolioTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Portfolio Name</th>
-                      <th></th>
+                      <th colspan="2">Portfolio Name</th>
                     </tr>
                   </thead>
                     <tr *ngFor="let portfolio of portfolios" [ngClass]="'tablerow'">
                       <td>{{ portfolio.portfolioName}}</td>
-                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', portfolio.portfolioId]">View</button></td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', portfolio.portfolioId]">View</button>&nbsp;<button type="button" class="btn btn-dark" (click)="deletePortfolio(portfolio.portfolioId)">Delete</button></td>
                     </tr>  
                   </table> 
                 </div>
@@ -80,20 +52,19 @@
             <!--watchlist table-->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h4 style="color: green; font-weight: bold;">My Watchlists</h4>
+                <h4 style="color: green; font-weight: bold;">My Watchlists <button style="float: right;" type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button></h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="watchlistTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>Watchlist Name</th>
-                        <th></th>
+                        <th colspan="3">Watchlist Name</th>
                       </tr>
                     </thead>
                       <tr *ngFor="let watchlist of watchlists" [ngClass]="'tablerow'">
                         <td>{{watchlist.portfolioName}}</td>
-                        <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', watchlist.portfolioId]">View</button></td>
+                        <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/portfolio/', watchlist.portfolioId]">View</button>&nbsp;<button type="button" class="btn btn-dark" (click)="deletePortfolio(watchlist.portfolioId)">Delete</button></td>
                       </tr>  
                     </table> 
                   </div>
@@ -102,60 +73,94 @@
           </div>
 
         </div>
+
+        <div class="row">
+
+          <!-- Portfolio Info Card -->
+            <div class="col-6" style="display: inline-flex; float: right;">
+              <div class="card text-black bg-light mb-3" style="min-width: 90%;">
+                      <div class="card-header"><h6>About Portfolios</h6></div>
+                      <div class="card-body">
+                        <p style="font-size: 14px;">"An investment portfolio can be thought of as a pie that is divided into pieces of varying sizes, representing a variety of asset classes and/or types of investments to accomplish an appropriate risk-return portfolio allocation. Many different types of securities can be used to build a diversified portfolio, but stocks, bonds and cash are generally considered a portfolio's core building blocks. Other potential asset classes include, but aren't limited to, real estate, gold and currency." - <a href="https://www.investopedia.com/terms/p/portfolio.asp">investopedia.com</a></p>
+                        <p>Currently our portfolios can only track stocks that trade on major North American indexes such as the NYSE.</p>
+                        <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
+                      </div>
+              </div>
+            </div>
+  
+            <!-- Watchlist Info Card -->
+            <div class="col-6" style="display: inline-flex; float: right;">
+                <div class="card text-black bg-light mb-3" style="min-width: 90%;">
+                        <div class="card-header"><h6>About Watchlists</h6></div>
+                        <div class="card-body">
+                          <p style="font-size: 14px;">"A watchlist is a list of securities being monitored for potential trading or investing opportunities. An investor or trader may create a watchlist of several, dozens or even hundreds of trading instruments to make more informed and opportune investment decisions. A watchlist can help an investor track companies and stay abreast of financial or other news that could impact these instruments." - <a href="https://www.investopedia.com/terms/w/watchlist.asp">investopedia.com</a></p>
+                          <br>
+                          <p>Our watchlists function identially to our portfolios, allowing you to create imaginary portfolios and view their performance vs. your own.</p>
+                          <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#portfolio-modal">Create New</button>
+                        </div>
+                </div>
+              </div>
+  
+        </div>
+
     </div>
 </div>
 
 <div [hidden]="submitted">
-<div class="modal fade" id="portfolio-modal" role="dialog">
-    <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="container">
-            <h1>Add New Portfolio</h1>    
-                <form #portfolioForm="ngForm">
-                    <div class="form-group">
-                        <div> 
-                            <div class="form-group">
-                                <label for="portfolioName">Portfolio Name</label>
-                                <input type="text" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
-                                <div [hidden]="portfolioName.valid || portfolioName.pristine"
-                                       class="alert alert-danger">
-                                       Portfolio Name is required
-                                  </div>
-                              </div>
-    
-                          <label for="portfolioType">Portfolio Type</label>
-                          <ul class="nav justify-content-center">
-                              <li class="nav-item">
-                                  <label class="radioButton">Portfolio
-                                    <input  type="radio"  name="portfolioTypeP" id="portfolioTypeP"
-                                            required [value]="true" class="form-control"
-                                            [(ngModel)]="newportfolio.portfolioType" #portfolioTypeP="ngModel" 
-                                            >
-                                    <span class="checkmark"></span>
-                                  </label> 
-                              </li>
-                              <li class="nav-item">
-                                  <label class="radioButton">Watchlist 
-                                    <input  type="radio"  name="portfolioTypeW" id="portfolioTypeW"
-                                            required [value]="false" class="form-control" 
-                                            [(ngModel)]="newportfolio.portfolioType" #portfolioTypeW="ngModel" 
-                                            >
-                                    <span class="checkmark"></span>
-                                  </label> 
-                              </li>
-                          </ul>  
-                          <div [hidden]="newportfolio.valid || newportfolio.pristine"
-                                class="alert alert-danger">
-                                portfolio type is required
-                          </div>
-                        </div>
+<!-- Add Portfolio-->
+
+<div class="modal fade" id="portfolio-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: green">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: white; font-weight: bold;">Add New Portfolio</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" style="background-color: whitesmoke">
+              <form #portfolioForm="ngForm">
+                  <div class="form-group">
+                      <div> 
+                          <div class="form-group">
+                              <label for="portfolioName">Portfolio Name</label>
+                              <input required type="text" maxlength="16" pattern="([0-9A-Za-z]{1,16})" class="form-control" id="portfolioName" required [(ngModel)]="newportfolio.portfolioName" name="portfolioName" #portfolioName="ngModel">
+                              <div [hidden]="portfolioName.valid || portfolioName.pristine"
+                                     class="alert alert-danger">
+                                     Portfolio Name is required
+                                </div>
+                            </div>
+  
+                        <label for="portfolioType">Portfolio Type</label>
+                        <ul class="nav justify-content-center">
+                            <li class="nav-item">
+                                <label class="radioButton">Portfolio
+                                  <input  type="radio"  name="portfolioTypeP" id="portfolioTypeP"
+                                          required [value]="true" class="form-control"
+                                          [(ngModel)]="newportfolio.portfolioType" #portfolioTypeP="ngModel" 
+                                          >
+                                  <span class="checkmark"></span>
+                                </label> 
+                            </li>
+                            <li class="nav-item">
+                                <label class="radioButton">Watchlist 
+                                  <input  type="radio"  name="portfolioTypeW" id="portfolioTypeW"
+                                          required [value]="false" class="form-control" 
+                                          [(ngModel)]="newportfolio.portfolioType" #portfolioTypeW="ngModel" 
+                                          >
+                                  <span class="checkmark"></span>
+                                </label> 
+                            </li>
+                        </ul>  
                       </div>
-    
-                      <div><button type="button" class="btn btn-dark" (click)="addPortfolio()">Create</button></div>
-                      
-                      </form>
-              </div>
-        </div>
+                    </div>                   
+              </form>
+          </div>
+          <div class="modal-footer" style="background-color: green">
+            <button style="float: left;" type="button" class="btn btn-dark" [disabled]="!portfolioForm.form.valid" (click)="addPortfolio()">Create</button>
+            <button class="btn btn-dark" type="button" data-dismiss="modal">Cancel</button>
+          </div>
+       </div>
     </div>
   </div>
 </div>

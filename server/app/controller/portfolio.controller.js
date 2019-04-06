@@ -1,8 +1,11 @@
+
+
 const db = require('../config/db.config.js');
 const Portfolio = db.portfolios;
  
 // Post a portfolio
 exports.create = (req, res) => {	
+
 	// Save to PostgreSQL database
 	Portfolio.create({
                 "username": req.body.username, 
@@ -20,7 +23,6 @@ exports.create = (req, res) => {
 // Find a Portfolio by Id
 exports.findById = (req, res) => {	
 	    Portfolio.findByPk(req.query.portfolioId).then(Portfolio => {
-			console.log(Portfolio);
 			res.json(Portfolio);
 		}).catch(err => {
 			console.log(err);
@@ -42,11 +44,12 @@ exports.update = (req, res) => {
  
 // Delete a Portfolio by Id
 exports.delete = (req, res) => {
+	console.log("doksdfkofdsokdfskofsd");
 	const portfolioid = req.params.portfolioid;
 	Portfolio.destroy({
-			where: { portfolioid: portfolioid }
+			where: { portfolioId: portfolioid }
 		}).then(() => {
-			res.status(200).json( { msg: 'Deleted Successfully -> PortfolioID = ' + username } );
+			res.status(200).json( { msg: 'Deleted Successfully -> PortfolioID = ' + portfolioid } );
 		}).catch(err => {
 			console.log(err);
 			res.status(500).json({msg: "error", details: err});
@@ -63,3 +66,21 @@ exports.findAll = (req, res) => {
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
+// Fetch all portfolio names associated with a username
+exports.getNames = (req, res) => {
+	let arrayOfNames = []
+
+	db.sequelize.query('select distinct \"portfolioName\", \"portfolioId\" from portfolios where username = \'' + req.params.username + '\';')
+		.then( obj => {
+			obj[1]['rows'].forEach(element => {
+				arrayOfNames.push({id: element.portfolioId, name: element.portfolioName})	
+			})
+		}).then( obj => {
+			res.json(arrayOfNames)
+			console.log(arrayOfNames)
+		}).catch( err => {
+			console.log(err);
+			res.status(500).json({msg: "error", details: err});
+		})
+}
