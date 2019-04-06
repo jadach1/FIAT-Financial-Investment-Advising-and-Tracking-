@@ -14,7 +14,7 @@
 }
 
 #newsTitle {
-    font-family: cursive;
+    font-weight: bold;
     font-size: 18px;
 }
 
@@ -27,16 +27,12 @@
 #news {
     position: relative;
     left: 500px;
-    font-family: cursive;
     font-size: 24px;
     color: black
 }
 
 #table1 {
     border: 3px solid rgb(142, 241, 3);
-    position: relative;
-    left: 30px;
-    width: 700px;
 }
 
 #title {

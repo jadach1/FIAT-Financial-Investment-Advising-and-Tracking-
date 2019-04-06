@@ -44,15 +44,17 @@ export class AddAssetComponent implements OnInit {
       this.sidebar.show();  
     }
 
-   // upon initialization set the transaction to true/buy and the colors to green
    ngOnInit()
    {
+     //initialize new transaction
       this.Transaction = new transaction();
        this.stringUsername = this.username.toString();
+       //if this transaction is a trade on a current asset display the current share amount
        if ( this.passedInShares ){ 
          this.shareCount = "You currently have this many shares : "+this.passedInShares;
          this.newtrans = false;
        }
+       //if theres a passed in symbol set the symbol
        if (this.symbol != null)
        {
          this.stringSymbol = this.symbol.toString();
@@ -80,11 +82,14 @@ export class AddAssetComponent implements OnInit {
      this.location.back();
    }
 
+   //this function adds the transaction to the database
    addTransaction() : void {
     this.submitted = true;
+    //if the number of shares passed in are more than the shares owned by the user set the shares to the amount the user owns
     if (this.Transaction.shares > this.passedInShares && this.Transaction.transaction == false){
       this.Transaction.shares = this.passedInShares;
     }
+    //call the service function to add to the db
     this.transactionService.addTransaction(this.Transaction, this.portfolioId).subscribe();
    }
 

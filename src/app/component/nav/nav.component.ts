@@ -18,6 +18,7 @@ export class NavComponent implements OnInit {
   public user: User;
 
   constructor(private router: Router, public nav: NavbarService, private authService: AuthenticationService, private userService: UserService) { 
+    //retrieve the current user
     this.user = new User();
     this.userService.currentUser().subscribe(
       res => this.user = res
@@ -28,6 +29,7 @@ export class NavComponent implements OnInit {
   }
 
   public logout() {
+    //logout the current user the navigate to the homepage
     this.authService.logout();
     this.router.navigateByUrl('/');
   }
