@@ -12,6 +12,8 @@ import { AssetService }          from  '../../service/asset.service'
 import { PortfolioService }      from '../../service/portfolio.service'
 import { User }                  from 'src/app/model/user';
 import { NewsService }           from '../../service/news.service'
+import { Portfolio2 } from '../../model/portfolio2'
+import { AdvisorService } from '../../service/advisor.service'
 
 
 /*
@@ -44,6 +46,8 @@ export class DashboardComponent implements OnInit {
   readMoreTitle:   string   // modal
   readMoreContent: string   // modal
   contentURL:      string   // modal
+  private pCount = 0; //portfolio count
+  private aCount = 0; //advisor count
 
   /*
   Below we have the variables which we will use to build our URL to fetch news information from
@@ -60,7 +64,7 @@ export class DashboardComponent implements OnInit {
   constructor( public nav:               NavbarService        , public sidebar:       SidebarService, 
                private authService:      AuthenticationService, private userService:  UserService,
                private PortfolioService: PortfolioService     , private assetService: AssetService,
-               private newsService:      NewsService) {
+               private newsService:      NewsService          , private advisorService: AdvisorService) {
 
                   this.nav.show(); 
                   this.sidebar.show();
@@ -71,6 +75,7 @@ export class DashboardComponent implements OnInit {
                       err => console.log("error connecting to database"),
                       ()  => this.fetchPortfolioNames()
                     );
+                
   } // constructor ends
  
   ngOnInit() {
@@ -115,10 +120,23 @@ export class DashboardComponent implements OnInit {
   private fetchPortfolioNames(): void{
     this.PortfolioService.getPortfolioNames(this.user.username)
       .subscribe(
-        res=> this.pNames = res,
+        res=> {this.pNames = res,
+          res.forEach(element => {
+            this.pCount = this.pCount + 1;
+          });
+        },
         err=> console.log("error connecting to database from fetchP"),
         () => {console.log(this.pNames)}
-      )
+      );
+
+      //retrive advisor count
+      /*this.advisorService.getAllAdvisor(this.user.username).subscribe(
+        res => {
+          res.forEach(advisor => {
+              this.aCount = this.aCount + 1;
+            });
+          });
+        }*/
   }
 
   /*
@@ -141,7 +159,8 @@ export class DashboardComponent implements OnInit {
   private fetchAssets(idNumber: any): void{
     this.assetService.getAssetNames(idNumber)
     .subscribe(
-      res=> this.assets = res,
+      res=> {this.assets = res
+    },
       err=> console.log("error connecting to database in dashboard to get assets"),
       ()=> console.log("done")
     )

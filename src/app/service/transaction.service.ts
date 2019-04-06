@@ -61,4 +61,8 @@ export class TransactionsService {
     asset.portfolioId = portfolioID;
     return this.http.post<transaction>(this.Url+'Transaction', asset, httpOptions);
   }
+
+  deleteTransaction (transactionID: Number): Observable<transaction> {
+    return this.http.delete<transaction>('http://myvmlab.senecacollege.ca:6349/portfolio/Transaction/'+transactionID, httpOptions);
+  }
 }

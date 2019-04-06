@@ -134,7 +134,7 @@
                         <label for="portfolioType">Portfolio Type</label>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <label class="radioButton">Portfolio
+                                <label class="radioButton">Portfolio&nbsp;&nbsp;&nbsp;&nbsp;
                                   <input  type="radio"  name="portfolioTypeP" id="portfolioTypeP"
                                           required [value]="true" class="form-control"
                                           [(ngModel)]="newportfolio.portfolioType" #portfolioTypeP="ngModel" 
@@ -157,7 +157,7 @@
               </form>
           </div>
           <div class="modal-footer" style="background-color: green">
-            <button style="float: left;" type="button" class="btn btn-dark" [disabled]="!portfolioForm.form.valid" (click)="addPortfolio()">Create</button>
+            <button style="float: left;" type="button" class="btn btn-dark" [disabled]="!portfolioForm.form.valid" (click)="addPortfolio()" data-dismiss="modal">Create</button>
             <button class="btn btn-dark" type="button" data-dismiss="modal">Cancel</button>
           </div>
        </div>

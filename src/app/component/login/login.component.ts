@@ -24,13 +24,12 @@ export class LoginComponent implements OnInit {
   public login(){
 
     new Promise(res=>{
+      //set username and password to the values set in the modal
       this.user.username = this.username2.value;
       this.user.password = this.password2.value;
       return res();
     }).then(res=>{
-      console.log(this.user.username + "," + this.user.password);
-      return "";
-    }).then(res=>{
+      //call the login function, if successful user is redirected to the dashboard
       this.authService.login(this.user)
       .subscribe(
         res => "",
