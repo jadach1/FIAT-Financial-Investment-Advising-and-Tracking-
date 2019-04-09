@@ -21,8 +21,10 @@ const httpOptions = {
 })
 export class AssetService {
 
+
   private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
   // private Url = 'http://localhost:8080/portfolio/';
+
   private singleAsset: testAsset;
   private assetList: testAsset[];
   private transactionList: transaction[];
