@@ -84,7 +84,7 @@
              minlength="8" maxlength="24"
              pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
              >
-             <div [hidden]="password.valid || password.pristine"
+             <div [hidden]="newPassword.valid || newPassword.pristine"
              class="alert alert-danger">
             Password is invalid
             Please include at least 1 uppercase character, 1 lowercase character, and 1 number
@@ -93,7 +93,7 @@
     </div>
 
     <div class="modal-footer" style="background-color: red">
-      <button type="button" class="btn btn-dark" (click)="updateUser()" data-dismiss="modal">Save</button>
+      <button type="button" class="btn btn-dark" (click)="verifyPassword()"  data-toggle="modal" data-target="#alertPasswordModal">Save</button>
       <button class="btn btn-dark" type="button" data-dismiss="modal">Cancel</button>
       <!-- <button type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#changePasswordModal">Save</button> -->
     </div>

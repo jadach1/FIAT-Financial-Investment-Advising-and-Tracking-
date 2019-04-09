@@ -17,7 +17,8 @@ export class UserProfileComponent implements OnInit {
   submitted = false;
   public tempPassword;
   public oldPassword;
-
+  public repsonseToUser;
+  
   constructor(private router: Router, private authService: AuthenticationService,
     private userService: UserService) {
     this.user = new User();
@@ -39,7 +40,20 @@ export class UserProfileComponent implements OnInit {
     if ( this.oldPassword == this.user.password )
     {
       console.log("old password matches new password")
+      this.user.password = this.tempPassword
+      alert("Password was validated successfully !")
+      this.updateUser()
+      this.resetForm()
+    } else {
+      alert("Sorry, the password you entered is not valid.")
+      this.resetForm()
     }
+  }
+
+  private resetForm() {
+    this.tempPassword = ""
+    this.oldPassword = ""
+    this.submitted = false;
   }
 
   private save(): void {
