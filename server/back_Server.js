@@ -119,7 +119,7 @@ app.listen(port, hostname, function () {
         let portfolios = [
             {
                 portfolioId: 1,
-                username: "emilio",
+                username: "Emilio",
                 portfolioName: "My Retirement",
                 portfolioType: "t"
             }
@@ -155,6 +155,15 @@ app.listen(port, hostname, function () {
                 buydate: 1991-01-14,
                 transaction: 't',
                 currency: 't' 
+            }
+        ]
+
+        adv = [
+            {
+                advisorId: 1,
+                portfolioId: 1,  
+                username: "Emilio" , 
+                advisorName: "Ian Tipson"  
             }
         ]
         // Init data -> save to PostgreSQL
