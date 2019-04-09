@@ -104,6 +104,7 @@
                                         <td>{{transaction.price | currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                                         <td *ngIf="transaction.transaction">Buy</td>
                                         <td *ngIf="!transaction.transaction">Sell</td>
+                                        <td><button type="button" class="btn btn-dark" (click)="deleteTransaction(transaction.id)">Delete</button></td>
                                     </tr>
                             </table>
                         </div>

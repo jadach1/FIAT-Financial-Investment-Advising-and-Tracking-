@@ -37,19 +37,23 @@ export class PortfolioComponent implements OnInit {
   }
 
   ngOnInit() { 
-   
+    //get the currently logged in user
     this.userService.currentUser().subscribe(
       res => {
         this.user = res;
         this.username = res.username;
+        //once the current user is determined, build the user's portfolios
         this.buildPortfolios();
     });
 
   }
 
+  //This function builds the arrays of the user's portfolios and watchlists
   private buildPortfolios(){
+    //retrieve all portfolios from the database
     this.portfolioService.getAllPortfolio(this.username).subscribe(
       res => {
+        //for every portfolio, seperate into portfolio/watchlist depending on type
         res.forEach(portfolio => {
           if (portfolio.portfolioType == true){
             this.portfolios.push(portfolio);
@@ -57,26 +61,42 @@ export class PortfolioComponent implements OnInit {
             this.watchlists.push(portfolio);
           }
         });
+        //hide the loading spinner
         this.spinnerService.hide();
       }
     );
   }
 
+  //sets submitted to true and call the save function
   private addPortfolio(){
     this.submitted = true;
     this.save();
   }
 
+  //Saves a portfolio into the database
   private save(){
     this.newportfolio.username = this.username;
+    //Calls api to create a new portfolio
     this.portfolioService.addPortfolio(this.newportfolio).subscribe(
-      ()=> window.location.reload()
-    );
+      ()=> {
+        //Resets the portfolio and watchlist arrays to null and rebuilds
+        //needs to be null or it will just add all portfolios back onto the old lists and show them twice
+        this.portfolios = new Array();
+        this.watchlists = new Array();
+        this.buildPortfolios();
+      });
   }
 
+  //delete a portfolio
   private deletePortfolio(portfolioID: Number){
     this.portfolioService.deletePortfolio(portfolioID).subscribe(
-      ()=> window.location.reload()
+      ()=> {
+        //Resets the portfolio and watchlist arrays to null and rebuilds
+        //needs to be null or it will just add all portfolios back onto the old lists and show them twice
+        this.portfolios = new Array();
+        this.watchlists = new Array();
+        this.buildPortfolios();
+      }
     );
   }
 }
