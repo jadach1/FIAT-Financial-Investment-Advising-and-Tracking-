@@ -54,14 +54,14 @@ export class AdvisorDetailsComponent implements OnInit {
 
   private advisors: advisor[] = new Array();
   advisorID: number;
-  rsiLimit: number[] = [30, 70];
-  stochLimit: number[] = [20, 80];
-  cciLimit: number[] = [-200, 200];
-  ultoscLimit: number[] = [30, 70];
-  adxLimit: number[] = [20, 25];
+  rsiLimit: number[] = [30, 70]; // Holds the limits to evaluate stock using the techinal model RSI
+  stochLimit: number[] = [20, 80]; // Holds the limits to evaluate stock using the techinal model STOCH
+  cciLimit: number[] = [-200, 200]; // Holds the limits to evaluate stock using the techinal model CCI
+  ultoscLimit: number[] = [30, 70]; // Holds the limits to evaluate stock using the techinal model ULTOSC
+  adxLimit: number[] = [20, 25]; // Holds the limits to evaluate stock using the techinal model ADX
   adviceAverage: any;
 
-  rsii: any;
+  rsii: any; // Variable used to 
   stochh: any;
   ccii: any;
   ultoscc: any;
@@ -124,31 +124,11 @@ export class AdvisorDetailsComponent implements OnInit {
 
     
     this.getFormatedDate();
-
-    // this.getRsi('AMZN');
   
    }
  
   ngOnInit(): void {
   }
-
-  // getRsi(symbol: any): any{
-  //   this.advisorService.getRsi(symbol).subscribe(
-  //     res => {
-
-  //     var date  = new Date()
-  //     var day   = String(date.getDate() - 1).padStart(2, '0');
-  //     var month = String(date.getMonth() +1).padStart(2, '0');
-  //     var year  = date.getFullYear()
-  //     this.date   = year + "-" + month + "-" + day + "T00:00:00.000Z"
-
-  //       this.rsii = parseFloat(res['data'][this.date]['RSI']);
-  //       console.log(this.date);
-  //       console.log(this.rsii);
-  //       return this.rsii;
-  //     }
-  //   )
-  // }
   
 
   buildPortfolio(): void {
@@ -242,9 +222,9 @@ export class AdvisorDetailsComponent implements OnInit {
                 } else {
                   newAsset.rsiAdvice = 'Neutral';
                 }
-                console.log(this.date);
-                console.log(this.rsii);
-                console.log(newAsset.rsiAdvice);
+                // console.log(this.date);
+                // console.log(this.rsii);
+                // console.log(newAsset.rsiAdvice);
                 newAsset.rsi = this.rsii;
               }
             );
@@ -262,9 +242,9 @@ export class AdvisorDetailsComponent implements OnInit {
                 } else {
                   newAsset.cciAdvice = 'Neutral';
                 }
-                console.log(this.date);
-                console.log(this.ccii);
-                console.log(newAsset.cciAdvice);
+                // console.log(this.date);
+                // console.log(this.ccii);
+                // console.log(newAsset.cciAdvice);
                 newAsset.cci = this.ccii;
               }
             );
@@ -282,9 +262,9 @@ export class AdvisorDetailsComponent implements OnInit {
                 } else {
                   newAsset.stochAdvice = 'Neutral';
                 }
-                console.log(this.date);
-                console.log(this.stochh);
-                console.log(newAsset.stochAdvice);
+                // console.log(this.date);
+                // console.log(this.stochh);
+                // console.log(newAsset.stochAdvice);
                 newAsset.stoch = this.stochh;
               }
             );
@@ -302,9 +282,9 @@ export class AdvisorDetailsComponent implements OnInit {
                 } else {
                   newAsset.ultoscAdvice = 'Neutral';
                 }
-                console.log(this.date);
-                console.log(this.ultoscc);
-                console.log(newAsset.ultoscAdvice);
+                // console.log(this.date);
+                // console.log(this.ultoscc);
+                // console.log(newAsset.ultoscAdvice);
                 newAsset.ultosc = this.ultoscc;
               }
             );
@@ -322,9 +302,9 @@ export class AdvisorDetailsComponent implements OnInit {
                 } else {
                   newAsset.adxAdvice = 'Neutral';
                 }
-                console.log(this.date);
-                console.log(this.adxx);
-                console.log(newAsset.adxAdvice);
+                // console.log(this.date);
+                // console.log(this.adxx);
+                // console.log(newAsset.adxAdvice);
                 newAsset.adx = this.adxx;
               }
             );
