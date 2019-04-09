@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
     this.newsService.getNews(urlString)
     .subscribe(
               res => this.news = res,
-              err => console.log("error in get news"),
+              err => console.log("error in get news, maybe url " + urlString),
               () => this.parseNews()
               )
   }
@@ -181,10 +181,10 @@ export class DashboardComponent implements OnInit {
     yyyy-mm-dd
   */
   private  generateDate(): void {
-    const date  = new Date()
-    const day   = date.getDate()
-    const month = date.getMonth()
-    const year  = date.getFullYear()
+    const dateToday  = new Date()
+    const day   = dateToday.getDate()
+    const month = dateToday.getMonth()  + 1  // 0 -- 11 , we need to+1 for api date to work
+    const year  = dateToday.getFullYear()
     this.date   = year+"-"+month+"-"+day
   }
 
