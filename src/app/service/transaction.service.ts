@@ -15,7 +15,7 @@ const httpOptions = {
 export class TransactionsService {
 
   private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio/';  // URL to web api
-  // private Url = 'http://localhost:8080/portfolio/';  // URL to web api
+
   private user: User;
 
   constructor(private http: HttpClient, private userService: UserService) { 

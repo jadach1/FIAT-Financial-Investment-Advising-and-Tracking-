@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class PortfolioService {
   private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio';
-  // private Url = 'http://localhost:8080/portfolio';
+  
   constructor(private http: HttpClient, private transactionService: TransactionsService) { }
 
   getPortfolio(portfolioId: number): Observable<Portfolio2> {
