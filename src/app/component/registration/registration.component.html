@@ -75,10 +75,10 @@
 
     <div class="form-group">
       <label for="recoveryAnswer">Recovery Answer</label>
-      <input type="text" required pattern="([0-9A-Za-z.]{1,20})"class="form-control" id="recoveryAnswer" [(ngModel)]="user.recoveryAnswer" name="recoveryAnswer" #recoveryAnswer="ngModel" maxlength="20">
+      <input type="text" required pattern="([0-9A-Za-z.]{6,44})"class="form-control" id="recoveryAnswer" [(ngModel)]="user.recoveryAnswer" name="recoveryAnswer" #recoveryAnswer="ngModel" maxlength="20">
       <div [hidden]="recoveryAnswer.valid || recoveryAnswer.pristine"
              class="alert alert-danger">
-             recoveryAnswer is required
+             recoveryAnswer needs to be at least 6 characters long using only alpha numeric characters and .
         </div>
     </div>
 
