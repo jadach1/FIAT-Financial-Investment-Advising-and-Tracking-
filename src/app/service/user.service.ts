@@ -37,6 +37,7 @@ interface valueCount {
 export class UserService {
 
   private usersUrl = 'http://myvmlab.senecacollege.ca:6349/user';  // URL to node
+  // private usersUrl = 'http://localhost:8080/user';
 
   constructor( 
     private http: HttpClient

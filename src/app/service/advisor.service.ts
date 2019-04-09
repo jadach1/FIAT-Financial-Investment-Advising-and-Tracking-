@@ -22,6 +22,7 @@ const httpOptions = {
 })
 export class AdvisorService {
   private Url = 'http://myvmlab.senecacollege.ca:6349/advisor';
+  // private Url = 'http://localhost:8080/advisor';
 
   constructor(private http: HttpClient, private portfolioService: PortfolioService) { }
 
