@@ -75,7 +75,11 @@
                           <th>Current Price (CAD)</th>
                           <th>Average Buy Price</th>
                           <th>Shares Owned</th>
-                          <th>Advice</th>
+                          <th>Advice-RSI</th>
+                          <th>Advice-CCI</th>
+                          <th>Advice-STOCH</th>
+                          <th>Advice-ULTOSC</th>
+                          <th>Advice-ADX</th>
                         </tr>
                       </thead>
                       <tbody >    
@@ -85,11 +89,11 @@
                             <td *ngIf="asset.currentPrice == 0">Price Not Available</td>
                             <td>{{ asset.avgprice | currency:'CAD':'symbol-narrow':'1.2-2'}}</td>
                             <td>{{ asset.shares}}</td>
-                            <td></td>
-                            <!-- <td *ngIf="asset.currentPrice == 0">{{asset.avgprice * asset.shares | currency:'CAD':'symbol-narrow':'1.2-2'}}</td>
-                            <td [style.color]="asset.gain < 0  ? 'red' : 'green'">%{{asset.gain | number:'1.1-2'}}</td> -->
-                            <!-- <td style="border:none; text-align: center"><button type="button" class="btn btn-dark" (click)="openModal(asset.symbol, asset.shares, portfolioID, asset.currency)">Trade</button></td>
-                            <td style="border:none; text-align: center"><button type="button" class="btn btn-dark"[routerLink]="['/portfolio/', portfolioID, asset.symbol]" routerLinkActive="active" >DETAILS</button></td> -->
+                            <td>{{ asset.rsiAdvice}}</td>
+                            <td>{{ asset.cciAdvice}}</td>
+                            <td>{{ asset.stochAdvice}}</td>
+                            <td>{{ asset.ultoscAdvice}}</td>
+                            <td>{{ asset.adxAdvice}}</td>
                             <p></p>
                           <br>
                         </tr>   
