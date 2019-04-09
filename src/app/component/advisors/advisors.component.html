@@ -33,7 +33,7 @@
           </div>
 
                     <!--portfolio table-->
-                    <div class="card shadow mb-4">
+                    <!-- <div class="card shadow mb-4">
                       <div class="card-header py-3">
                         <h4 style="color: green; font-weight: bold;">My Portfolios </h4>
                       </div>
@@ -54,7 +54,7 @@
                           </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   
           <!--Advisors table-->
           <div class="card shadow mb-4">
@@ -66,18 +66,13 @@
                 <table class="table table-bordered" id="advisorsTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Portfolio</th>
-                      <!-- <th>Models</th> -->
-                      <th>Advisor Name</th>
-                      <th></th>
+                      <th style="text-align:center;">Advisor Name</th>
+                      <th style="text-align:center;">Portfolio Analysis</th>
                     </tr>
                   </thead>
                     <tr *ngFor="let advisor of advisors" [ngClass]="'tablerow'">
-                      <!-- <td>{{ advisor.portfolioId}}</td> -->
-                      <!-- <td>{{ advisor.}}</td> -->
-                      <!-- <td>{{ advisor.advisorName}}</td> -->
-                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/advisordetails', advisor.portfolioId]">View Portfolio</button></td>
                       <td style="text-align:center;">{{advisor.advisorName}}</td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/advisordetails', advisor.portfolioId]">View Portfolio</button></td>
                     </tr>  
                   </table> 
                 </div>
@@ -109,9 +104,15 @@
                                   </select>
                                 </div>
       
-                            <label for="technicals">Technical Models</label>
+                            <label for="technicals">Technical Models Available</label>
                             <ul class="nav justify-content-center">
-                                <li class="nav-item">
+
+                              <li class="nav-item"> RSI</li>
+                              <li class="nav-item"> CCI</li>
+                              <li class="nav-item"> STOCH</li>
+                              <li class="nav-item"> ULTOSC</li>
+                              <li class="nav-item"> ADX</li>
+                                <!-- <li class="nav-item">
                                     <label class="checkbox">MACD
                                       <input  type="checkbox"  name="macd" id="macd"
                                               required [value]="false" class="form-control"
@@ -131,7 +132,7 @@
                                 </li>
                                 <li class="nav-item">
                                   <label class="checkbox">EMA 
-                                    <input  type="checkbox"  name="ema" id="sma"
+                                    <input  type="checkbox"  name="ema" id="ema"
                                             required [value]="false" class="form-control" 
                                             [(ngModel)]="newadvisor.ema" #ema="ngModel" 
                                             >
@@ -146,8 +147,8 @@
                                           >
                                   <span class="checkmark"></span>
                                 </label> 
-                            </li>
-                            <li class="nav-item">
+                            </li> -->
+                            <!-- <li class="nav-item">
                               <label class="checkbox">RSI 
                                 <input  type="checkbox"  name="rsi" id="rsi"
                                         required [value]="false" class="form-control" 
@@ -155,8 +156,8 @@
                                         >
                                 <span class="checkmark"></span>
                               </label> 
-                          </li>
-                          <li class="nav-item">
+                          </li> -->
+                          <!-- <li class="nav-item">
                             <label class="checkbox">STOCHRSI 
                               <input  type="checkbox"  name="stochrsi" id="stochrsi"
                                       required [value]="false" class="form-control" 
@@ -164,8 +165,8 @@
                                       >
                               <span class="checkmark"></span>
                             </label> 
-                        </li>
-                        <li class="nav-item">
+                        </li> -->
+                        <!-- <li class="nav-item">
                           <label class="checkbox">STOCH 
                             <input  type="checkbox"  name="stoch" id="stoch"
                                     required [value]="false" class="form-control" 
@@ -173,8 +174,8 @@
                                     >
                             <span class="checkmark"></span>
                           </label> 
-                      </li>
-                      <li class="nav-item">
+                      </li> -->
+                      <!-- <li class="nav-item">
                         <label class="checkbox">WILLR 
                           <input  type="checkbox"  name="willr" id="willr"
                                   required [value]="false" class="form-control" 
@@ -182,8 +183,8 @@
                                   >
                           <span class="checkmark"></span>
                         </label> 
-                    </li>
-                    <li class="nav-item">
+                    </li> -->
+                    <!-- <li class="nav-item">
                       <label class="checkbox">ULTOSC 
                         <input  type="checkbox"  name="ultosc" id="ultosc"
                                 required [value]="false" class="form-control" 
@@ -193,15 +194,15 @@
                       </label> 
                   </li>
                   <li class="nav-item">
-                    <label class="checkbox">ADXR 
+                    <label class="checkbox">ADX 
                       <input  type="checkbox"  name="adxr" id="adxr"
                               required [value]="false" class="form-control" 
                               [(ngModel)]="newadvisor.adxr" #adxr="ngModel" 
                               >
                       <span class="checkmark"></span>
                     </label> 
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                   <label class="checkbox">MOM 
                     <input  type="checkbox"  name="mom" id="mom"
                             required [value]="false" class="form-control" 
@@ -209,8 +210,8 @@
                             >
                     <span class="checkmark"></span>
                   </label> 
-              </li>
-              <li class="nav-item">
+              </li> -->
+              <!-- <li class="nav-item">
                 <label class="checkbox">CCI 
                   <input  type="checkbox"  name="cci" id="cci"
                           required [value]="false" class="form-control" 
@@ -218,7 +219,7 @@
                           >
                   <span class="checkmark"></span>
                 </label> 
-            </li>
+            </li> -->
                             </ul>  
                           </div>
                         </div>

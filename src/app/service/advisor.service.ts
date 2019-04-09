@@ -8,6 +8,8 @@ import { Portfolio2 } from '../model/portfolio2';
 import { testAsset } from '../model/testAsset';
 import { PortfolioService } from '../service/portfolio.service';
 
+
+
 // const endpoint = 'http://localhost:3000/api/v1/';
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,6 +23,7 @@ const httpOptions = {
 export class AdvisorService {
   //private Url = 'http://myvmlab.senecacollege.ca:6349/advisor';
   private Url = 'http://localhost:8080/advisor';
+
   constructor(private http: HttpClient, private portfolioService: PortfolioService) { }
 
   getAdvisor(advisorId: number): Observable<advisor> {
@@ -48,9 +51,24 @@ export class AdvisorService {
     return this.http.put(this.Url, advisor, httpOptions);
   }
 
-  getMacd(advisor: advisor): Observable<any> {
-    //build query string based on passed data
-    let data = {queryparams: }//query string here
-    return this.http.get('http://localhost:8080/alphaData', {params: data});
+  getRsi(symbol: string): Observable<any> {
+    return this.http.get(this.Url + '/rsi/' + symbol)
   }
+
+  getCci(symbol: string): Observable<any> {
+    return this.http.get(this.Url + '/cci/' + symbol)
+  }
+
+  getStoch(symbol: string): Observable<any> {
+    return this.http.get(this.Url + '/stoch/' + symbol)
+  }
+
+  getUltosc(symbol: string): Observable<any> {
+    return this.http.get(this.Url + '/ultosc/' + symbol)
+  }
+
+  getAdx(symbol: string): Observable<any> {
+    return this.http.get(this.Url + '/adx/' + symbol)
+  }
+
 }

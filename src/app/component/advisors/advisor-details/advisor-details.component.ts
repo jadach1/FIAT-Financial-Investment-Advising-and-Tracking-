@@ -19,6 +19,7 @@ import { PortfolioService }      from '../../../service/portfolio.service';
 import { TransactionsService }   from '../../../service/transaction.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Chart } from 'chart.js';
+import { AdvisorsComponent } from '../advisors.component';
 
 @Component({
   selector: 'app-advisor-details',
@@ -33,6 +34,7 @@ export class AdvisorDetailsComponent implements OnInit {
   stockPrices = new Array();
 
   userPortfolio: any;
+  userAdvisor: any;
 
   cadAssets: testAsset[];
   usdAssets: testAsset[];
@@ -51,10 +53,21 @@ export class AdvisorDetailsComponent implements OnInit {
   exchangeRate: any = 1; // set 1 for now
 
   private advisors: advisor[] = new Array();
-  macd: number[] = [12, 26];
-  rsi: number[] = [30, 70];
+  advisorID: number;
+  rsiLimit: number[] = [30, 70];
+  stochLimit: number[] = [20, 80];
+  cciLimit: number[] = [-200, 200];
+  ultoscLimit: number[] = [30, 70];
+  adxLimit: number[] = [20, 25];
+  adviceAverage: any;
 
-  
+  rsii: any;
+  stochh: any;
+  ccii: any;
+  ultoscc: any;
+  adxx: any;
+
+  private date;
   
   constructor(private assetService: AssetService,
     private nav: NavbarService, 
@@ -75,17 +88,19 @@ export class AdvisorDetailsComponent implements OnInit {
 
     this.spinnerService.show();
 
-    //get portfolioid
+    // get portfolioid
     this.portfolioID = parseInt(this.route.snapshot.paramMap.get('portfolioId'));
+    // get advisorId
+    this.advisorID = parseInt(this.route.snapshot.paramMap.get('advisorId'));
 
-    //get currency user
+    // get current user
     this.userService.currentUser().subscribe(
       res => {
         this.username = res.username;
         this.buildPortfolio();
     });
 
-    //get latest conversion rate
+    // get latest conversion rate
     this.assetService.getConversion().subscribe(
       res => {
         res = JSON.parse(res);
@@ -95,15 +110,46 @@ export class AdvisorDetailsComponent implements OnInit {
 
     console.log(this.exchangeRate);
 
-    //retrieve portfolio transactions
+    // retrieve portfolio transactions
     this.portfolioService.getPortfolio(this.portfolioID).subscribe(
       res => {
         this.userPortfolio = res;
     });
+
+    // retrieve advisor parameters
+    this.advisorService.getAdvisor(this.advisorID).subscribe(
+      res => {
+        this.userAdvisor = res;
+    });
+
+    
+    this.getFormatedDate();
+
+    // this.getRsi('AMZN');
+  
    }
  
   ngOnInit(): void {
   }
+
+  // getRsi(symbol: any): any{
+  //   this.advisorService.getRsi(symbol).subscribe(
+  //     res => {
+
+  //     var date  = new Date()
+  //     var day   = String(date.getDate() - 1).padStart(2, '0');
+  //     var month = String(date.getMonth() +1).padStart(2, '0');
+  //     var year  = date.getFullYear()
+  //     this.date   = year + "-" + month + "-" + day + "T00:00:00.000Z"
+
+  //       this.rsii = parseFloat(res['data'][this.date]['RSI']);
+  //       console.log(this.date);
+  //       console.log(this.rsii);
+  //       return this.rsii;
+  //     }
+  //   )
+  // }
+  
 
   buildPortfolio(): void {
     let assetList: testAsset[];
@@ -123,7 +169,7 @@ export class AdvisorDetailsComponent implements OnInit {
                 if (transaction.transaction == true){
                   asset.shares += transaction.shares;
                   asset.totalMoneyIn += (transaction.shares * transaction.price);
-                  asset.sharesBought += transaction.shares;         
+                  asset.sharesBought += transaction.shares;
                 //sell
                 }else{
                   asset.shares -= transaction.shares;
@@ -155,6 +201,7 @@ export class AdvisorDetailsComponent implements OnInit {
             newAsset.sharesSold = 0;
             newAsset.totalMoneyIn = 0;
             newAsset.totalMoneyOut= 0;
+            newAsset.rsi= 0;
             if (transaction.currency == true){
               newAsset.currency = true;
             }else{
@@ -182,8 +229,109 @@ export class AdvisorDetailsComponent implements OnInit {
             newAsset.avgprice = newAsset.totalMoneyIn / (newAsset.sharesBought);
             newAsset.avgpriceSold = newAsset.totalMoneyOut / newAsset.sharesSold;
 
+            // Get the technical model (Algorithm) - RSI
+            this.advisorService.getRsi(transaction.symbol).subscribe(
+              res => {
+
+                this.rsii = parseFloat(res['data'][this.date]['RSI']);
+
+                if (this.rsii < this.rsiLimit[0]) {
+                  newAsset.rsiAdvice = 'Buy';
+                 }else if (this.rsii > this.rsiLimit[1]) {
+                  newAsset.rsiAdvice = 'Sell';
+                } else {
+                  newAsset.rsiAdvice = 'Neutral';
+                }
+                console.log(this.date);
+                console.log(this.rsii);
+                console.log(newAsset.rsiAdvice);
+                newAsset.rsi = this.rsii;
+              }
+            );
+
+            // Get the technical model (Algorithm) - CCI
+            this.advisorService.getCci(transaction.symbol).subscribe(
+              res => {
+
+                this.ccii = parseFloat(res['data'][this.date]['CCI']);
+
+                if (this.ccii < this.cciLimit[0]) {
+                  newAsset.cciAdvice = 'Buy';
+                 }else if (this.rsii > this.cciLimit[1]) {
+                  newAsset.cciAdvice = 'Sell';
+                } else {
+                  newAsset.cciAdvice = 'Neutral';
+                }
+                console.log(this.date);
+                console.log(this.ccii);
+                console.log(newAsset.cciAdvice);
+                newAsset.cci = this.ccii;
+              }
+            );
+
+            // Get the technical model (Algorithm) - STOCH
+            this.advisorService.getStoch(transaction.symbol).subscribe(
+              res => {
+
+                this.stochh = parseFloat(res['data'][this.date]['SlowK']);
+
+                if (this.stochh < this.stochLimit[0]) {
+                  newAsset.stochAdvice = 'Buy';
+                 }else if (this.stochh > this.stochLimit[1]) {
+                  newAsset.stochAdvice = 'Sell';
+                } else {
+                  newAsset.stochAdvice = 'Neutral';
+                }
+                console.log(this.date);
+                console.log(this.stochh);
+                console.log(newAsset.stochAdvice);
+                newAsset.stoch = this.stochh;
+              }
+            );
+
+            // Get the technical model (Algorithm) - ULTOSC
+            this.advisorService.getUltosc(transaction.symbol).subscribe(
+              res => {
+
+                this.ultoscc = parseFloat(res['data'][this.date]['ULTOSC']);
+
+                if (this.ultoscc < this.ultoscLimit[0]) {
+                  newAsset.ultoscAdvice = 'Buy';
+                 }else if (this.ultoscc > this.ultoscLimit[1]) {
+                  newAsset.ultoscAdvice = 'Sell';
+                } else {
+                  newAsset.ultoscAdvice = 'Neutral';
+                }
+                console.log(this.date);
+                console.log(this.ultoscc);
+                console.log(newAsset.ultoscAdvice);
+                newAsset.ultosc = this.ultoscc;
+              }
+            );
+
+            // Get the technical model (Algorithm) - ADX
+            this.advisorService.getAdx(transaction.symbol).subscribe(
+              res => {
+
+                this.adxx = parseFloat(res['data'][this.date]['ADX']);
+
+                if (this.adxx < this.adxLimit[0]) {
+                  newAsset.adxAdvice = 'Buy';
+                 }else if (this.adxx > this.adxLimit[1]) {
+                  newAsset.adxAdvice = 'Sell';
+                } else {
+                  newAsset.adxAdvice = 'Neutral';
+                }
+                console.log(this.date);
+                console.log(this.adxx);
+                console.log(newAsset.adxAdvice);
+                newAsset.adx = this.adxx;
+              }
+            );
+
             this.assetService.getPrice(transaction.symbol).subscribe(
-              data => {            
+              data => {
+
                 //if canadian convert to cad
                 if (transaction.currency == true){
                   newAsset.currentPrice = (data.data.price*this.exchangeRate);
@@ -200,18 +348,20 @@ export class AdvisorDetailsComponent implements OnInit {
                 this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100;  
               }      
             );
-            assetList.push(newAsset);       
+            assetList.push(newAsset);
+            console.log(newAsset); 
           }
-          
+
         });
         this.cadAssets = assetList.filter(x => x.currency == true);
         this.usdAssets = assetList.filter(x => x.currency == false);
         this.assets = assetList;
         this.calculate(this.cadAssets); 
         this.calculate(this.usdAssets); 
-        this.buildChart();       
-      }   
-    );   
+
+        this.buildChart();
+      }
+    );
   }
 
   calculate(myAssets: testAsset[]){
@@ -232,9 +382,6 @@ export class AdvisorDetailsComponent implements OnInit {
     });
   }
 
-  advice(){
-    
-  }
 
   private buildChart(){
 
@@ -298,4 +445,12 @@ export class AdvisorDetailsComponent implements OnInit {
     modalRef.componentInstance.portfolioId = this.portfolioID;
     modalRef.componentInstance.currencyType = currency;
   }
+
+  private  getFormatedDate(): void {
+    var date  = new Date()
+    var day   = String(date.getDate() - 1).padStart(2, '0');
+    var month = String(date.getMonth() + 1).padStart(2, '0');
+    var year  = date.getFullYear()
+    this.date   = year + "-" + month + "-" + day + "T00:00:00.000Z"
+    }
 }

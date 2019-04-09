@@ -1,5 +1,7 @@
 const db = require('../config/db.config.js');
 const Advisor = db.advisors;
+//const alpha = require('alphavantage')({ key: 'A4MNDIDEKI72ARZJ' });
+const alpha = require('alphavantage')({ key: 'XSGLKDQT4V4TTZ6A' });
 
 // Post a Advisor
 exports.create = (req, res) => {	
@@ -77,19 +79,66 @@ exports.findAll = (req, res) => {
 		});
 };
 
-exports.alphaData = (req, response) => {
-	http.get('https://www.alphavantage.co/query?function=MACD&symbol=AAPL&interval=daily&series_type=open&apikey=A4MNDIDEKI72ARZJ', (res) =>{
-		res.setEncoding('utf-8');
-		var body = "";
-	
-		res.on('data', function(data) {
-			body += data;
-		});
-	
-		res.on('end', () => {
-			response.json(body);
-		});
-	}).on("error", (err) => {
-		console.log("Error: " + err.message);
+exports.getRsi = (req, res) => {
+	const symbol = req.params.symbol;
+	alpha.technical.rsi(symbol, 'daily', '14', 'open').then(data => {
+		const polished = alpha.util.polish(data);
+		res.json(polished);
+		//console.log(data);
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
 	});
+};
+
+exports.getCci = (req, res) => {
+	const symbol = req.params.symbol;
+	alpha.technical.cci(symbol, 'daily', '20').then(data => {
+		const polished = alpha.util.polish(data);
+		res.json(polished);
+		//console.log(data);
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
+	});
+	
+};
+
+exports.getStoch = (req, res) => {
+	const symbol = req.params.symbol;
+	alpha.technical.stoch(symbol, 'daily', '14', '3', '3', 'sma', 'sma').then(data => {
+		const polished = alpha.util.polish(data);
+		res.json(polished);
+		//console.log(data);
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
+	});
+	
+};
+
+exports.getUltosc = (req, res) => {
+	const symbol = req.params.symbol;
+	alpha.technical.ultosc(symbol, 'daily', '7', '14', '28').then(data => {
+		const polished = alpha.util.polish(data);
+		res.json(polished);
+		//console.log(data);
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
+	});
+	
+};
+
+exports.getAdx = (req, res) => {
+	const symbol = req.params.symbol;
+	alpha.technical.adx(symbol, 'daily', '14').then(data => {
+		const polished = alpha.util.polish(data);
+		res.json(polished);
+		//console.log(data);
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({msg: "error", details: err});
+	});
+	
 };

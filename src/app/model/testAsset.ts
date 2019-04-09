@@ -10,4 +10,15 @@ export class testAsset {
     currentPrice: any = 0;
     gain: any = 0;
     currency: any;
+    rsi: any;
+    rsiAdvice: any;
+    stoch: any;
+    stochAdvice: any;
+    cci: any;
+    cciAdvice: any;
+    ultosc: any;
+    ultoscAdvice: any;
+    adx: any;
+    adxAdvice: any;
+    adviceAverage: any;
 }

@@ -21,6 +21,7 @@
     "@angular/router": "~7.1.0",
     "@concide/stock-scraper": "^1.0.1",
     "@ng-bootstrap/ng-bootstrap": "^4.1.0",
+    "alphavantage": "^1.2.3",
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",
     "cors": "^2.8.5",

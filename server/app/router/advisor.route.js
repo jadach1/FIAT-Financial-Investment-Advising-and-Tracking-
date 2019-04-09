@@ -15,6 +15,19 @@ module.exports = function(app) {
     // Delete a advisor with advisorId
     app.delete('/advisor/:advisorid', Advisor.delete);
 
-   app.get('/alphaData', Advisor.alphaData);
+    //Get the technical model RSI
+    app.get('/advisor/rsi/:symbol', Advisor.getRsi);
+
+    //Get the technical model CCI
+    app.get('/advisor/cci/:symbol', Advisor.getCci);
+
+    //Get the technical model STOCH
+    app.get('/advisor/stoch/:symbol', Advisor.getStoch);
+
+    //Get the technical model ULTOSCH
+    app.get('/advisor/ultosc/:symbol', Advisor.getUltosc);
+
+    //Get the technical model CCI
+    app.get('/advisor/adx/:symbol', Advisor.getAdx);
 
 }
