@@ -1,10 +1,12 @@
 <!-- Begin Page Content -->
-<div class="modal-body">
+<div class="modal-header" style="background-color: green">
+  <h5 class="modal-title" id="exampleModalLabel" style="color: white; font-weight: bold;">New Transaction</h5>
+</div>
+<div class="modal-body" style="background-color: whitesmoke">
   <div class="container-fluid">
       <div class="row">
           <div class="col-sm-2"><!-- Just here for formatting the page--> </div>
           <div class='col-sm-8'>
-            <h3>Add New Transaction</h3>
             <div [hidden]="submitted">
                 <form #transactionForm="ngForm">
             
@@ -85,7 +87,7 @@
                           <li class="nav-item">
                               <label class="radioButton">CAD
                                 <input  type="radio"  name="currency" id="currency"
-                                        required [value]="true" class="form-control"
+                                        required [value]="true" class="form-check-input"
                                         [(ngModel)]="Transaction.currency" #currency="ngModel" checked="checked"
                                         >
                                 <span class="checkmark"></span>
@@ -94,7 +96,7 @@
                           <li class="nav-item">
                               <label  class="radioButton">USD
                                 <input type="radio"  name="usd" id="usd"
-                                        required [value]="false" class="form-control" 
+                                        required [value]="false" class="form-check-input"
                                         [(ngModel)]="Transaction.currency" #currency="ngModel"
                                         >
                                 <span class="checkmark"></span>
@@ -118,19 +120,19 @@
                       <div>  
                         <p>Transaction Type</p>
                         <ul class="nav justify-content-center">
-                            <li class="nav-item"  style="color:white ; background-color: green">
+                            <li class="nav-item"  style="color:white ; color: green">
                                 <label class="radioButton">BUY
-                                  <input  type="radio"  name="Buy" id="Buy"
-                                          required [value]="true" class="form-control"
+                                  <input  type="radio" name="Buy" id="Buy"
+                                          required [value]="true" class="form-check-input"
                                           [(ngModel)]="Transaction.transaction" #transaction="ngModel" checked="checked"
                                           >
                                   <span class="checkmark"></span>
                                 </label> 
                             </li>
-                            <li *ngIf="passedInShares" class="nav-item"  style="color:white ; background-color: red">
+                            <li *ngIf="passedInShares" class="nav-item"  style="color:white ; color: red">
                                 <label  class="radioButton">SELL
                                   <input type="radio"  name="transaction" id="transaction"
-                                          required [value]="false" class="form-control" 
+                                          required [value]="false" class="form-check-input" 
                                           [(ngModel)]="Transaction.transaction" #transaction="ngModel"
                                           >
                                   <span class="checkmark"></span>
@@ -143,25 +145,25 @@
                         </div>
                       </div>
                     </div>
-            
-                  <div class="btn-group btn-group-md">
-                    <button type="button" class="btn btn-dark" (click) = "back()">Back</button>
-                      <button type="button" class="btn btn-dark" (click)="addTransaction()" [disabled]="!transactionForm.form.valid" >Submit</button>      
-                    <button type="button" class="btn btn-dark" (click)="newTransaction()" >Clear</button>
-                  </div>
                 </form> 
             </div>
-            
-            <div [hidden]="!submitted">
+
+            <div [hidden] = "!submitted">
               <p>Submitted Successfully!<span class="badge badge-light"></span></p>
-            
-              <div class="btn-group btn-group-sm" >
-                    <button type="button" class="btn btn-dark" (click)="back()">Back</button>
-                    <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
-              </div>
             </div>
 
       </div>
     </div>
   </div>      
+</div>
+<div [hidden]="submitted" class="modal-footer" style="background-color: green">
+    <button type="button" class="btn btn-dark" (click)="addTransaction()" [disabled]="!transactionForm.form.valid" >Submit</button>
+    <button type="button" class="btn btn-dark" (click)="transactionForm.reset()" >Clear</button>
+    <button type="button" class="btn btn-dark" (click) = "back()">Cancel</button>
+</div>
+<div [hidden]="!submitted" class="modal-footer" style="background-color: green">
+    <div class="btn-group btn-group-sm" >
+        <button type="button" class="btn btn-dark" (click)="back()">Back</button>
+        <button type="button" class="btn btn-dark" (click)="newTransaction(); transactionForm.reset()">Add Another Transaction</button>
+  </div>
 </div>

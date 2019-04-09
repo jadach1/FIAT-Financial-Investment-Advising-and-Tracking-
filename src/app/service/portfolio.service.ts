@@ -6,6 +6,11 @@ import { Portfolio2 } from '../model/portfolio2';
 import { testAsset } from '../model/testAsset';
 import { TransactionsService } from './transaction.service';
 
+interface portfolioNames{
+  id: any,
+  name: any
+}
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -15,7 +20,9 @@ const httpOptions = {
 })
 export class PortfolioService {
   private Url = 'http://myvmlab.senecacollege.ca:6349/portfolio';
-  // private Url = 'http://localhost:8080/portfolio';
+
+ // private Url = 'http://localhost:8080/portfolio';
+
   constructor(private http: HttpClient, private transactionService: TransactionsService) { }
 
   getPortfolio(portfolioId: number): Observable<Portfolio2> {
@@ -25,7 +32,10 @@ export class PortfolioService {
   }
 
   getAllPortfolio(username: string): Observable<Portfolio2[]> {
-    let data = {username: username};
+    let data = {
+                username: username
+              }
+
     return this.http.get<Portfolio2[]>(this.Url, {params:data});
   }
  
@@ -33,9 +43,8 @@ export class PortfolioService {
     return this.http.post<Portfolio2>(this.Url+'/create', portfolio, httpOptions);
   }
  
-  deletePortfolio (portfolio: Portfolio2): Observable<Portfolio2> {
-    const username = portfolio.username;
-    const url = this.Url+'/'+username;
+  deletePortfolio (portfolioID: Number): Observable<Portfolio2> {
+    const url = this.Url+'/'+portfolioID;
     return this.http.delete<Portfolio2>(url, httpOptions);
   }
  
@@ -43,4 +52,8 @@ export class PortfolioService {
     return this.http.put(this.Url, portfolio, httpOptions);
   }
 
+  // Get all portfolio names related to the user currently logged in
+  getPortfolioNames (userName: string): Observable<portfolioNames[]> {
+    return this.http.get<portfolioNames[]>(this.Url + '/getNames/' + userName);
+  }
 }

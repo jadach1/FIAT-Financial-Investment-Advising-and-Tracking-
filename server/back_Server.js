@@ -86,16 +86,15 @@ if (process.argv[4] == 'blast')
     // // force: true will drop the table if it already exists
     db.sequelize.sync({force: true}).then(() => {
         console.log('Database is running, recreate DB');
-        initial();
     });
-} 
-else 
-{
+} else {
     // // force: true will drop the table if it already exists
     db.sequelize.sync().then(() => {
         console.log('Database is running');
     });
 }
+
+process.argv[4] == 'populate' &&  initial() 
 
 
 // Create a Server
@@ -106,20 +105,73 @@ app.listen(port, hostname, function () {
     function initial(){
         let users = [
             {
-                username: "admin",
-                password: "admin",
-                firstname: "admin",
-                lastname: "admin",
-                email: "admin",
-                recoveryQuestion: "admin",
-                recoveryAnswer: "admin"
+                username: "Emilio",
+                password: "password",
+                firstname: "Emile",
+                lastname: "Ohan",
+                email: "emile.ohan@senecacollege.ca",
+                isVerified: "t",
+                recoveryQuestion: "What is my profession ? ",
+                recoveryAnswer: "professor"
             }
         ]
 
+        let portfolios = [
+            {
+                portfolioId: 1,
+                username: "emilio",
+                portfolioName: "My Retirement",
+                portfolioType: "t"
+            }
+        ]
+
+        let trans = [
+            {
+                id: 1,
+                portfolioId: 1, 
+                symbol: "AMZN", 
+                shares: 1000,
+                price: 20.56,
+                currency: 't',
+                buydate: 1999-03-18,
+                transaction: 't' 
+            } ,
+            {
+                id: 2,
+                portfolioId: 1, 
+                symbol: "TSLA", 
+                shares: 1000,
+                price: 67.89,
+                currency: 't',
+                buydate: 2011-02-11,
+                transaction: 't' 
+            } , 
+            {
+                id: 3,
+                portfolioId: 1, 
+                symbol: "BRK.A", 
+                shares: 10,
+                price: 9999.99,
+                buydate: 1991-01-14,
+                transaction: 't',
+                currency: 't' 
+            }
+        ]
         // Init data -> save to PostgreSQL
         const User = db.users;
+        const Portfolio = db.portfolios;
+        const Transaction = db.transactions;
+
         for (let i = 0; i < users.length; i++) { 
         User.create(users[i]);  
         }
+
+        for (let i = 0; i < portfolios.length; i++) { 
+            Portfolio.create(portfolios[i]);  
+            }
+
+        for (let i = 0; i < trans.length; i++) { 
+            Transaction.create(trans[i]);  
+            }
     }
 }

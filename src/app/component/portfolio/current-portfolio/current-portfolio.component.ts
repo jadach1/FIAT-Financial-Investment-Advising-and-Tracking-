@@ -62,18 +62,19 @@ export class CurrentPortfolioComponent implements OnInit {
     ) {
     this.nav.show();
     this.sidebar.show();
-
+    //show to loading spinner
     this.spinnerService.show();
 
     //get portfolioid
     this.portfolioID = parseInt(this.route.snapshot.paramMap.get('portfolioId'));
 
-    //get currency user
+    //get current user
     this.userService.currentUser().subscribe(
       res => {
         this.username = res.username;
         this.buildPortfolio();
     });
+
 
     //get latest conversion rate
     this.assetService.getConversion().subscribe(
@@ -83,9 +84,7 @@ export class CurrentPortfolioComponent implements OnInit {
       }
     )
 
-    console.log(this.exchangeRate);
-
-    //retrieve portfolio transactions
+    //retrieve portfolio info
     this.portfolioService.getPortfolio(this.portfolioID).subscribe(
       res => {
         this.userPortfolio = res;
@@ -95,15 +94,19 @@ export class CurrentPortfolioComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //builds the portfolio array
   buildPortfolio(): void {
     let assetList: testAsset[];
     assetList = new Array();
+    //retrieves all transactions on the portfolio
     this.transactionService.getAllTransactions(this.portfolioID.toString()).subscribe(
       res => {
+        //for every portfolio in the list
         res.forEach(transaction => {
           transaction.price = parseFloat(transaction.price);
           let found = false;
 
+          //if the assetList has any assets added yet
           if (assetList){
             assetList.forEach(asset => {
           
@@ -121,11 +124,13 @@ export class CurrentPortfolioComponent implements OnInit {
                   asset.sharesSold += transaction.shares;
                 }
 
+                //modify the asset avgprices
                 asset.avgprice = asset.totalMoneyIn / (asset.sharesBought);
                 asset.avgpriceSold = asset.totalMoneyOut / asset.sharesSold;
                 
                 found = true;
 
+                //if there are transactions on the asset but the currently owned shares are 0, remove it from the array so it wont display
                 if (asset.shares == 0){
                   var i = assetList.findIndex(index => {
                     return index.symbol == transaction.symbol;
@@ -136,6 +141,7 @@ export class CurrentPortfolioComponent implements OnInit {
             });
           }
 
+          //if the asset does not already exist in the list we need to add it as a new asset
           if (!found){
             var newAsset = new testAsset();
             newAsset.shares = 0;
@@ -145,58 +151,64 @@ export class CurrentPortfolioComponent implements OnInit {
             newAsset.sharesSold = 0;
             newAsset.totalMoneyIn = 0;
             newAsset.totalMoneyOut= 0;
+            //set currencytype
             if (transaction.currency == true){
               newAsset.currency = true;
             }else{
               newAsset.currency = false;
             }
-
+            //set symbol
             newAsset.symbol = transaction.symbol;
             //buy
-            var buycount = 0, sellcount = 0;
             if (transaction.transaction == true){
               newAsset.shares += transaction.shares;
               newAsset.totalMoneyIn += (transaction.shares * transaction.price);
               newAsset.sharesBought += transaction.shares;
-
-              buycount+=1;
             //sell
             }else{
               newAsset.shares -= transaction.shares;
               newAsset.totalMoneyOut += (transaction.shares * transaction.price);
               newAsset.sharesSold += transaction.shares;
-
-              sellcount += 1;
             }
 
+            //set the avgprices
             newAsset.avgprice = newAsset.totalMoneyIn / (newAsset.sharesBought);
             newAsset.avgpriceSold = newAsset.totalMoneyOut / newAsset.sharesSold;
 
+            //retrieve the current price (in USD) of the asset from the API
             this.assetService.getPrice(transaction.symbol).subscribe(
-              data => {            
-                //if canadian convert to cad
-                if (transaction.currency == true){
-                  newAsset.currentPrice = (data.data.price*this.exchangeRate);
-                  newAsset.gain = (((data.data.price*this.exchangeRate) - newAsset.avgprice) / newAsset.avgprice) * 100;
-                }else{
-                  newAsset.currentPrice = (data.data.price);
-                  newAsset.gain = (((data.data.price) - newAsset.avgprice) / newAsset.avgprice) * 100;
-                }
-                if (!data.data.price){
+              data => {
+                //if the price cannot be retrieved we use the avgprice as the current price and update values accordingly         
+                if (data.data === undefined){
                   this.totalPortfolioValue += (newAsset.shares * newAsset.avgprice);
                 }else{
                   this.totalPortfolioValue += (data.data.price*this.exchangeRate) * newAsset.shares;
+
+                  //if canadian convert to cad
+                  if (transaction.currency == true){
+                    newAsset.currentPrice = (data.data.price*this.exchangeRate);
+                    newAsset.gain = (((data.data.price*this.exchangeRate) - newAsset.avgprice) / newAsset.avgprice) * 100;
+                  }else{
+                    //usd
+                    newAsset.currentPrice = (data.data.price);
+                    newAsset.gain = (((data.data.price) - newAsset.avgprice) / newAsset.avgprice) * 100;
+                  }
+
                 }
+                //calculate the total percent gain of the portfolio
                 this.totPercent = ((this.totalPortfolioValue - this.totDiff) / this.totDiff) * 100;  
-              }      
+              }
             );
+            //add the new asset to the list
             assetList.push(newAsset);       
           }
           
         });
+        //split the array based on currencytype to create an array of canadian assets and array of us assets
         this.cadAssets = assetList.filter(x => x.currency == true);
         this.usdAssets = assetList.filter(x => x.currency == false);
         this.assets = assetList;
+        //calculate totals
         this.calculate(this.cadAssets); 
         this.calculate(this.usdAssets); 
         this.buildChart();       
@@ -204,17 +216,20 @@ export class CurrentPortfolioComponent implements OnInit {
     );   
   }
 
+  //this function calculates the totals at the top of the portfolio based on the assets in the portfolio that were previously built
   calculate(myAssets: testAsset[]){
     myAssets.forEach(element => 
     {
       //if currency is usd convert usd to cad
       if (element.currency == false){
+        //calculate the totalin and totalout
         this.totIn += (element.totalMoneyIn*this.exchangeRate);
         this.totOut += (element.totalMoneyOut*this.exchangeRate);
         this.totDiff = this.totIn - this.totOut;
       }
       //if currency is usd leave as is
       else{
+        //calculate the totalin and totalout
         this.totIn += element.totalMoneyIn;
         this.totOut += element.totalMoneyOut
         this.totDiff = this.totIn - this.totOut;
@@ -222,6 +237,7 @@ export class CurrentPortfolioComponent implements OnInit {
     });
   }
 
+  //this function builds the pie chart on the right side of the screen
   private buildChart(){
 
     this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
@@ -230,6 +246,7 @@ export class CurrentPortfolioComponent implements OnInit {
     let assetAmounts = new Array();
     let colourList = new Array();
 
+    //this function creates a random rgb colour value
     var dynamicColors = function() {
       var r = Math.floor(Math.random() * 255);
       var g = Math.floor(Math.random() * 255);
@@ -237,12 +254,24 @@ export class CurrentPortfolioComponent implements OnInit {
       return "rgba(" + r + "," + g + "," + b + ", 1)";
    };
 
+   //for every asset in the assetlist
     this.assets.forEach(asset => {
+      //add the symbol to the labels
       assetLabels.push(asset.symbol);
+      //add a new random colour to the colours
       colourList.push(dynamicColors());
+      //get the price of the asset
       this.assetService.getPrice(asset.symbol).subscribe(
         data => {
-          assetAmounts.push(Math.round(data.data.price * asset.shares));
+          //if the price could not be found, use the average buy price
+          if (data.data === undefined){
+            assetAmounts.push(Math.round(asset.shares*asset.avgprice));
+          }
+          //if the price is found use the current price
+          else{
+            assetAmounts.push(Math.round(data.data.price * asset.shares));
+          } 
+          //hide the loading spinner
           this.spinnerService.hide();
         },
         err => {
@@ -264,7 +293,10 @@ export class CurrentPortfolioComponent implements OnInit {
             },
             options: {
                cutoutPercentage: 20,
-               responsive: true  
+               responsive: true,
+               legend: {
+                display: false
+               },  
             }
           });
         }      
@@ -274,6 +306,7 @@ export class CurrentPortfolioComponent implements OnInit {
     
   }
 
+  //this function opens the transaction modal, passing in the stock symbol, shares, portfolioId, and currency type (CAD/USD)
   openModal(symbol: string, shares: number, portfolio: number, currency: boolean){
     const modalRef = this.modalService.open(AddAssetComponent);
     modalRef.componentInstance.username = this.username;

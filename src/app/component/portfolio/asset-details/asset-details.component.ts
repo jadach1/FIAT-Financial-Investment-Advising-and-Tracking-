@@ -61,20 +61,41 @@ export class AssetDetailsComponent implements OnInit {
 
       this.user = new User();
 
+      //get latest conversion rate
+      this.assetService.getConversion().subscribe(
+        res => {
+          res = JSON.parse(res);
+          this.exchangeRate = res.quotes.USDCAD;
+        }
+      )
+
+      //get current user
       this.userService.currentUser().subscribe(
         res =>{
           this.user = res;
           this.buildDetails();
         }
       );
+
     }
 
   ngOnInit() {
    //this.grabAssetAndConvert();
   }
 
+  //refresh the browser
   private refresh(){
     window.location.reload();
+  }
+
+  //delete a transaction, run buildDetails() again to get updated list of transactions
+  private deleteTransaction(transactionID: Number){
+    this.transactionService.deleteTransaction(transactionID).subscribe(
+      ()=> {
+        this.transactions = new Array();
+        this.buildDetails();
+      }
+    );
   }
 
   private buildDetails(){
@@ -88,71 +109,81 @@ export class AssetDetailsComponent implements OnInit {
     this.newAsset.totalMoneyIn = 0;
     this.newAsset.totalMoneyOut= 0;
 
+
+    //gets all transactions of the current asset
     this.transactionService.getTransactionsByAsset(null, this.symbol, this.portfolioID.toString()).subscribe(
       res => {
+        //for each transaction of the current asset
         res.forEach(transaction => {
             transactionList.push(transaction);
 
+            //set the current asset displayed to the transaction asset
             this.newAsset.symbol = transaction.symbol;
+
+            //set the currency to canadian or us
             if (transaction.currency == true){
               this.newAsset.currency = true;
             }else{
               this.newAsset.currency = false;
             }
 
-            //buy
-            var buycount = 0, sellcount = 0;
+            //if transaction is a buy, add to the details
             if (transaction.transaction == true){
               this.newAsset.shares += transaction.shares;
               this.newAsset.totalMoneyIn += (transaction.shares * transaction.price);
               this.newAsset.sharesBought += transaction.shares;
-
-              buycount+=1;
-            //sell
+            //if transaction is a sell, subtract from the details
             }else{
               this.newAsset.shares -= transaction.shares;
               this.newAsset.totalMoneyOut += (transaction.shares * transaction.price);
               this.newAsset.sharesSold += transaction.shares;
-
-              sellcount += 1;
             }
-
+            //update the total avg price bought and sold
             this.newAsset.avgprice = this.newAsset.totalMoneyIn / this.newAsset.sharesBought;
-            this.newAsset.avgpriceSold = this.newAsset.totalMoneyOut / this.newAsset.sharesSold;
-       
+            this.newAsset.avgpriceSold = this.newAsset.totalMoneyOut / this.newAsset.sharesSold;  
         });
 
+        //get the current price of the asset (from api, in USD)
         this.assetService.getPrice(this.symbol).subscribe(
           data => {
-            if (this.newAsset.currency == true){
-              this.newAsset.currentPrice = (data.data.price*this.exchangeRate);
-              this.newAsset.gain = (((data.data.price*this.exchangeRate) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
+            //if the price could not be found
+            if (data.data == undefined){
+              //set current price to the average buy price
+              this.newAsset.currentPrice = this.newAsset.avgprice;
             }else{
-              this.newAsset.currentPrice = (data.data.price);
-              this.newAsset.gain = (((data.data.price) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
-            }
-            this.stockData = data;
-            this.buildChart();
-            this.spinnerService.hide();
-          }      
-        );
-
-        this.transactions = transactionList;
-        
+              //if currency is canadian we need to modify the price to match using the exchange rate
+              if (this.newAsset.currency == true){
+                this.newAsset.currentPrice = (data.data.price*this.exchangeRate);
+                this.newAsset.gain = (((data.data.price*this.exchangeRate) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
+              }else{
+                this.newAsset.currentPrice = (data.data.price);
+                this.newAsset.gain = (((data.data.price) - this.newAsset.avgprice) / this.newAsset.avgprice) * 100;
+              }
+              this.stockData = data;
+              //call function to build the 5yr chart
+              this.buildChart();
+              //hide the loading spinner
+              this.spinnerService.hide();
+            }  
+          });
+        this.transactions = transactionList;      
       }
     )
   }
 
+  //build the asset 5 year chart
   private buildChart(){
     this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d');
 
     let stockLabels = new Array();
     let stockPrices = new Array();
 
+    //build the array of prices using the data retrieved from before, only taking every 20th value so the chart isnt so filled
     let arr = this.stockData.charts.chartDailyLast5Years.filter(function (value, index, ar) {
-      return (index % 30 == 0);
+      return (index % 20 == 0);
     } );
 
+    //for every price in the chart add a label corresponding to the price, also convert currency if necessary
     arr.forEach(day => {
       stockLabels.push(day.date);
       if (this.newAsset.currency == true){
@@ -162,6 +193,7 @@ export class AssetDetailsComponent implements OnInit {
       }
     });
     
+    //build the chart using stockData as data, stockLabels as labels
     this.chart = new Chart(this.context, {
       type: 'line',
       data: {

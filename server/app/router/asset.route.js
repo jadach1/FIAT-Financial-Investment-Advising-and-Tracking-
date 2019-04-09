@@ -22,4 +22,5 @@ module.exports = function(capp) {
     capp.get('/asset/:symbol', CurrentAssets.GetPrice);
 
     capp.get('/convert', CurrentAssets.Convert);
+    capp.get('/portfolio/getAssetNames/:id', CurrentAssets.GetAllAssetNames)
 }

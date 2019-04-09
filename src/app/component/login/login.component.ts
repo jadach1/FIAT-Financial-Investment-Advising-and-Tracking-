@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  user = new User();
+  user      = new User();
   username2 = new FormControl('');
   password2 = new FormControl('');
 
@@ -24,17 +24,16 @@ export class LoginComponent implements OnInit {
   public login(){
 
     new Promise(res=>{
+      //set username and password to the values set in the modal
       this.user.username = this.username2.value;
       this.user.password = this.password2.value;
       return res();
     }).then(res=>{
-      console.log(this.user.username + "," + this.user.password);
-      return "";
-    }).then(res=>{
+      //call the login function, if successful user is redirected to the dashboard
       this.authService.login(this.user)
       .subscribe(
         res => "",
-        err => alert("error on login"),
+        err => alert("Sorry, the password and or username entered is incorrect"),
         () => this.router.navigateByUrl('/dashboard')
         );
     })

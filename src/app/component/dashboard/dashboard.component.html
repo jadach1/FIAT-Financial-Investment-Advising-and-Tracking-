@@ -19,11 +19,126 @@
       </div>
 
       <div class="row">
+        <!-- Left Side -->
+          <div class="col-6">
+            <!-- User counts -->
+              <div class="col-12">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-center" width="100%">
+                          <div class="p-2">
+                            <h2>{{pCount}} Portfolios & Watchlists <button type="button" class="btn btn-dark" [routerLink]="['/portfolio']">View All</button></h2>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
 
-        <!-- Portfolio Info Card -->
-          <div class="col-12" style="display: inline-flex; float: right;">
+              <div class="col-12">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-center" width="100%">
+                          <div class="p-2">
+                            <h2>{{aCount}} Custom Advisors <button type="button" class="btn btn-dark" [routerLink]="['/advisors']">View All</button></h2>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12">
+                  <iframe src="https://ca.widgets.investing.com/live-indices?theme=darkTheme&pairs=166,27,24441,44336" width="100%" height="1000px" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="10"></iframe><div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif;"></div>
+              </div>
+
+              
+        </div>
+
+
+        <div class="col-6">
+      
+        <!-- Page Heading -->
+        <div class="col-12">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-center" width="100%">
+                      <div class="p-2">
+                        <h5>Search for News either by selecting an Asset from your Portfolio or typing in your own symbol</h5>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+        </div>
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                   <div class="d-flex justify-content-center" width="75%">
+                      <div class="p-2">
+                        <select id="role"  (change)="selectName($event.target.value);">
+                          <option value="">--select Portfolio--</option>
+                          <option [ngValue]="portfolio.id" *ngFor="let portfolio of pNames"  >{{portfolio.name}}</option> 
+                          </select>
+
+                          <select id="role2" (change)="createURL($event.target.value);">
+                            <option value="">--select Asset--</option>
+                            <option  [ngValue]="asset" *ngFor="let asset of assets" >{{asset}}</option>
+                          </select>
+
+                         <input type="text"  placeholder="Search for ... " name="searchBar" class="searchBar" [(ngModel)]="searchString" />
+                          <button type="button"  class="searchBar" (click)="searchFor()">SEARCH</button>
+                    </div>
+                    </div>
+                  </div>
+              </div>
           </div>
 
+      <div [hidden]="hide">
+        <!-- Page Heading -->
+          <div class="col-12">
+            <div class="card text-white bg-success mb-3">
+              <p id="news">NEWS REEL</p>
+                <div class="card-body">
+                  <div class="p-2" >
+                    <table *ngFor="let news of arrayOfNews" id="table1" width="100%">
+                        <tr id="title"> Title: {{news.title}} </tr>
+                        <tr id="author"> By: {{news.author}} </tr>
+                        <tr id="desc">    DESCRIPTION: </tr>
+                        <tr id= "descr">  {{news.description}}  </tr> 
+                        <tr > 
+                            <button id="readmore" type="button" class="btn btn-dark" href="#" data-toggle="modal" data-target="#news-modal" (click)="setUpModal(news.title, news.content)">
+                                Read More
+                            </button> 
+                              <button id="fullSite" type="button" class="btn btn-light" (click)="redirect(news.url)">
+                                Take Me To The Source
+                            </button>
+                        </tr>
+                    </table>
+                    <p id="attribution">Powered by News API</p>
+                  </div>
+                </div>
+              </div>
+          </div>
       </div>
     </div>
+    </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="news-modal" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="container">
+            <h1>{{readMoreTitle}}</h1>    
+          <div id="modalContent">
+              {{readMoreContent}}
+          </div>   
+          <!--  <iframe id="inlineFrame"
+              title="g"
+              width="300"
+              height="200"
+              [src]="contentURL">
+          </iframe>    -->     
+        </div>
+    </div>
+  </div>
 </div>
