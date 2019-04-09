@@ -1,5 +1,88 @@
 <app-nav></app-nav>
 <app-sidebar></app-sidebar>
-<p>
-  create-advisor works!
-</p>
+<div id="advisorsCreate-content">
+	  		
+  <div class="container-fluid">
+          <!-- Page Heading -->
+       <h1 style="text-align:center" class="h3 mb-2 text-gray-1000">Create New Advisor</h1>
+
+
+    <form class="form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit()">
+     
+      <div class="form-group">
+    
+        <div class="col-md-3" [ngClass]='tech'>
+          <label for="tech">Technical models</label>
+          <div id="tech" class="row">
+            <div class="checkbox" class="col-sm-4"
+              formArrayName="tech"
+              *ngFor="let item of form.get('tech').controls; let i = index" >
+              <label class="checkbox-inline">
+                <input type="checkbox" [formControlName]="i"> {{ tech[i] }}
+              </label>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+      <div class="form-group">
+          <div class="col-md-5" [ngClass]="advisorName">
+            <label for="bairro" class="control-label">Advisor Name</label>
+            <input type="text" class="form-control" id="advisorName" formControlName="advisorname">
+            
+          </div>
+        </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button class="btn btn-default" (click)="reset()">Cancel</button>
+    
+    </form>
+  </div>
+  </div>
+
+
+  <!-- <form #createAdvisorForm="ngForm">
+      <div class="form-group">
+        <label for="name">Advisor name</label>
+        <input type="text" class="form-control" id="advisorName" required [(ngModel)]="advisor.advisorName" name="advisorname" #advisorName="ngModel">
+        <div [hidden]="advisorname.valid || advisorname.pristine"
+           class="alert alert-danger">
+          Advisor name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+      <div class="col-md-3" [ngClass]="tech">
+        <label for="tech">tech</label>
+        <div id="tech" class="row">
+          <div class="checkbox"
+            formArrayName="tech"
+            *ngFor="let item of createAdvisorForm.get('tech').controls; let i = index" >
+            <label class="checkbox-inline">
+              <input type="checkbox" [formControlName]="i"> {{ tech[i] }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="form-group">
+      <h3 style="text-align:center" class="h3 mb-2 text-gray-1000">Select Algorithms</h3>
+      <input type="checkbox" name="algorithms" value= [ngModel]="advisor.algorithm"> Portfolio1
+      <input type="checkbox" name="algorithms" value= [ngModel]="advisor.algorithm"> Portfolio2
+    </div>
+
+    <div class="form-group">
+        <h3 style="text-align:center" class="h3 mb-2 text-gray-1000">Stocks to Monitor</h3>
+      <label for="name">Stocks</label>
+      <input type="text" class="form-control" id="advisorSymbol" required [(ngModel)]="advisor.advisorSymbol" name="advisorsymbol" #advisorName="ngModel">
+      <div [hidden]="advisorsymbol.valid || advisorsymbol.pristine"
+         class="alert alert-danger">
+        Stock symbol is required
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="button" class="btn btn-secondary" (click)="createAdvisor()">Save</button>
+      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+    </form> -->
