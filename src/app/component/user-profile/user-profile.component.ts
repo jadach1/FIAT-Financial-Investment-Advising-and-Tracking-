@@ -15,6 +15,8 @@ export class UserProfileComponent implements OnInit {
 
   public user: User;
   submitted = false;
+  public tempPassword;
+  public oldPassword;
 
   constructor(private router: Router, private authService: AuthenticationService,
     private userService: UserService) {
@@ -25,14 +27,19 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateUser() {
-    console.log(
-      this.user.firstname + ',',
-      this.user.lastname + ',',
-      this.user.email + ','
-    );
     this.submitted = true;
     this.save();
     this.router.navigateByUrl('/');
+  }
+
+  /*
+    This will match the old password to the new one to verify that they match
+  */
+  verifyPassword() {
+    if ( this.oldPassword == this.user.password )
+    {
+      console.log("old password matches new password")
+    }
   }
 
   private save(): void {
