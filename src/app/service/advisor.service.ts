@@ -41,9 +41,8 @@ export class AdvisorService {
     return this.http.post<advisor>(this.Url+'/create', advisor, httpOptions);
   }
  
-  deleteAdvisor (advisor: advisor): Observable<advisor> {
-    const username = advisor.username;
-    const url = this.Url+'/'+advisor;
+  deleteAdvisor (advisorID: Number): Observable<advisor> {
+    const url = this.Url + '/' + advisorID;
     return this.http.delete<advisor>(url, httpOptions);
   }
  

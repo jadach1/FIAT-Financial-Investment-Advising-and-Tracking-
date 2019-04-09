@@ -73,6 +73,7 @@
                     <tr *ngFor="let advisor of advisors" [ngClass]="'tablerow'">
                       <td style="text-align:center;">{{advisor.advisorName}}</td>
                       <td style="text-align:center;"> <button type="button" class="btn btn-dark" [routerLink]="['/advisordetails', advisor.portfolioId]">View Portfolio</button></td>
+                      <td style="text-align:center;"> <button type="button" class="btn btn-dark" (click)="deleteAdvisor(advisor.advisorId)">Delete</button></td>
                     </tr>  
                   </table> 
                 </div>

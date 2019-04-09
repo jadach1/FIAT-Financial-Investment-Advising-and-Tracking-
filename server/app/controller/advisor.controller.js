@@ -59,14 +59,15 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
 	const advisorid = req.params.advisorid;
 	Advisor.destroy({
-			where: { advisorid: advisorid }
+			where: { advisorId: advisorid }
 		}).then(() => {
-			res.status(200).json( { msg: 'Deleted Successfully -> AdvisorID = ' + username } );
+			res.status(200).json( { msg: 'Deleted Successfully -> AdvisorID = ' + advisorid } );
 		}).catch(err => {
 			console.log(err);
 			res.status(500).json({msg: "error", details: err});
 		});
 };
+
 
 // FETCH All Advisors
 exports.findAll = (req, res) => {

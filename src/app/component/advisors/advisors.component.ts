@@ -96,4 +96,16 @@ export class AdvisorsComponent implements OnInit {
 
   }
 
+  // Delete an Advisor
+  private deleteAdvisor(advisorID: any){
+    this.advisorService.deleteAdvisor(advisorID).subscribe(
+      ()=> {
+
+        this.advisors = new Array();
+
+        this.buildAdvisors();
+      }
+    );
+  }
+
 }
