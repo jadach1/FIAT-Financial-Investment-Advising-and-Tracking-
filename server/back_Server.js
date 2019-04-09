@@ -170,6 +170,7 @@ app.listen(port, hostname, function () {
         const User = db.users;
         const Portfolio = db.portfolios;
         const Transaction = db.transactions;
+        const Advisors = db.advisors;
 
         for (let i = 0; i < users.length; i++) { 
         User.create(users[i]);  
@@ -181,6 +182,10 @@ app.listen(port, hostname, function () {
 
         for (let i = 0; i < trans.length; i++) { 
             Transaction.create(trans[i]);  
+            }
+
+        for (let i = 0; i < adv.length; i++) { 
+            Advisors.create(adv[i]);  
             }
     }
 }
