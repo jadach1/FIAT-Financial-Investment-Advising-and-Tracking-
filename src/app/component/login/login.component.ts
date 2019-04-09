@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  user = new User();
+  user      = new User();
   username2 = new FormControl('');
   password2 = new FormControl('');
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.user)
       .subscribe(
         res => "",
-        err => alert("error on login"),
+        err => alert("Sorry, the password and or username entered is incorrect"),
         () => this.router.navigateByUrl('/dashboard')
         );
     })
